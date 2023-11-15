@@ -1,0 +1,32 @@
+=make-color($color, $suffix)
+  .text-#{$suffix}
+    color: $color
+  .bg-#{$suffix}
+    background: $color
+  .border-#{$suffix}
+    border-color: $color
+  .fill-#{$suffix}
+    fill: $color
+  .stroke-#{$suffix}
+    stroke: $color
+  .hover-bg-#{$suffix}:hover
+    background: $color
+  .hover-text-#{$suffix}:hover
+    color: $color
+
++make-color($color-ff, "ff")
++make-color($color-k, "k")
+
++make-color($color-primary-1, "primary-1")
++make-color($color-primary-2, "primary-2")
++make-color($color-primary-3, "primary-3")
++make-color($color-secondary-1, "secondary-1")
++make-color($color-secondary-2, "secondary-2")
++make-color($color-secondary-3, "secondary-3")
++make-color($color-tertiary-1, "tertiary-1")
+
+@for $i from 1 through length($colors-animal)
+  +make-color(nth($colors-animal, $i), "animal-" + $i)
+
+@for $i from 1 through length($colors-plant)
+  +make-color(nth($colors-plant, $i), "plant-" + $i)

@@ -1,0 +1,67 @@
+@use "sass:map";
+
+$color-k: #000000;
+$color-ff: #ffffff;
+
+$color-primary-1: #00827E;
+$color-primary-2: #178C89;
+$color-primary-3: #309895;
+$color-secondary-1: #ffffff;
+$color-secondary-2: #DFF0EF;
+$color-secondary-3: #BFE0DF;
+$color-tertiary-1: #5ed78a;
+$color-tertiary-2: #2ec06d;
+
+
+// Stephen Hutchings' OKLCH smooth palette variables
+// See: https://www.s-ings.com/scratchpad/oklch-smooth/
+
+$oklch-palette: (
+  "A": ("10": #fce9ec, "20": #ffd2da, "30": #ffb7c5, "40": #ff93ab, "50": #fc6e91, "60": #e74b77, "70": #be2f5c, "80": #911541, "90": #5a0023),
+  "B": ("10": #fde9e7, "20": #fed4d0, "30": #ffb9b4, "40": #ff9793, "50": #ff6c6f, "60": #ed4752, "70": #c7263a, "80": #970823, "90": #5c0010),
+  "C": ("10": #feeae3, "20": #ffd4c4, "30": #ffbba1, "40": #ff9b76, "50": #fc784a, "60": #e45729, "70": #be3c0f, "80": #8e2500, "90": #551400),
+  "D": ("10": #ffecdb, "20": #ffdcb9, "30": #ffc587, "40": #ffaa4a, "50": #fa9016, "60": #e17900, "70": #b66000, "80": #7d4200, "90": #472500),
+  "E": ("10": #feedc6, "20": #ffe197, "30": #ffd158, "40": #fdc215, "50": #edaf00, "60": #cb9300, "70": #9e7100, "80": #6d4d00, "90": #3d2a00),
+  "F": ("10": #eef2d4, "20": #e3ed9f, "30": #d4e360, "40": #c1d126, "50": #aab900, "60": #8e9b00, "70": #6f7900, "80": #4f5600, "90": #2d3100),
+  "G": ("10": #e1f5d8, "20": #caf1b9, "30": #a7e788, "40": #87d65d, "50": #6dbe3d, "60": #57a126, "70": #418014, "80": #2d5c0a, "90": #163700),
+  "H": ("10": #e0f5e5, "20": #c5eecf, "30": #96e4ad, "40": #5ed78a, "50": #2ec06d, "60": #1ca25a, "70": #148046, "80": #105d32, "90": #07371c),
+  "I": ("10": #d9f6ed, "20": #b7eede, "30": #78e5c9, "40": #33d6b3, "50": #00bc9a, "60": #169e81, "70": #0b7e66, "80": #065b49, "90": #00372b),
+  "J": ("10": #d7f5f6, "20": #b0eef0, "30": #70e3e8, "40": #33d1d8, "50": #1db8bf, "60": #0f9aa1, "70": #0a7a80, "80": #05595e, "90": #003538),
+  "K": ("10": #daf4ff, "20": #b9eafe, "30": #84dcfe, "40": #4dcbf6, "50": #09b5e3, "60": #069ac2, "70": #077a9b, "80": #065871, "90": #003344),
+  "L": ("10": #e3f1fe, "20": #c3e3ff, "30": #9fd4ff, "40": #6fc1ff, "50": #3aadfc, "60": #0391e6, "70": #0073c1, "80": #005391, "90": #002f56),
+  "M": ("10": #e8eeff, "20": #d7e1fe, "30": #bdcefe, "40": #a0b8ff, "50": #7f9dff, "60": #6381f8, "70": #4a62d4, "80": #32449c, "90": #1e2959),
+  "N": ("10": #f1ebff, "20": #e6dbff, "30": #d7c5fe, "40": #c6a9ff, "50": #b48aff, "60": #9c6bed, "70": #7f50ca, "80": #5d3996, "90": #361c5c),
+  "O": ("10": #fce7fc, "20": #fbd1fb, "30": #f9b1fb, "40": #f190f5, "50": #e171e7, "60": #c458cb, "70": #a13da7, "80": #79237f, "90": #4c0452),
+  "P": ("10": #fee8f2, "20": #fcd3e6, "30": #ffb4d9, "40": #ff8ac8, "50": #f668b6, "60": #dc4d9e, "70": #b82f7f, "80": #8c145d, "90": #580037),
+  "Z": ("10": #eaf0f5, "20": #d8e1e9, "30": #c1cdd8, "40": #a9b8c6, "50": #8fa1b2, "60": #74889b, "70": #5b6c7c, "80": #414e5a, "90": #262f37)
+);
+
+@function palette($hue, $shade) {
+  @return map.get($oklch-palette, $hue, $shade);
+}
+
+$colors-animal: palette("A", "70"),
+  palette("B", "70"),
+  palette("C", "70"),
+  palette("A", "60"),
+  palette("B", "60"),
+  palette("C", "60"),
+  palette("A", "50"),
+  palette("B", "50"),
+  palette("C", "50");
+
+$colors-plant: palette("G", "70"),
+  palette("H", "70"),
+  palette("I", "70"),
+  palette("J", "70"),
+  palette("K", "70"),
+  palette("G", "60"),
+  palette("H", "60"),
+  palette("I", "60"),
+  palette("J", "60"),
+  palette("K", "60"),
+  palette("G", "50"),
+  palette("H", "50"),
+  palette("I", "50"),
+  palette("J", "50"),
+  palette("K", "50");
