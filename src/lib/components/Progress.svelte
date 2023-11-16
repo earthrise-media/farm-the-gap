@@ -1,28 +1,36 @@
 <script lang="ts">
   import { tweened } from "svelte/motion"
-  import { quintInOut as easing } from "svelte/easing"
+  import { quintInOut } from "svelte/easing"
+
+  import Number from "$lib/components/Number.svelte"
 
   export let min = 0
   export let max = 100
   export let value = 0
+  export let isPercent = false
+  export let showLabels = true
 
-  const progress = tweened(0, {
-    duration: 400,
-    delay: 50,
-    easing
-  })
+  export let delay = 0
+  export let duration = 400
+  export let easing = quintInOut
 
-  $: $progress = (100 * (value - min)) / (max - min)
+  const width = tweened(0, { duration, delay, easing })
+
+  $: $width = +((100 * (value - min)) / (max - min))
 </script>
 
 <div class="progress-bar">
-  <div class="progress-bar-labels">
-    <div class="progress-bar-label">{min}</div>
-    <div class="progress-bar-label">{max}</div>
-  </div>
+  {#if showLabels}
+    <div class="progress-bar-labels">
+      <div class="progress-bar-label">{(isPercent ? 100 : 1) * min}</div>
+      <div class="progress-bar-label">{(isPercent ? 100 : 1) * max}</div>
+    </div>
+  {/if}
   <div class="progress-bar-bar">
-    <div class="progress-bar-value" style="width: {$progress}%">
-      <div class="progress-bar-value-label" class:visible={$progress > 10}>{value}</div>
+    <div class="progress-bar-value" style="width: {$width}%">
+      <div class="progress-bar-value-label" class:visible={$width > 10}>
+        <Number {value} {delay} {duration} {easing} {isPercent} />
+      </div>
     </div>
   </div>
 </div>

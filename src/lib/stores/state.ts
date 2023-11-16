@@ -28,7 +28,7 @@ class YieldCoefficients {
 
 class NutritionalRequirements {
   carbs = 275
-  protein = 80
+  protein = 70
   calories = 2250
 }
 

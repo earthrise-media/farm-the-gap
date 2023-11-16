@@ -1,11 +1,12 @@
 <script lang="ts">
-  import written from "written"
   import { farmGrid, gameState, successMetrics } from "$lib/stores/state"
 
   import Farm from "$lib/components/Farm.svelte"
+  import Number from "$lib/components/Number.svelte"
   import Button from "$lib/components/Button.svelte"
   import FoodMenu from "$lib/components/FoodMenu.svelte"
   import Progress from "$lib/components/Progress.svelte"
+  import DivergingBar from "$lib/components/DivergingBar.svelte"
 </script>
 
 <main>
@@ -43,20 +44,36 @@
       <span class="label">current population</span>
       <span>{$gameState.population.current}</span>
     </div>
-    {#each Object.entries($successMetrics) as [key, value]}
-      <div class="food-info-card-cell">
-        <span class="label">{key}</span>
-        <span>{written.prettyNumber(value)}</span>
-      </div>
-    {/each}
+    <div style="margin: 1rem 0">
+      {#each Object.entries($successMetrics) as [key, value]}
+        <div class="food-info-card-cell">
+          <span class="label">{key}</span>
+          <br />
+          <span><Number value={+value} /></span>
+        </div>
+      {/each}
+    </div>
     <hr />
     <h2>Emissions</h2>
-    {$farmGrid.emissions.total} ghg
-    {#each Object.entries($farmGrid.emissions.byFood) as [key, value]}
+    <div class="label">Total</div>
+    <Number value={+$farmGrid.emissions.total} /><span class="label">&nbsp;kg CO₂eq</span>
+    <DivergingBar datum={695122} value={+$farmGrid.emissions.total} scale={100000} />
+    <div class="label">Contribution by food types</div>
+    {#each Object.entries($farmGrid.emissions.byFood)
+      .sort((a, b) => +b[1] - +a[1])
+      .slice(0, 4) as [key, value]}
       <div class="food-info-card-cell">
         <span class="label">{key}</span>
-        <span>{written.prettyPercent(value, $farmGrid.emissions.total, 0)}</span>
-        <span class="label" />
+        <Progress
+          isPercent
+          max={0.25}
+          showLabels={false}
+          value={+value / $farmGrid.emissions.total}
+        />
+        <span>
+          <!-- <Number value={+value} isPercent /> -->
+          <span class="label" />
+        </span>
       </div>
     {/each}
   </div>
