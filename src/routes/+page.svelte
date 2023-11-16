@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from "$app/paths"
   import { farmGrid, gameState, successMetrics } from "$lib/stores/state"
 
   import Farm from "$lib/components/Farm.svelte"
@@ -12,7 +13,7 @@
 <main>
   <div class="panel panel-controls">
     <header class="flex justify-between">
-      <img width="100" src="/brand/logo.png" alt="The Plotline Logo" />
+      <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
       <Button
         onClick={() => {
           $farmGrid.grid = $farmGrid.initialGrid
