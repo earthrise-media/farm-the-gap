@@ -2,12 +2,11 @@
   import { fade, scale } from "svelte/transition"
   import { backOut as easing } from "svelte/easing"
 
-  import { farmGrid, userState, gameState } from "$lib/stores/state"
-  import type { Food } from "$lib/data/foods"
+  import { farm, userState, gameState } from "$lib/stores/state"
 
   const isSwappable = (food: Food) => food.id !== $userState.itemSelectedForSwap?.id
   const swapFoodItem = (x: number, y: number) => {
-    $farmGrid.grid[y][x] = JSON.parse(JSON.stringify($userState.itemSelectedForSwap))
+    $farm.grid[y][x] = JSON.parse(JSON.stringify($userState.itemSelectedForSwap))
     $gameState.update()
     $gameState = $gameState
   }
@@ -15,7 +14,7 @@
 
 <div id="farm-wrapper">
   <div id="land-grid">
-    {#each $farmGrid.grid as row, y}
+    {#each $farm.grid as row, y}
       {#each row as food, x}
         {#key food.id}
           <button
@@ -39,7 +38,7 @@
   width: 100%
   height: 100%
   overflow: hidden
-  padding: 0.5rem
+  padding: 0.25rem
   border-radius: var(--border-radius)
   background: var(--color-primary-3)
 
@@ -66,7 +65,6 @@
   color: var(--color-primary-1)
   transition: background 0.2s
   overflow: hidden
-  // aspect-ratio: 1
 
   &:nth-child(1)
     border-radius: 0.75rem 0 0 0
@@ -86,7 +84,7 @@
   right: 0
   width: 100%
   text-align: center
-  font-size: 7px
+  font-size: 0.4375rem
   white-space: nowrap
   text-overflow: ellipsis
   overflow: hidden
@@ -95,6 +93,5 @@
 @media (hover: hover)
   .land-cell:not(.unswappable):hover
     background: var(--color-secondary-1)
-
 
 </style>

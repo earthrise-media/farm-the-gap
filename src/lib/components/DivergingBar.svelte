@@ -12,6 +12,10 @@
   export let duration = 400
   export let easing = quintInOut
 
+  export let showSign = true
+  export let showValue = true
+  export let isPercent = true
+
   const left = tweened(0, { duration, delay, easing })
   const width = tweened(0, { duration, delay, easing })
 
@@ -25,20 +29,24 @@
   <div class="diverging-bar-axis diverging-bar-axis-x" />
   <div class="diverging-bar-bar">
     <div class="diverging-bar-value" style="left: {$left}%; width: {$width}%">
-      <div class="diverging-bar-value-label" class:visible={$width > 10}>
-        <Number value={percent} isPercent showSign {delay} {duration} {easing} />
+      <div class="diverging-bar-value-label" class:visible={true || $width > -0.5}>
+        {#if showValue}
+          {#if isPercent}
+            <Number value={percent} isPercent {showSign} {delay} {duration} {easing} />
+          {:else}
+            <Number {value} {showSign} {delay} {duration} {easing} />
+          {/if}
+        {/if}
       </div>
     </div>
   </div>
-  <div class="diverging-bar-axis diverging-bar-axis-y">
-    <!-- <div class="datum-label">{datum}</div> -->
-  </div>
+  <div class="diverging-bar-axis diverging-bar-axis-y" />
 </div>
 
 <style lang="sass">
 .diverging-bar
   position: relative
-  margin: 1rem 0
+  flex-grow: 1
 
 .diverging-bar-axis
   position: absolute
@@ -50,6 +58,7 @@
   height: 1px
   width: 100%
   top: 50%
+  opacity: 0
 
 .diverging-bar-axis-y
   top: 0
@@ -66,40 +75,36 @@
 
 .diverging-bar-value
   position: absolute
-  top: 0
+  top: calc(50% - 1px)
   left: 0
   height: 0.75em
+  height: 2px
   background: linear-gradient(-90deg, var(--color-tertiary-1), var(--color-tertiary-2))
-  border-radius: 0 0.5em 0.5em 0
   
   .is-negative &
     border-radius: 0.5em 0 0 0.5em
 
 .diverging-bar-value-label
   position: absolute
+  top: 50%
+  left: 100%
+  transform: translate(0, -50%)
+  color: var(--color-secondary-1)
+  opacity: 0
+  transition: all 0.2s
+  padding: 0.25em
+  background: inherit
+  border-radius: 0.5em
   font-size: 0.5em
   font-weight: bold
-  top: 50%
-  transform: translateY(-50%)
-  color: var(--color-secondary-1)
-  right: 0.5em
-  opacity: 0
-  transition: opacity 0.2s
+  min-width: 0.75em
+  min-height: 0.75em
+
+  .is-negative &
+    left: 0
+    transform: translate(-100%, -50%)
 
   &.visible
     opacity: 1
-
-.datum-label
-  display: flex
-  justify-content: space-between
-  margin-bottom: 0.25em
-  font-size: 0.5em
-  font-weight: bold
-  position: absolute
-  z-index: 1
-  top: 0%
-  left: 50%
-  transform: translate(-50%, -50%)
-  text-shadow: 0 0 0.25em var(--color-primary-1)
 
 </style>

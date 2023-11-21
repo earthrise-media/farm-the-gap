@@ -9,6 +9,7 @@
   export let value = 0
   export let isPercent = false
   export let showLabels = true
+  export let backgroundCurrentColor = false
 
   export let delay = 0
   export let duration = 400
@@ -19,6 +20,11 @@
   $: $width = +((100 * (value - min)) / (max - min))
 </script>
 
+{#if $$slots.label}
+  <div class="progress-label">
+    <slot name="label" />
+  </div>
+{/if}
 <div class="progress-bar">
   {#if showLabels}
     <div class="progress-bar-labels">
@@ -27,7 +33,11 @@
     </div>
   {/if}
   <div class="progress-bar-bar">
-    <div class="progress-bar-value" style="width: {$width}%">
+    <div
+      class="progress-bar-value"
+      class:bg-current={backgroundCurrentColor}
+      style="width: {$width}%"
+    >
       <div class="progress-bar-value-label" class:visible={$width > 10}>
         <Number {value} {delay} {duration} {easing} {isPercent} />
       </div>
@@ -42,6 +52,7 @@
   position: relative
   overflow: hidden
   background: var(--color-secondary-3)
+  border: 1px solid var(--color-secondary-3)
 
 .progress-bar-labels
   display: flex
@@ -57,6 +68,9 @@
   height: 100%
   background: linear-gradient(-90deg, var(--color-tertiary-1), var(--color-tertiary-2))
   border-radius: inherit
+  
+  &.bg-current
+    background: currentColor
 
 .progress-bar-value-label
   position: absolute
@@ -71,5 +85,12 @@
 
   &.visible
     opacity: 1
+
+.progress-label
+  font-size: 0.625rem
+  margin-bottom: 0.125rem
+  color: var(--color-secondary-1)
+  white-space: nowrap
+  overflow: hidden
 
 </style>

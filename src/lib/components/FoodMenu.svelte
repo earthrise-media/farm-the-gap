@@ -1,21 +1,18 @@
 <script lang="ts">
-  import { foodItemsGrouped, type Food } from "$lib/data/foods"
+  import { foodItemsGrouped } from "$lib/data/foods"
 
   import Button from "$lib/components/Button.svelte"
-  import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
   import { userState } from "$lib/stores/state"
 
   const showFoodDetail = (e: MouseEvent | KeyboardEvent, food: Food) => {
     e.stopPropagation()
-    inspectedFoodItem = food
+    $userState.itemInspecting = food
   }
 
   const selectFoodItem = (e: MouseEvent | KeyboardEvent, food: Food) => {
     e.stopPropagation()
     $userState.itemSelectedForSwap = food
   }
-
-  let inspectedFoodItem: Food | null = null
 </script>
 
 <svelte:window on:click={() => ($userState.itemSelectedForSwap = null)} />
@@ -26,6 +23,7 @@
       <div class="label">{key} Proteins</div>
       {#each foodItemsGrouped[key] as food, i}
         <Button
+          active={food === $userState.itemSelectedForSwap}
           color={food === $userState.itemSelectedForSwap ? "tertiary" : "primary"}
           onClick={(e) => selectFoodItem(e, food)}
         >
@@ -45,8 +43,6 @@
     </div>
   {/each}
 </div>
-
-<FoodInformationCard bind:inspectedFoodItem />
 
 <style lang="sass">
 #food-menu-wrapper

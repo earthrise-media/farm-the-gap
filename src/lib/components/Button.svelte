@@ -36,7 +36,7 @@ button
   overflow: hidden
 
   &.active
-    filter: brightness(1.1)
+    filter: brightness(1.2)
 
 .color-primary
   color: var(--color-primary-1)
@@ -56,6 +56,6 @@ button
   button:hover
     filter: brightness(1.05)
   button.active:hover
-    filter: brightness(1.15)
+    filter: brightness(1.2)
 
 </style>

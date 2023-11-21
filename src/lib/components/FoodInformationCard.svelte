@@ -1,13 +1,12 @@
 <script lang="ts">
-  import type { Food } from "$lib/data/foods"
-
   import Modal from "$lib/components/Modal.svelte"
+  import { userState } from "$lib/stores/state"
 
-  export let inspectedFoodItem: Food | null = null
+  $: inspectedFoodItem = $userState.itemInspecting
 </script>
 
 {#if inspectedFoodItem}
-  <Modal close={() => (inspectedFoodItem = null)}>
+  <Modal close={() => ($userState.itemInspecting = null)}>
     <div class="flex align-center" slot="title">
       <div class="food-item-avatar bg-{inspectedFoodItem.colorId}" />
       <span>{inspectedFoodItem.name}</span>
