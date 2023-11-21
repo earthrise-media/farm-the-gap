@@ -20,7 +20,7 @@
   </div>
 
   <div class="progress-calorie">
-    <div class="label">People served adequate calories</div>
+    <div class="label">People fed adequate calories</div>
     <Progress
       min={$gameState.population.start}
       max={$gameState.population.end}

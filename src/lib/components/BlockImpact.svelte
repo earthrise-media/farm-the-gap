@@ -93,8 +93,7 @@
           {:else}
             You have {delta > 0 ? "increased" : "decreased"} your
             <span class="lowercase">{data.name ?? data.title}</span>
-            by
-            <Number value={Math.abs(delta)} />
+            by <Number value={Math.abs(delta)} />
             {units} since you started farming.
           {/if}
         </div>
@@ -141,7 +140,7 @@
 .block-overview
   .big-number
     font-size: 2em
-    min-width: 4.5ch
+    min-width: 4.25ch
     margin-right: 0.25em
     text-align: right
   .block-summary

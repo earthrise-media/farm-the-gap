@@ -38,6 +38,9 @@ button
   &.active
     filter: brightness(1.2)
 
+  &.bare
+    background: none
+
 .color-primary
   color: var(--color-primary-1)
   background: var(--color-secondary-3)

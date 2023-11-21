@@ -1,6 +1,6 @@
 <script lang="ts">
   import { base } from "$app/paths"
-  import { farm, gameState, userState } from "$lib/stores/state"
+  import { farm, gameState } from "$lib/stores/state"
 
   import Farm from "$lib/components/Farm.svelte"
   import Button from "$lib/components/Button.svelte"
@@ -9,6 +9,7 @@
   import FoodItemsGrid from "$lib/components/FoodItemsGrid.svelte"
   import BlockGameState from "$lib/components/BlockGameState.svelte"
   import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
+  import WelcomeScreen from "$lib/components/WelcomeScreen.svelte"
 </script>
 
 <main>
@@ -44,6 +45,7 @@
   </div>
 
   <FoodInformationCard />
+  <WelcomeScreen />
 </main>
 
 <style lang="sass">
