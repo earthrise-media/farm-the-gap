@@ -11,6 +11,7 @@
   import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
   import WelcomeScreen from "$lib/components/WelcomeScreen.svelte"
   import EndScreen from "$lib/components/EndScreen.svelte"
+  import Tooltip from "$lib/components/Tooltip.svelte"
 </script>
 
 <main>
@@ -45,6 +46,7 @@
     <!-- <BlockNutrition type="protein" /> -->
   </div>
   <FoodInformationCard />
+  <Tooltip />
   <!-- <WelcomeScreen /> -->
   <!-- <EndScreen /> -->
 </main>
@@ -71,6 +73,9 @@ main
 .panel-farm
   grid-area: farm
   padding-top: 0rem
+  display: flex
+  align-items: center
+  justify-content: center
 
 .panel-right,
 .panel-center

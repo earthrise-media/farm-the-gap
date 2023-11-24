@@ -1,4 +1,6 @@
 declare global {
+  type InteractionEvent = MouseEvent | PointerEvent | TouchEvent
+
   interface Food {
     id: string
     name: string

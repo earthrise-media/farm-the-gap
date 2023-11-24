@@ -3,6 +3,7 @@
 $color-k: #000000;
 $color-ff: #ffffff;
 
+$color-primary-0: #005754;
 $color-primary-1: #00827E;
 $color-primary-2: #178C89;
 $color-primary-3: #309895;
@@ -43,15 +44,15 @@ $oklch-palette: (
 $colors-animal: palette("A", "80"),
   palette("B", "60"), // Dairy
   palette("C", "40"), // Eggs
-  palette("P", "60"), // Fish
+  palette("P", "50"), // Fish
   palette("A", "60"), // Pork
-  palette("C", "60"); // Poultry
+  palette("D", "60"); // Poultry
 
-$colors-plant: palette("E", "70"),
-  palette("F", "70"),
+$colors-plant: palette("E", "60"),
   palette("F", "60"),
-  palette("K", "70"),
-  palette("N", "70"),
-  palette("O", "70"),
-  palette("Z", "70"),
-  palette("H", "70");
+  palette("F", "50"),
+  palette("K", "60"),
+  palette("N", "60"),
+  palette("O", "60"),
+  palette("Z", "50"),
+  palette("H", "50");
