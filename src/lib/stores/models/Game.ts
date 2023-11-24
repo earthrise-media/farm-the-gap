@@ -15,7 +15,7 @@ export class YieldCoefficients {
   proteinMultiplier = 1 // accounts for improvements in protein per kg
   yieldMultiplier = 1 // accounts for improvements in yield per ha
   demandRatio = 0.5 // 0 = no animal products, 1 = only animal products
-  lossRatio = 0.9 // % of nutrients retained (i.e. minus losses from waste, processing, storage, etc.)
+  lossRatio = 0.85 // % of nutrients retained (i.e. minus losses from waste, processing, storage, etc.)
 }
 
 export class NutritionalRequirements {

@@ -5,7 +5,6 @@ declare global {
     type: string
     proteinType: string
     yieldPerHa: number
-    yieldEstimated: number
     proteinRatio: number
     calorieRatio: number
     carbRatio: number
@@ -15,8 +14,7 @@ declare global {
     landPerKg: number
     waterPerKg: number
     eutrophyPerKg: number
-    pricePerKg: number
-    media: string
+    landAllocation: number
     sources: string
     description: string
     colorId?: string

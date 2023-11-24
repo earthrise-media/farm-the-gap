@@ -6,6 +6,7 @@
 
   export let close = () => {}
   export let classes = ""
+  export let fullscreen = false
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -26,6 +27,7 @@
   role="dialog"
   tabindex="-1"
   aria-modal="true"
+  class:fullscreen
   on:click={close}
   on:keydown={handleKeydown}
   in:fade={{ duration: 200 }}
@@ -86,6 +88,14 @@ $radius: 1rem
   border-radius: $radius
   color: var(--color-primary-1)
   background: var(--color-secondary-1)
+
+  .fullscreen &
+    max-height: 100vh
+    max-height: 100svh
+    max-width: 100vw
+    height: 100%
+    width: 100%
+    border-radius: 0
 
   .has-title &
     padding: $radius

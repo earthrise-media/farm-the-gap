@@ -10,6 +10,7 @@
   import BlockGameState from "$lib/components/BlockGameState.svelte"
   import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
   import WelcomeScreen from "$lib/components/WelcomeScreen.svelte"
+  import EndScreen from "$lib/components/EndScreen.svelte"
 </script>
 
 <main>
@@ -43,9 +44,9 @@
     <!-- <div class="label">Nutrition</div> -->
     <!-- <BlockNutrition type="protein" /> -->
   </div>
-
   <FoodInformationCard />
-  <WelcomeScreen />
+  <!-- <WelcomeScreen /> -->
+  <!-- <EndScreen /> -->
 </main>
 
 <style lang="sass">

@@ -2,7 +2,6 @@ import { GameSettings } from "./Game"
 
 import { units } from "$lib/data/units"
 import { foodItems as foods } from "$lib/data/foods"
-import landUseByFood from "$lib/data/land-use-by-food.json"
 
 export class Farm {
   initialState: FarmState
@@ -14,26 +13,26 @@ export class Farm {
     // Create a grid with separate arrays for each row
     this.grid = new Array(this.rows).fill(null).map(() => new Array(this.cols).fill(0))
 
-    const regionalLandUse = landUseByFood.find(({ rId }) => rId === settings?.region?.id)
+    let x = 0
+    let y = 0
 
-    if (regionalLandUse) {
-      let x = 0
-      let y = 0
-
-      foods.forEach((item) => {
-        let count = Math.round(100 * regionalLandUse[item.id])
-
-        while (count > 0 && y < this.cols) {
-          this.plantCrop(x, y, item)
-          x++
-          count--
-          if (x === this.rows) {
-            x = 0
-            y++
-          }
-        }
-      })
+    if (settings) {
+      // Add any logic here for different game modes or regional selection
     }
+
+    foods.forEach((item) => {
+      let count = item.landAllocation
+
+      while (count > 0 && y < this.cols) {
+        this.plantCrop(x, y, item)
+        x++
+        count--
+        if (x === this.rows) {
+          x = 0
+          y++
+        }
+      }
+    })
 
     this.initialState = this.getInitialState()
   }

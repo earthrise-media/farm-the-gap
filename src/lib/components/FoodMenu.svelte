@@ -47,23 +47,30 @@
 <style lang="sass">
 #food-menu-wrapper
   display: grid
-  grid-template-columns: 1fr 2fr
+  grid-template-columns: 2fr 2fr
   grid-template-areas: "animal plant"
   grid-gap: 1.5rem
   margin-top: 1rem
   align-items: start
 
+.group-animal,
+.group-plant
+  grid-template-columns: 1fr 1fr
+  grid-template-rows: auto repeat(4, 1fr)
+  grid-auto-flow: column
+  align-items: start
+
 .group-animal
   grid-area: animal
-
+  
 .group-plant
   grid-area: plant
-  grid-template-columns: 1fr 1fr
 
 .button-group
   display: grid
+  align-items: start
   grid-gap: 0.25rem
-  gap: 0.25rem 0.375rem
+  gap: 0.25rem 0.25rem
 
 .label
   grid-column: 1 / -1
