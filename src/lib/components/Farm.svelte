@@ -103,6 +103,8 @@
   transition: background 0.2s, transform 0.2s ease-out
   
   &.swappable
+    background: var(--color-primary-1)
+  &.unswappable
     background: var(--color-primary-3)
 
 .food-item-avatar
