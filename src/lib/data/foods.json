@@ -154,7 +154,7 @@
   {
     "id": "f09",
     "name": "Legumes",
-    "type": "Fruit",
+    "type": "Legume",
     "proteinType": "plant",
     "yieldPerHa": 1714,
     "proteinRatio": 70.2,
@@ -249,7 +249,7 @@
   {
     "id": "f14",
     "name": "Corn",
-    "type": "Vegetable",
+    "type": "Cereal",
     "proteinType": "plant",
     "yieldPerHa": 5807,
     "proteinRatio": 62,
