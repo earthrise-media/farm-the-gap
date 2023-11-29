@@ -4,13 +4,15 @@
   import Button from "$lib/components/Button.svelte"
   import Scroller from "$lib/components/Scroller.svelte"
 
+  export let id = ""
   export let close = () => {}
   export let classes = ""
   export let fullscreen = false
+  export let durationIn = 200
+  export let durationOut = 100
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
-      e.stopPropagation()
       close()
     }
   }
@@ -22,6 +24,7 @@
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <div
+  {id}
   class="modal-screen font-sans"
   class:has-title={title}
   role="dialog"
@@ -30,8 +33,8 @@
   class:fullscreen
   on:click={close}
   on:keydown={handleKeydown}
-  in:fade={{ duration: 200 }}
-  out:fade={{ duration: 100 }}
+  in:fade={{ duration: durationIn }}
+  out:fade={{ duration: durationOut }}
 >
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
@@ -42,9 +45,11 @@
     on:click|stopPropagation
     on:keydown|stopPropagation
   >
-    <div class="modal-close-button">
-      <Button onClick={close}>Close</Button>
-    </div>
+    {#if !fullscreen}
+      <div class="modal-close-button">
+        <Button onClick={close}>Close</Button>
+      </div>
+    {/if}
     {#if title}
       <h2 class="modal-title">
         <slot name="title" />
@@ -57,6 +62,8 @@
 </div>
 
 <style lang="sass">
+@import "/src/styles/vars/color.scss"
+
 $padding: 1.25rem
 $radius: 1rem
 
@@ -66,12 +73,15 @@ $radius: 1rem
   left: 0
   right: 0
   bottom: 0
-  z-index: 100
+  z-index: 1000
   display: flex
   align-items: center
   justify-content: center
   background: transparent
   background: rgba(0,0,0,0.5)
+
+  &.fullscreen
+    background: rgba(0,0,0, 0.9)
 
 .modal
   display: flex
@@ -94,8 +104,11 @@ $radius: 1rem
     max-height: 100svh
     max-width: 100vw
     height: 100%
-    width: 100%
+    // width: 100%
+    min-height: none
     border-radius: 0
+    color: var(--color-secondary-1)
+    background: transparent
 
   .has-title &
     padding: $radius

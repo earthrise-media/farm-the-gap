@@ -139,8 +139,6 @@
 
 .block-overview
   .big-number
-    font-size: 2em
-    min-width: 4.25ch
     margin-right: 0.25em
     text-align: right
   .block-summary

@@ -12,6 +12,7 @@
   import WelcomeScreen from "$lib/components/WelcomeScreen.svelte"
   import EndScreen from "$lib/components/EndScreen.svelte"
   import Tooltip from "$lib/components/Tooltip.svelte"
+  import Toast from "$lib/components/Toast.svelte"
 </script>
 
 <main>
@@ -29,10 +30,12 @@
         Reset
       </Button>
     </header>
-    <p class="label">Change how your land is used by adding food types below.</p>
     <FoodMenu />
   </div>
-  <div class="panel panel-farm"><Farm /></div>
+  <div class="panel panel-farm">
+    <Farm />
+    <Toast />
+  </div>
   <div class="panel panel-center">
     <BlockGameState />
     <FoodItemsGrid />
@@ -47,7 +50,7 @@
   </div>
   <FoodInformationCard />
   <Tooltip />
-  <!-- <WelcomeScreen /> -->
+  <WelcomeScreen />
   <!-- <EndScreen /> -->
 </main>
 
@@ -56,13 +59,14 @@ main
   height: 100vh
   height: 100svh
   display: grid
-  grid-template-rows: 1fr 2fr
+  grid-template-rows: auto 1fr
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr)
   grid-template-areas: "controls center right" "farm center right"
 
 .panel
   position: relative
   padding: 1rem
+  overflow: hidden
 
 .panel-controls
   grid-area: controls

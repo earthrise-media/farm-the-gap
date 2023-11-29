@@ -9,6 +9,7 @@ export class UserState {
   hasBeenWelcomed: boolean = false
   itemInspecting: Food | null = null
   itemSelectedForSwap: Food | null = null
+  milestonesAchieved: string[] = []
 }
 
 export class YieldCoefficients {

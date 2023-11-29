@@ -1,18 +1,49 @@
 <script lang="ts">
+  import { onMount } from "svelte"
   import { tweened } from "svelte/motion"
-  import { fly } from "svelte/transition"
-  import { linear } from "svelte/easing"
+  import { fly, fade } from "svelte/transition"
+  import { backOut as easing, linear } from "svelte/easing"
 
   import { userState, gameState, successMetrics } from "$lib/stores/state"
 
+  import Farm from "$lib/components/Farm.svelte"
   import Modal from "$lib/components/Modal.svelte"
-  import Button from "$lib/components/Button.svelte"
-  import Progress from "$lib/components/Progress.svelte"
 
+  let mounted = false
   let slideIndex = 0
-  let slides = ["Welcome", "Context", "Gameplay"]
+
+  const slides = ["Welcome", "Context", "Gameplay", "Challenge"]
+
+  const impactCharts = [
+    {
+      title: "Emissions",
+      percent: 26,
+      description: "of global greenhouse gas emissions come from food"
+    },
+    {
+      title: "Land use",
+      percent: 50,
+      description: "of the world’s habitable land is used for agriculture"
+    },
+    {
+      title: "Water use",
+      percent: 70,
+      description: "of global freshwater withdrawals are used for agriculture"
+    },
+    {
+      title: "Water pollution",
+      percent: 78,
+      description: "of ocean and freshwater eutrophication is caused by agriculture"
+    }
+  ]
+
+  onMount(() => {
+    mounted = true
+    setTimeout(() => (slideIndex = 0), 400)
+  })
 
   const numberTween = tweened($gameState.population.start, { duration: 4000 })
+  const flyIn = { y: 8, easing, delay: 600, duration: 1200 }
 
   $: {
     if (slideIndex === 2) $numberTween = $gameState.population.end
@@ -22,83 +53,114 @@
   const close = () => {
     $userState.hasBeenWelcomed = true
   }
+
+  const onClick = () => {
+    if (slideIndex < 0) return
+    if (slideIndex === slides.length - 1) close()
+    else slideIndex += 1
+  }
 </script>
 
+<svelte:window
+  on:keydown={(e) => {
+    if (["ArrowRight", "Enter"].includes(e.key)) onClick()
+    if (e.key === "ArrowLeft" && slideIndex > 0) slideIndex -= 1
+    if (e.key === "Escape") close()
+  }}
+/>
+
 {#if !$userState.hasBeenWelcomed}
-  <Modal {close}>
-    <h2 slot="title">{slides[slideIndex]}</h2>
-    <div class="wrapper">
+  <Modal id="welcome-screen" fullscreen close={onClick} durationOut={800}>
+    <div
+      class="welcome-wrapper slide-{slideIndex}"
+      role="button"
+      tabindex="0"
+      in:fade={{ duration: 2000, delay: 100, easing }}
+      on:click={onClick}
+      on:keydown={(e) => {
+        if (e.key === "Enter") onClick
+      }}
+    >
       <div class="slide-wrap">
+        <div out:fade class="backing-screen bg-primary-0">
+          <div class="welcome-farm-wrapper">
+            <Farm levitate />
+          </div>
+        </div>
         {#if slideIndex === 0}
-          <div class="slide" in:fly={{ x: 1000 }} out:fly={{ x: -1000 }}>
+          <div class="slide" out:fade in:fly={flyIn}>
+            <h1 class="title slide-title-0">The Food Gap Challenge</h1>
             <p>
-              Welcome to The Protein Plant by the Plotline. This is an interactive online game about
-              building a sustainable food future.
+              The world faces a food gap. By 2060, we must produce 70% more calories to feed a
+              growing and developing population.
             </p>
+            <p>Can you reimagine agriculture to feed the future sustainably?</p>
+            <p class="label text-tertiary-1">Click anywhere to begin</p>
           </div>
         {:else if slideIndex === 1}
-          <div class="slide" in:fly={{ x: 1000 }} out:fly={{ x: -1000 }}>
+          <div class="slide" out:fade in:fly={flyIn}>
+            <h3 class="slide-title-1">The environmental impact of food</h3>
             <p>
-              By 2060, the world will need to produce 70% more calories to feed a growing and
-              developing world.
+              Food systems have a significant global footprint. To meet the food gap, we must better
+              utilise our finite land and water resources, and reduce emissions and pollution.
             </p>
-            <p>
-              Some context here about the impact of food systems in climate change and land use.
-            </p>
+            <div class="impact-charts flex">
+              {#each impactCharts as { title, percent, description }}
+                <div class="flex-col align-center text-center justify-center">
+                  <div class="label-caps text-secondary-3">{title}</div>
+                  <div class="big-number">
+                    {percent}<span class="text-secondary-3 labe">%</span>
+                  </div>
+                  <div class="label text-secondary-3">{description}</div>
+                </div>
+              {/each}
+            </div>
           </div>
         {:else if slideIndex === 2}
-          <div class="slide" in:fly={{ x: 1000 }} out:fly={{ x: -1000 }}>
+          <div class="slide" out:fade in:fly={flyIn}>
+            <h3 class="slide-title-2">This is our global farm</h3>
             <p>
-              You start with a 10 x 10 grid, where each square represents one hectare of land. These
-              100 hectares are populated with crops and animal typical of our global agricultural
-              land use.
+              Each square on this 10&hairsp;×&hairsp;10 plot represents 1% of global land used for
+              agriculture. 77% is used for livestock farming, and 23% for crops such as fruit,
+              vegetables, and grains.
+            </p>
+          </div>
+        {:else if slideIndex === 3}
+          <div class="slide" out:fade in:fly={flyIn}>
+            <h3 class="slide-title-3">You decide how to feed the future</h3>
+            <p>You have 50 moves to close the food gap.</p>
+            <p>
+              Your must deliver a nutritionally-balanced diet to a growing population, while meeting
+              market demands and keeping environmental impacts in check.
             </p>
             <p>
-              Your 100 hectares feeds {$gameState.population.start} people. By Over the next 50 years,
-              due to growing population and development, you will need to feed 150 people. To do this,
-              you can change how your land is used.
+              <b class="text-tertiary-1"> Let's play! </b>
             </p>
-            <Progress
-              min={$gameState.population.start}
-              max={$gameState.population.end}
-              value={$numberTween}
-              easing={linear}
-            />
           </div>
         {/if}
       </div>
-      <div class="pager-wrap">
+    </div>
+    {#if slideIndex > 0 && slideIndex < slides.length - 1}
+      <div transition:fade class="pager-wrap">
+        <div class="label text-secondary-1">Click anywhere to continue</div>
         <div class="pagers">
           {#each slides as s, i}
             <button
               class="pager"
               class:active={slideIndex === i}
-              on:click={() => (slideIndex = i)}
+              on:click|stopPropagation={() => (slideIndex = i)}
             />
           {/each}
-          <div class="label">{slideIndex + 1} / {slides.length}</div>
-        </div>
-        <div class="arrows">
-          <Button disabled={slideIndex === 0} onClick={() => (slideIndex -= 1)}>&larr;</Button>
-          <Button
-            color="secondary"
-            onClick={() => (slideIndex === slides.length - 1 ? close() : (slideIndex += 1))}
-          >
-            {slideIndex === slides.length - 1 ? "Enter" : "Next"}
-            &rarr;</Button
-          >
         </div>
       </div>
-    </div>
+    {/if}
   </Modal>
 {/if}
 
 <style lang="sass">
-.wrapper
+.welcome-wrapper
   display: flex
-  flex-direction: column
-  height: 50svh
-  height: 50vh
+  height: 100%
 
 .slide-wrap
   position: relative
@@ -106,24 +168,48 @@
 
 .slide
   position: absolute
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  text-align: center
   top: 0
   left: 0
   right: 0
   bottom: 0
   font-size: 0.875rem
+  font-size: 1.125rem
+  line-height: 1.3
+
+.slide-title-0
+    padding-top: 3rem
+.slide-title-2
+    padding-top: 6rem
+.slide-title-3
+    padding-top: 6rem
 
 .pager-wrap
   position: relative
   display: flex
-  justify-content: space-between
-  align-items: flex-end
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  position: fixed
+  bottom: 2rem
+  width: 100%
+  left: 0
+  gap: 1rem
 
 .pagers
   display: flex
-  gap: 0.25rem
+  align-items: center
+  position: relative
+  gap: 0.5rem
 
   .label
-    margin-left: 0.25rem
+    left: calc(100% + 1rem)
+    position: absolute
+    width: 4ch
 
 .pager
   width: 1em
@@ -132,12 +218,53 @@
   border-radius: 100%
   border: none
   transition: background 0.2s ease-in-out
-  background: var(--color-primary-3)
+  background: var(--color-primary-1)
 
   &.active
-    background: var(--color-primary-1)
+    background: var(--color-primary-3)
 
-p
-  margin-bottom: 1rem
+.welcome-farm-wrapper
+  margin: 0 auto
+  max-width: 420px
+  width: 100%
+  top: 0
+  transition: all 0.6s ease-in-out
+  transform-origin: center
+  transform-style: preserve-3d
+  -webkit-transform-origin: center
+  -webkit-transform-style: preserve-3d
+  transform: scale(0.7) translate(0, 75%)
+
+  .slide-0 &
+    transition: all 0.8s ease
+    transform: scale(0.5) translate(0, 0%)
+
+  .slide-1 &
+    transform: scale(2) translate(0, -29%)
+    opacity: 1
+
+  .slide-2 &
+    transform: scale(0.95) translate(0, 15%)
+
+  .slide-3 &
+    transform: scale(0.6) translate(0, 20%)
+
+.impact-charts
+  gap: 0 1.25rem
+  margin-top: 1.25rem
+
+.backing-screen
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  position: fixed
+  opacity: 1
+  pointer-events: none
+
+:global(#welcome-screen)
+  user-select: none
+:global(#welcome-screen .scroller-contents.scroller-y)
+  overflow: hidden
 
 </style>

@@ -31,9 +31,10 @@ button
   cursor: pointer
   border-radius: 1em
   transition: filter 0.2s ease-in-out, background 0.2s ease-in-out
-  padding: 0.125em 0.375em
+  padding: 0.125em 0.5em
   white-space: nowrap
   overflow: hidden
+  font-size: 1em
 
   &.active
     filter: brightness(1.2)
@@ -48,6 +49,10 @@ button
 .color-secondary
   color: var(--color-secondary-3)
   background: var(--color-primary-1)
+
+.color-tertiary
+  color: var(--color-primary-1)
+  background: var(--color-tertiary-1)
 
 .bare
   background: none

@@ -18,6 +18,7 @@
 
   let tooltip = {
     text: "",
+    title: "",
     active: false,
     classList: "",
     duration: 1000
@@ -32,12 +33,13 @@
       return
     }
 
-    const { tooltip: text, classList = "" } = target.dataset
+    const { tooltip: text, tooltipTitle = "", classList = "" } = target.dataset
 
     clearTimeout(timeout)
 
     tooltip.active = true
     tooltip.classList = classList
+    tooltip.title = tooltipTitle
     tooltip.text = text
 
     move(e)
@@ -86,10 +88,15 @@
   style="left: {$coords.x}px; top: {$coords.y}px"
   class:bump-left={$coords.x > vw - 100}
   class:bump-right={$coords.x < 100}
-  class="shadow-md"
+  class="shadow-md {tooltip.classList}"
 >
   {#if tooltip.active}
-    <div id="tooltip-body" class={tooltip.classList} transition:fade>
+    <div id="tooltip-body" transition:fade>
+      {#if tooltip.title}
+        <div id="tooltip-title">
+          {@html tooltip.title}
+        </div>
+      {/if}
       {@html tooltip.text}
     </div>
   {/if}
@@ -125,6 +132,10 @@
   .bump-left &
     transform: translate(-100%, calc(-100% - 16px))
 
+#tooltip-title
+  margin-bottom: .25rem
+  padding-bottom: .25rem
+  border-bottom: 1px solid var(--color-secondary-3)
 
 :global([data-tooltip])
   cursor: pointer

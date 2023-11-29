@@ -52,6 +52,7 @@
   grid-gap: 1.5rem
   margin-top: 1rem
   align-items: start
+  border: 1px solid transparent
 
 .group-animal,
 .group-plant
@@ -85,4 +86,10 @@
 
 .food-item-avatar
   margin-right: 0.5em
+
+:global(#food-menu-wrapper button)
+  padding: 0.125em 0.375em
+
+:global(#food-menu-wrapper .food-item-button button)
+  padding: 0
 </style>
