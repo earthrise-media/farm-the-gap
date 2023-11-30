@@ -88,6 +88,7 @@
   style="left: {$coords.x}px; top: {$coords.y}px"
   class:bump-left={$coords.x > vw - 100}
   class:bump-right={$coords.x < 100}
+  class:bump-down={$coords.y < 50}
   class="shadow-md {tooltip.classList}"
 >
   {#if tooltip.active}
@@ -114,13 +115,13 @@
   top: 0
   left: 0
   padding: .5rem 1rem
-  font-size: 14px
+  font-size: 12px
   font-weight: 500
   max-width: 200px
   width: max-content
   text-align: center
   border-radius: 2px
-  color: var(--color-secondary-1)
+  color: var(--color-secondary-2)
   background: var(--color-primary-1)
   box-shadow: 0 4px 1.5rem #0008
   transform: translate(-50%, calc(-100% - 16px))
@@ -132,10 +133,21 @@
   .bump-left &
     transform: translate(-100%, calc(-100% - 16px))
 
+  .bump-down &
+    transform: translate(-50%, calc(100% - 24px))
+
+  .bump-down.bump-right &
+    transform: translate(0%, calc(100% - 24px))
+
+  .bump-down.bump-left &
+    transform: translate(-100%, calc(100% - 24px))
+
+
 #tooltip-title
   margin-bottom: .25rem
   padding-bottom: .25rem
-  border-bottom: 1px solid var(--color-secondary-3)
+  font-weight: bold
+  border-bottom: 1px solid var(--color-primary-3)
 
 :global([data-tooltip])
   cursor: pointer

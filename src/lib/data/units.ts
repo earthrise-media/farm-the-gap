@@ -45,7 +45,7 @@ export const units: Unit[] = [
   },
   {
     id: "protein",
-    name: "Protein supply",
+    name: "Protein",
     suffix: "g",
     suffixFull: "grams of protein",
     description: "The amount of protein supplied from the total yield or food type.",
@@ -53,10 +53,18 @@ export const units: Unit[] = [
   },
   {
     id: "calories",
-    name: "Calorie supply",
+    name: "Calories",
     suffix: "cal",
     suffixFull: "calories",
     description: "The energy supplied in calories from the total yield or food type.",
+    sources: "USDA"
+  },
+  {
+    id: "protein-per-capita",
+    name: "Protein supply",
+    suffix: "g / person / day",
+    suffixFull: "grams of protein per person per day",
+    description: "The average amount of daily protein per person by total farm yield.",
     sources: "USDA"
   }
 ]

@@ -20,7 +20,7 @@
   $: $tweenedNumber = value
 </script>
 
-{#if showSign && $tweenedNumber > 0}+{/if}{#if isPercent}
+{#if showSign && $tweenedNumber >= 0}+{/if}{#if isPercent}
   {prettyPercent($tweenedNumber, 1, precision)}
 {:else if isCurrency}
   {prettyPrice($tweenedNumber)}

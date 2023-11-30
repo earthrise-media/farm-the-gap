@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { gameState, successMetrics } from "$lib/stores/state"
+  import { gameSettings, gameState, successMetrics } from "$lib/stores/state"
   import Progress from "$lib/components/Progress.svelte"
   import Number from "$lib/components/Number.svelte"
+  import { prettyPercent } from "$lib/utils/written"
 
   $: data = [
     {
@@ -21,17 +22,17 @@
       <Number showSign isPercent value={$successMetrics.calorieProductionChange} />
     </strong>
     <div class="label">Calorie production</div>
-    <div class="label text-secondary-3">Target: 70%</div>
+    <div class="label text-secondary-3">Target: {prettyPercent($gameSettings.gap)}</div>
   </div>
   <div class="dock-item flex-col flex-grow progress-calorie">
     <Progress
       isPercent
-      max={0.7}
+      max={$gameSettings.gap}
       showLabels={false}
       showValue={false}
       value={$successMetrics.calorieProductionChange}
     />
-    <span class="label">Food gap closed</span>
+    <span class="label">Food gap progress</span>
   </div>
   <div class="dock-item flex-col">
     <strong class="big-number">{$gameState.year.end - $gameState.year.current}</strong>

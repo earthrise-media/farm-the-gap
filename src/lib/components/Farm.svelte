@@ -14,26 +14,6 @@
     $gameState.update()
     $gameState = $gameState
   }
-
-  const getTooltipBody = (food: Food) => `
-      <div class="label flex-col">
-        <div>Protein: ${prettyNumber(
-          food.proteinRatio * $gameState.coefficients.lossRatio * food.yieldPerHa,
-          0
-        )} kg per hectare</div>
-        <div>Calories: ${prettyNumber(
-          food.calorieRatio * $gameState.coefficients.lossRatio * food.yieldPerHa,
-          0
-        )} cal per hectare</div>
-    </div>
-  `
-
-  const getTooltipTitle = (food: Food) => `
-    <div class="flex">
-        <div class="food-item-avatar bg-${food.colorId}"></div>
-        <h3 class="label">${food.name}</h3>
-      </div>
-  `
 </script>
 
 <div id="farm-wrapper" class:levitate>
@@ -45,8 +25,7 @@
             in:scale={{ duration: 300, easing, start: 0.6, opacity: 0.5 }}
             class="land-cell"
             class:tall={x == 4}
-            data-tooltip={getTooltipBody(food)}
-            data-tooltip-title={getTooltipTitle(food)}
+            data-tooltip={food.name}
             class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
             class:swappable={$userState.itemSelectedForSwap && isSwappable(food)}
             on:click={(e) =>

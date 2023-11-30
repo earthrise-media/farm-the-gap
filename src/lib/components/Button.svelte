@@ -2,9 +2,11 @@
   export let onClick = (e: MouseEvent | KeyboardEvent) => {}
   export let disabled: boolean = false
   export let type: "button" | "submit" | "reset" = "button"
-  export let color: "primary" | "secondary" | "tertiary" = "primary"
+  export let color: "primary" | "secondary" | "tertiary" | "error" = "primary"
   export let active: boolean = false
   export let classList: string = "default"
+  export let link: string = ""
+  export let target: "_blank" | "_self" | "_parent" | "_top" = "_self"
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -13,20 +15,25 @@
   }
 </script>
 
-<button
+<svelte:element
+  this={link ? "a" : "button"}
+  href={link}
   {type}
+  {target}
   {disabled}
   class:active
   class="{classList} color-{color}"
+  role="button"
+  tabindex="0"
   on:click={(e) => onClick(e)}
   on:keydown={handleKeydown}
 >
   <slot />
-</button>
+</svelte:element>
 
 <style lang="sass">
 
-button
+a, button
   border: none
   cursor: pointer
   border-radius: 1em
@@ -35,6 +42,7 @@ button
   white-space: nowrap
   overflow: hidden
   font-size: 1em
+  text-decoration: none
 
   &.active
     filter: brightness(1.2)
@@ -58,6 +66,10 @@ button
   color: var(--color-primary-1)
   background: var(--color-tertiary-1)
 
+.color-error
+  color: var(--color-animal-1)
+  background: var(--color-secondary-2)
+
 .bare
   background: none
   border: none
@@ -65,8 +77,10 @@ button
   margin: 0
 
 @media (hover: hover)
+  a:hover,
   button:hover
     filter: brightness(1.05)
+  a.active:hover,
   button.active:hover
     filter: brightness(1.2)
 

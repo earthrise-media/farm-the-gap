@@ -24,7 +24,15 @@ declare global {
 
   type FoodItemsGrouped = { [key: string]: Food[] }
 
-  type UnitId = "emissions" | "landUse" | "waterUse" | "eutrophy" | "yield" | "protein" | "calories"
+  type UnitId =
+    | "emissions"
+    | "landUse"
+    | "waterUse"
+    | "eutrophy"
+    | "yield"
+    | "protein"
+    | "calories"
+    | "protein-per-capita"
 
   interface Unit {
     id: UnitId

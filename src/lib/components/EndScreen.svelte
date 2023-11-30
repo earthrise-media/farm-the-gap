@@ -1,73 +1,60 @@
 <script lang="ts">
-  import { tweened } from "svelte/motion"
-  import { fly } from "svelte/transition"
-  import { linear } from "svelte/easing"
+  import { fly, fade } from "svelte/transition"
+  import { backOut as easing, linear } from "svelte/easing"
 
-  import { farm, gameState, successMetrics } from "$lib/stores/state"
+  import { userState, gameState, gameSettings, successMetrics, farm } from "$lib/stores/state"
 
-  import Modal from "$lib/components/Modal.svelte"
+  import BlockGameState from "$lib/components/BlockGameState.svelte"
   import Button from "$lib/components/Button.svelte"
-  import Progress from "$lib/components/Progress.svelte"
+  import Modal from "$lib/components/Modal.svelte"
+  import Farm from "$lib/components/Farm.svelte"
 
   let slideIndex = 0
-  let slides = ["End slide"]
-  let showEndScreen = true
 
-  const close = () => {
-    showEndScreen = false
+  const flyIn = { y: 8, easing, delay: 600, duration: 1200 }
+
+  const restart = () => {
+    $farm.reset()
+    $farm = $farm
+    $gameState.reset()
+    $gameState = $gameState
   }
+
+  $: $userState.isGameComplete = $successMetrics.hasSucceeded || $successMetrics.hasFailed
 </script>
 
-{#if showEndScreen || $successMetrics.hasSucceeded || $successMetrics.hasFailed}
-  <Modal fullscreen {close}>
-    <h2 slot="title">Game over • {$successMetrics.hasSucceeded ? "Success!" : "You failed!"}</h2>
-    <div class="wrapper">
+{#if $userState.isGameComplete}
+  <Modal id="end-screen" isError={!$successMetrics.hasSucceeded} fullscreen>
+    <div class="end-wrapper slide-{slideIndex}">
       <div class="slide-wrap">
-        {#if slideIndex === 0}
-          <div class="slide" in:fly={{ x: 1000 }} out:fly={{ x: -1000 }}>
-            {#if $successMetrics.hasSucceeded}
-              <p>
-                You were able to supply 850 people with adequate nutrition without clearing more
-                land.
-              </p>
-            {:else}
-              <p>You failed to supply 850 people with adequate nutrition in time.</p>
-            {/if}
-            <Button
-              color="secondary"
-              onClick={() => {
-                $farm.reset()
-                $farm = $farm
-                $gameState.reset()
-                $gameState = $gameState
-                showEndScreen = false
-              }}
-            >
-              Try again &rarr;
-            </Button>
-          </div>
-        {/if}
-      </div>
-      <div class="pager-wrap">
-        <div class="pagers">
-          {#each slides as s, i}
-            <button
-              class="pager"
-              class:active={slideIndex === i}
-              on:click={() => (slideIndex = i)}
-            />
-          {/each}
-          <div class="label">{slideIndex + 1} / {slides.length}</div>
-        </div>
-        <div class="arrows">
-          <Button disabled={slideIndex === 0} onClick={() => (slideIndex -= 1)}>&larr;</Button>
-          <Button
-            color="secondary"
-            onClick={() => (slideIndex === slides.length - 1 ? close() : (slideIndex += 1))}
-          >
-            {slideIndex === slides.length - 1 ? "Enter" : "Next"}
-            &rarr;</Button
-          >
+        <div class="slide" out:fade in:fly={flyIn}>
+          <h1 class="title slide-title-0">
+            You {$successMetrics.hasSucceeded ? "Won" : "Lost"}!
+          </h1>
+          {#if $successMetrics.hasFailed}
+            <p><b>Here's your problem:</b></p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis aliquam, ratione
+              eligendi ex fugiat soluta reprehenderit delectus debitis, blanditiis deserunt
+              perferendis molestias expedita. Vitae, non? Totam illo molestiae vitae, iste non
+              perspiciatis beatae facilis sapiente odit delectus nihil.
+            </p>
+            <Button color="error" onClick={restart}>Try again?</Button>
+          {:else if $successMetrics.hasSucceeded}
+            <p>Congratulations, you closed the food gap!</p>
+            <Farm levitate />
+            <div class="flex buttons">
+              <Button
+                color="primary"
+                target="_blank"
+                link="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                onClick={restart}>Share</Button
+              >
+              <Button color="secondary" onClick={restart}>Play again</Button>
+            </div>
+          {:else}
+            <p>An error has occurred.</p>
+          {/if}
         </div>
       </div>
     </div>
@@ -75,9 +62,8 @@
 {/if}
 
 <style lang="sass">
-.wrapper
+.end-wrapper
   display: flex
-  flex-direction: column
   height: 100%
 
 .slide-wrap
@@ -86,39 +72,23 @@
 
 .slide
   position: absolute
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  text-align: center
   top: 0
   left: 0
   right: 0
   bottom: 0
   font-size: 0.875rem
+  font-size: 1.125rem
+  line-height: 1.3
 
-.pager-wrap
-  position: relative
-  display: flex
-  justify-content: space-between
-  align-items: flex-end
+.buttons
+  gap: 0.75rem
 
-.pagers
-  display: flex
-  gap: 0.25rem
-
-  .label
-    margin-left: 0.25rem
-
-.pager
-  width: 1em
-  height: 1em
-  cursor: pointer
-  border-radius: 100%
-  border: none
-  transition: background 0.2s ease-in-out
-  background: var(--color-primary-3)
-
-  &.active
-    background: var(--color-primary-1)
-
-p
-  margin-bottom: 1rem
-  text-align: center
+:global(#end-screen .scroller-contents.scroller-y)
+  overflow: hidden
 
 </style>

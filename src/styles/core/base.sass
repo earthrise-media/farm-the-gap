@@ -10,6 +10,14 @@
   --color-secondary-3: #{$color-secondary-3}
   --color-tertiary-1: #{$color-tertiary-1}
   --color-tertiary-2: #{$color-tertiary-2}
+  --color-error-1: #{$color-error-1}
+  --color-error-2: #{$color-error-2}
+
+  @for $i from 1 through length($colors-animal)
+    --color-animal-#{$i}: #{nth($colors-animal, $i)}
+
+  @for $i from 1 through length($colors-plant)
+    --color-plant-#{$i}: #{nth($colors-plant, $i)}
 
   --border-radius: #{$border-radius}
 

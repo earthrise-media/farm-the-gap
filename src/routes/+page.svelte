@@ -1,6 +1,6 @@
 <script lang="ts">
   import { base } from "$app/paths"
-  import { farm, gameState } from "$lib/stores/state"
+  import { farm, gameState, userState } from "$lib/stores/state"
 
   import Dock from "$lib/components/Dock.svelte"
   import Farm from "$lib/components/Farm.svelte"
@@ -13,14 +13,16 @@
   import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
   import WelcomeScreen from "$lib/components/WelcomeScreen.svelte"
   import EndScreen from "$lib/components/EndScreen.svelte"
+  import AboutScreen from "$lib/components/AboutScreen.svelte"
   import Tooltip from "$lib/components/Tooltip.svelte"
   import Toast from "$lib/components/Toast.svelte"
+  import Modal from "$lib/components/Modal.svelte"
 </script>
 
 <main>
-  <div class="panel panel-controls">
-    <header class="flex justify-between">
-      <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
+  <header class="flex justify-between">
+    <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
+    <div class="buttons">
       <Button
         onClick={() => {
           $farm.reset()
@@ -31,30 +33,37 @@
       >
         Reset
       </Button>
-    </header>
-    <FoodMenu />
+      <Button onClick={() => ($userState.showAboutPage = true)}>About</Button>
+    </div>
+  </header>
+  <div class="panel-game-area panel">
+    <div class="panel-controls panel">
+      <FoodMenu />
+    </div>
+    <div class="panel-farm panel">
+      <Farm />
+      <Dock />
+      <!-- <Toast /> -->
+    </div>
   </div>
-  <div class="panel panel-farm">
-    <Farm />
-    <Dock />
-    <!-- <Toast /> -->
-  </div>
-  <div class="panel panel-center">
-    <!-- <BlockGameState /> -->
-    <FoodStatsGrid />
-  </div>
-  <div class="panel panel-right">
-    <!-- <div class="label">Environmental Impacts</div> -->
-    <BlockImpact type="emissions" />
-    <BlockImpact type="water" />
-    <BlockImpact type="eutrophy" />
-    <!-- <div class="label">Nutrition</div> -->
+
+  <div class="panel panel-data">
+    <div class="panel-1-3">
+      <BlockGameState />
+    </div>
+    <div class="panel-2-3">
+      <FoodStatsGrid />
+      <!-- <BlockImpact type="emissions" />
+      <BlockImpact type="water" />
+      <BlockImpact type="eutrophy" /> -->
+    </div>
     <!-- <BlockNutrition type="protein" /> -->
   </div>
   <FoodInformationCard />
-  <!-- <Tooltip /> -->
-  <WelcomeScreen />
-  <!-- <EndScreen /> -->
+  <Tooltip />
+  <!-- <WelcomeScreen /> -->
+  <EndScreen />
+  <AboutScreen />
 </main>
 
 <style lang="sass">
@@ -62,46 +71,42 @@ main
   height: 100vh
   height: 100svh
   display: grid
+  gap: 0.75rem 0.25rem
+  padding: 0.75rem
   grid-template-rows: auto 1fr
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr)
-  grid-template-areas: "controls center right" "farm center right"
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
+  grid-template-areas: "header header" "game data"
+  background: var(--color-primary-1)
 
 .panel
   position: relative
-  padding: 1rem
   overflow: hidden
 
-.panel-controls
-  grid-area: controls
+header
+  grid-area: header
 
-  header
-    margin-bottom: 0.75rem
+.panel-game-area
+  display: grid
+  grid-area: game
+  background: var(--color-primary-2)
+  border-radius: var(--border-radius)
+  padding: 0 1rem
+  grid-template-rows: auto 1fr
 
 .panel-farm
-  grid-area: farm
-  padding-top: 0rem
   display: flex
   align-items: center
   justify-content: center
 
-.panel-right,
-.panel-center
-  gap: 1em
-  display: flex
-  flex-direction: column
+.panel-data
+  grid-area: data
+  gap: 0.25rem
+  display: grid
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr)
 
-.panel-center
-  grid-area: center
-  grid-column: 2
-  grid-row: 1 / -1
-  padding-right: 0.5rem
-  background-color: var(--color-primary-2)
-
-.panel-right
-  grid-row: 1 / -1
-  grid-column: 3
-  grid-area: right
-  padding-left: 0.5rem
-  background-color: var(--color-primary-2)
+  .panel-1-3
+    background: var(--color-primary-2)
+    border-radius: var(--border-radius)
+    padding: var(--border-radius)
 
 </style>

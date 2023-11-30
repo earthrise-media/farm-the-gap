@@ -4,10 +4,11 @@
   import { fly, fade } from "svelte/transition"
   import { backOut as easing, linear } from "svelte/easing"
 
-  import { userState, gameState, successMetrics } from "$lib/stores/state"
+  import { userState, gameState, gameSettings, successMetrics } from "$lib/stores/state"
 
   import Farm from "$lib/components/Farm.svelte"
   import Modal from "$lib/components/Modal.svelte"
+  import { prettyPercent } from "$lib/utils/written"
 
   let mounted = false
   let slideIndex = 0
@@ -62,6 +63,7 @@
 </script>
 
 <svelte:window
+  on:click={onClick}
   on:keydown={(e) => {
     if (["ArrowRight", "Enter"].includes(e.key)) onClick()
     if (e.key === "ArrowLeft" && slideIndex > 0) slideIndex -= 1
@@ -70,19 +72,15 @@
 />
 
 {#if !$userState.hasBeenWelcomed}
-  <Modal id="welcome-screen" fullscreen close={onClick} durationOut={800}>
+  <Modal id="welcome-screen" fullscreen durationOut={800}>
     <div
       class="welcome-wrapper slide-{slideIndex}"
       role="button"
       tabindex="0"
       in:fade={{ duration: 2000, delay: 100, easing }}
-      on:click={onClick}
-      on:keydown={(e) => {
-        if (e.key === "Enter") onClick
-      }}
     >
       <div class="slide-wrap">
-        <div out:fade class="backing-screen bg-primary-0">
+        <div out:fade class="backing-screen">
           <div class="welcome-farm-wrapper">
             <Farm levitate />
           </div>
@@ -91,8 +89,9 @@
           <div class="slide" out:fade in:fly={flyIn}>
             <h1 class="title slide-title-0">The Food Gap Challenge</h1>
             <p>
-              The world faces a food gap. By 2060, we must produce 70% more calories to feed a
-              growing and developing population.
+              The world faces a food gap. By {$gameState.year.end}, we must produce {prettyPercent(
+                $gameSettings.gap
+              )} more calories to feed a growing and developing population.
             </p>
             <p>Can you reimagine agriculture to feed the future sustainably?</p>
             <p class="label text-tertiary-1">Click anywhere to begin</p>
@@ -128,7 +127,9 @@
         {:else if slideIndex === 3}
           <div class="slide" out:fade in:fly={flyIn}>
             <h3 class="slide-title-3">You decide how to feed the future</h3>
-            <p>You have 50 moves to close the food gap.</p>
+            <p>
+              You have {$gameState.year.end - $gameState.year.current} moves to close the food gap.
+            </p>
             <p>
               Your must deliver a nutritionally-balanced diet to a growing population, while meeting
               market demands and keeping environmental impacts in check.
@@ -182,7 +183,7 @@
   line-height: 1.3
 
 .slide-title-0
-    padding-top: 3rem
+    padding-top: 5rem
 .slide-title-2
     padding-top: 6rem
 .slide-title-3
@@ -237,7 +238,7 @@
 
   .slide-0 &
     transition: all 0.8s ease
-    transform: scale(0.5) translate(0, 0%)
+    transform: scale(0.5) translate(0, 15%)
 
   .slide-1 &
     transform: scale(2) translate(0, -29%)

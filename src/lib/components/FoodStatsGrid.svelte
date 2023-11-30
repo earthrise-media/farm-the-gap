@@ -49,7 +49,10 @@
 </script>
 
 <div class="food-items-grid block">
-  <h3 class="block-title">Food outputs per hectare</h3>
+  <h3 class="block-title flex align-center">
+    Food output per hectare
+    <sup class="label" data-tooltip-title="Sources" data-tooltip="Our World in Data; USDA.">ⓘ</sup>
+  </h3>
   <div class="food-items-grid-body">
     <div class="food-card table-head">
       {#each columns as { label, sort }, i}
@@ -91,9 +94,12 @@
 </div>
 
 <style lang="sass">
+.block-title
+  sup
+    margin-left: 0.5em
+
 .food-items-grid
   gap: 0.25rem
-  background: var(--color-primary-1)
 
 .food-items-grid-body
   display: grid

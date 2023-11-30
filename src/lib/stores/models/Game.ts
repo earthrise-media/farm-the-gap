@@ -3,13 +3,16 @@ import regions from "$lib/data/regions.json"
 export class GameSettings {
   region: Region = regions[0]
   mode: number = 0
+  gap: number = 0.5 // Food gap
 }
 
 export class UserState {
+  showAboutPage: boolean = false
   hasBeenWelcomed: boolean = false
   itemInspecting: Food | null = null
   itemSelectedForSwap: Food | null = null
   milestonesAchieved: string[] = []
+  isGameComplete: boolean = false
 }
 
 export class YieldCoefficients {
@@ -28,7 +31,7 @@ export class NutritionalRequirements {
 export class GameState {
   year = {
     start: 2020,
-    end: 2070,
+    end: 2050,
     current: 2020
   }
 

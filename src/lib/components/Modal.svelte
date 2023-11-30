@@ -6,7 +6,8 @@
 
   export let id = ""
   export let close = () => {}
-  export let classes = ""
+  export let classList = ""
+  export let isError = false
   export let fullscreen = false
   export let durationIn = 200
   export let durationOut = 100
@@ -25,12 +26,13 @@
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <div
   {id}
-  class="modal-screen font-sans"
+  class="modal-screen font-sans {classList}"
   class:has-title={title}
   role="dialog"
   tabindex="-1"
   aria-modal="true"
   class:fullscreen
+  class:error={isError}
   on:click={close}
   on:keydown={handleKeydown}
   in:fade={{ duration: durationIn }}
@@ -38,12 +40,12 @@
 >
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
-    class="modal {classes}"
+    class="modal"
     role="dialog"
     tabindex="-1"
     aria-modal="true"
-    on:click|stopPropagation
-    on:keydown|stopPropagation
+    on:click={(e) => !fullscreen && e.stopPropagation()}
+    on:keydown={(e) => !fullscreen && e.stopPropagation()}
   >
     {#if !fullscreen}
       <div class="modal-close-button">
@@ -62,8 +64,6 @@
 </div>
 
 <style lang="sass">
-@import "/src/styles/vars/color.scss"
-
 $padding: 1.25rem
 $radius: 1rem
 
@@ -77,11 +77,13 @@ $radius: 1rem
   display: flex
   align-items: center
   justify-content: center
-  background: transparent
   background: rgba(0,0,0,0.5)
 
   &.fullscreen
-    background: rgba(0,0,0, 0.9)
+    background: var(--color-primary-0)
+
+  &.error
+    background: var(--color-animal-1)
 
 .modal
   display: flex
@@ -104,7 +106,6 @@ $radius: 1rem
     max-height: 100svh
     max-width: 100vw
     height: 100%
-    // width: 100%
     min-height: none
     border-radius: 0
     color: var(--color-secondary-1)
@@ -125,5 +126,4 @@ $radius: 1rem
 .modal-title
   font-weight: bold
   margin-bottom: 0.75rem
-
 </style>

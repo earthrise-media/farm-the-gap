@@ -132,7 +132,7 @@
 
 <style lang="sass">
 .block-impact
-  background: var(--color-primary-3)
+  background: var(--color-primary-1)
 
 .block-title
   gap: 0.25em
