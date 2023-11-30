@@ -8,7 +8,8 @@
   export let levitate = false // animate the farm levitating
 
   const isSwappable = (food: Food) => food.id !== $userState.itemSelectedForSwap?.id
-  const swapFoodItem = (x: number, y: number) => {
+  const swapFoodItem = (e: MouseEvent, x: number, y: number) => {
+    e.stopImmediatePropagation()
     $farm.grid[y][x] = JSON.parse(JSON.stringify($userState.itemSelectedForSwap))
     $gameState.update()
     $gameState = $gameState
@@ -48,7 +49,8 @@
             data-tooltip-title={getTooltipTitle(food)}
             class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
             class:swappable={$userState.itemSelectedForSwap && isSwappable(food)}
-            on:click|stopPropagation={() => $userState.itemSelectedForSwap && swapFoodItem(x, y)}
+            on:click={(e) =>
+              $userState.itemSelectedForSwap && isSwappable(food) && swapFoodItem(e, x, y)}
           >
             <div class="food-item-avatar bg-{food.colorId}" />
           </button>

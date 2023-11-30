@@ -4,12 +4,13 @@
 
   import Number from "$lib/components/Number.svelte"
 
-  export let min = 0
-  export let max = 100
   export let value = 0
-  export let isPercent = false
+  export let showValue = true
   export let showLabels = true
+  export let isPercent = false
   export let backgroundCurrentColor = false
+  export let min = 0
+  export let max = isPercent ? 1 : 100
 
   export let delay = 0
   export let duration = 400
@@ -38,9 +39,11 @@
       class:bg-current={backgroundCurrentColor}
       style="width: {$width}%"
     >
-      <div class="progress-bar-value-label" class:visible={$width > 10}>
-        <Number {value} {delay} {duration} {easing} {isPercent} />
-      </div>
+      {#if showValue}
+        <div class="progress-bar-value-label" class:visible={$width > 10}>
+          <Number {value} {delay} {duration} {easing} {isPercent} />
+        </div>
+      {/if}
     </div>
   </div>
 </div>

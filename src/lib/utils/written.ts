@@ -595,3 +595,8 @@ export const numerate = quantify
 export const count = quantify
 /** Alias for `capitalizeAll` */
 export const titleCase = capitalizeAll
+
+// Custom functions
+
+export const largeNumber = (n: number): string =>
+  Intl.NumberFormat("en", { notation: "compact" }).format(n)

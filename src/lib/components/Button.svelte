@@ -41,6 +41,10 @@ button
 
   &.bare
     background: none
+    font-family: inherit
+    padding: 0
+    margin: 0
+    border-radius: 0
 
 .color-primary
   color: var(--color-primary-1)

@@ -11,7 +11,7 @@ export const farm = writable(new Farm(get(gameSettings)))
 export const successMetrics = derived([farm, gameState], ([$farm, $gameState]) => {
   const { population, year, coefficients, nutritionalRequirements } = $gameState
 
-  const nutrientConversion = +coefficients.yieldMultiplier * coefficients.lossRatio
+  const nutrientConversion = coefficients.yieldMultiplier * coefficients.lossRatio
 
   const caloriesPerPersonPerDay = +(
     ($farm.calories.total * nutrientConversion) /
@@ -22,6 +22,9 @@ export const successMetrics = derived([farm, gameState], ([$farm, $gameState]) =
     ($farm.protein.total * coefficients.proteinMultiplier * nutrientConversion) /
     (population.current * 365)
   ).toFixed(0)
+
+  const calorieProductionChange =
+    ($farm.calories.total - $farm.initialState.calories.total) / $farm.initialState.calories.total
 
   const hectaresPerPerson = +(($farm.rows * $farm.cols) / population.current).toFixed(2)
 
@@ -36,6 +39,7 @@ export const successMetrics = derived([farm, gameState], ([$farm, $gameState]) =
   return {
     hectaresPerPerson,
     proteinPerPersonPerDay,
+    calorieProductionChange,
     caloriesPerPersonPerDay,
     peopleAdequateCalories,
     hasSucceeded,

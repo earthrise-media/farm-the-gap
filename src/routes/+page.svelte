@@ -2,10 +2,12 @@
   import { base } from "$app/paths"
   import { farm, gameState } from "$lib/stores/state"
 
+  import Dock from "$lib/components/Dock.svelte"
   import Farm from "$lib/components/Farm.svelte"
   import Button from "$lib/components/Button.svelte"
   import FoodMenu from "$lib/components/FoodMenu.svelte"
   import BlockImpact from "$lib/components/BlockImpact.svelte"
+  import FoodStatsGrid from "$lib/components/FoodStatsGrid.svelte"
   import FoodItemsGrid from "$lib/components/FoodItemsGrid.svelte"
   import BlockGameState from "$lib/components/BlockGameState.svelte"
   import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
@@ -34,11 +36,12 @@
   </div>
   <div class="panel panel-farm">
     <Farm />
-    <Toast />
+    <Dock />
+    <!-- <Toast /> -->
   </div>
   <div class="panel panel-center">
-    <BlockGameState />
-    <FoodItemsGrid />
+    <!-- <BlockGameState /> -->
+    <FoodStatsGrid />
   </div>
   <div class="panel panel-right">
     <!-- <div class="label">Environmental Impacts</div> -->
@@ -49,7 +52,7 @@
     <!-- <BlockNutrition type="protein" /> -->
   </div>
   <FoodInformationCard />
-  <Tooltip />
+  <!-- <Tooltip /> -->
   <WelcomeScreen />
   <!-- <EndScreen /> -->
 </main>
