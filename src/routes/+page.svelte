@@ -61,7 +61,7 @@
   </div>
   <FoodInformationCard />
   <Tooltip />
-  <!-- <WelcomeScreen /> -->
+  <WelcomeScreen />
   <EndScreen />
   <AboutScreen />
 </main>
