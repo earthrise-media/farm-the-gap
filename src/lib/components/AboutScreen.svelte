@@ -1,8 +1,6 @@
 <script lang="ts">
   import Modal from "$lib/components/Modal.svelte"
   import { userState } from "$lib/stores/state"
-
-  $: console.log(userState.showAboutPage)
 </script>
 
 {#if $userState.showAboutPage}

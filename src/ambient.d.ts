@@ -1,8 +1,24 @@
 declare global {
   type InteractionEvent = MouseEvent | PointerEvent | TouchEvent
 
+  type FoodId =
+    | "f01"
+    | "f02"
+    | "f03"
+    | "f04"
+    | "f05"
+    | "f06"
+    | "f07"
+    | "f08"
+    | "f09"
+    | "f10"
+    | "f11"
+    | "f12"
+    | "f13"
+    | "f14"
+
   interface Food {
-    id: string
+    id: FoodId
     name: string
     type: string
     proteinType: string
@@ -22,7 +38,7 @@ declare global {
     colorId?: string
   }
 
-  type FoodItemsGrouped = { [key: string]: Food[] }
+  type FoodItemsGrouped = { [key: "animal" | "plant"]: Food[] }
 
   type UnitId =
     | "emissions"
@@ -59,6 +75,9 @@ declare global {
     ghgAgriculturalAnnual: number
     note: string
   }
+
+  // GameState related types
+  type InventoryItem = { id: FoodId; name: string; available: number }
 
   // Farm related types
   type FarmKey = keyof Farm

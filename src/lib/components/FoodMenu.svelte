@@ -2,7 +2,7 @@
   import { foodItemsGrouped } from "$lib/data/foods"
 
   import Button from "$lib/components/Button.svelte"
-  import { userState } from "$lib/stores/state"
+  import { gameState, userState } from "$lib/stores/state"
 
   const showFoodDetail = (e: MouseEvent | KeyboardEvent, food: Food) => {
     e.stopPropagation()
@@ -23,16 +23,20 @@
       <div class="label">{key} Proteins</div>
       {#each foodItemsGrouped[key] as food, i}
         <Button
+          disabled={$gameState.inventory.get(food.id).available <= 0}
           active={food === $userState.itemSelectedForSwap}
           color={food === $userState.itemSelectedForSwap ? "tertiary" : "primary"}
           onClick={(e) => selectFoodItem(e, food)}
+          tooltip={$gameState.inventory.get(food.id).available <= 0
+            ? food.name + " supply exhaused."
+            : null}
         >
           <div class="food-item-button">
             <div class="flex align-center">
               <div class="food-item-avatar text-secondary-3 bg-{food.colorId}">
-                <svg fill="currentColor" viewBox="0 0 10 10" width="8">
-                  <path d="M3.97 9.29V.24h2.3v9.05h-2.3ZM.6 5.91V3.62h9.05v2.29H.6Z" />
-                </svg>
+                <span class="label">
+                  {$gameState.inventory.get(food.id).available}
+                </span>
               </div>
               <span>{food.name}</span>
             </div>
@@ -88,7 +92,7 @@
   margin-right: 0.5em
 
 :global(#food-menu-wrapper button)
-  padding: 0.125em 0.375em
+  padding: 0.125em 0.25em
 
 :global(#food-menu-wrapper .food-item-button button)
   padding: 0

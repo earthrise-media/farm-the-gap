@@ -8,10 +8,18 @@
   export let levitate = false // animate the farm levitating
 
   const isSwappable = (food: Food) => food.id !== $userState.itemSelectedForSwap?.id
+
   const swapFoodItem = (e: MouseEvent, x: number, y: number) => {
     e.stopImmediatePropagation()
-    $farm.grid[y][x] = JSON.parse(JSON.stringify($userState.itemSelectedForSwap))
-    $gameState.update()
+
+    const food = $userState.itemSelectedForSwap
+
+    if (food === null || food === undefined) return
+    $farm.grid[y][x] = JSON.parse(JSON.stringify(food))
+    $gameState.update(food.id)
+
+    if ($gameState.inventory.get(food.id).available <= 0) $userState.itemSelectedForSwap = null
+
     $gameState = $gameState
   }
 </script>

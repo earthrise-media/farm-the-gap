@@ -7,6 +7,7 @@
   export let classList: string = "default"
   export let link: string = ""
   export let target: "_blank" | "_self" | "_parent" | "_top" = "_self"
+  export let tooltip: string | null = null
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -25,6 +26,7 @@
   class="{classList} color-{color}"
   role="button"
   tabindex="0"
+  data-tooltip={tooltip}
   on:click={(e) => onClick(e)}
   on:keydown={handleKeydown}
 >
@@ -53,6 +55,11 @@ a, button
     padding: 0
     margin: 0
     border-radius: 0
+
+  &:disabled
+    cursor: not-allowed
+    opacity: 0.5
+    filter: saturate(0)
 
 .color-primary
   color: var(--color-primary-1)
