@@ -137,8 +137,10 @@
     grid-template-columns: repeat(3,1fr)
 
     div
+      pointer-events: all
       background: rgba(0,0,0,0.5)
       &.window
+        pointer-events: none
         border: 2px solid var(--color-tertiary-1)
         animation: 0.4s ease-in-out infinite alternate pulse-tertiary
         background: transparent
