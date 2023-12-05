@@ -43,7 +43,6 @@
     <div class="panel-farm panel">
       <Farm />
       <Dock />
-      <!-- <Toast /> -->
     </div>
   </div>
 
@@ -61,9 +60,10 @@
   </div>
   <FoodInformationCard />
   <Tooltip />
-  <WelcomeScreen />
+  <!-- <WelcomeScreen /> -->
   <EndScreen />
   <AboutScreen />
+  <Toast />
 </main>
 
 <style lang="sass">

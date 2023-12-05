@@ -60,7 +60,7 @@
         const element = qs(toast.target)
         const style = getComputedStyle(element)
         const r = parseInt(style.getPropertyValue("border-radius"))
-        const p = r ? 0 : parseInt(style.getPropertyValue("padding")) || 6
+        const p = parseInt(style.getPropertyValue("padding")) > 6 ? 0 : 6
 
         const { x, y, width: w, height: h } = element.getBoundingClientRect()
         $coords = { x: x - p, y: y - p, w: w + 2 * p, h: h + 2 * p, r }
@@ -70,14 +70,24 @@
 </script>
 
 {#if toast}
-  {#key toast.id}
-    <div class="toast-wrapper">
+  <div class="toast-wrapper">
+    {#if toast.target}
+      <div
+        class="toast-mask"
+        style="grid-template-columns: {$coords.x}px  {$coords.w}px 1fr; grid-template-rows: {$coords.y}px {$coords.h}px 1fr;"
+      >
+        {#each Array(9) as _, i}
+          <div class:window={i === 4} />
+        {/each}
+      </div>
+    {/if}
+    {#key toast.id}
       <div class="toast" out:fly={{ y: 32, easing }} in:fly={{ y: 32, easing, delay: 400 }}>
-        <div class="toast-icon">
-          {#if toast.icon}
-            <Icon name={toast.icon} />
-          {/if}
-        </div>
+        {#if toast.img}
+          <div class="toast-img"><img width="45" src="/img/{toast.img}" alt="" /></div>
+        {:else if toast.icon}
+          <div class="toast-icon"><Icon name={toast.icon} /></div>
+        {/if}
         <div class="toast-body">
           {#if toast.title}
             <div class="toast-title bold">{@html toast.title}</div>
@@ -92,17 +102,18 @@
           </div>
         {/if}
       </div>
-    </div>
-  {/key}
-  <div
-    id="active-tutorial-item"
-    style="left: {$coords.x}px; top: {$coords.y}px; width: {$coords.w}px; height: {$coords.h}px; border-radius: {$coords.r}px"
-  />
+    {/key}
+    <div
+      id="active-tutorial-item"
+      style="left: {$coords.x}px; top: {$coords.y}px; width: {$coords.w}px; height: {$coords.h}px; border-radius: {$coords.r}px"
+    />
+  </div>
 {/if}
 
 <style lang="sass">
   .toast-wrapper
-    position: absolute
+    position: fixed
+    top: 0
     left: 0
     right: 0
     bottom: 0
@@ -110,15 +121,42 @@
     justify-content: center
     font-size: 0.625rem
     padding: 1rem
+    z-index: 100
+    pointer-events: none
+
+  // this is a mask where the center grid item is transparent
+  .toast-mask
+    position: fixed
+    display: grid
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 0
+    grid-template-rows: repeat(3,1fr)
+    grid-template-columns: repeat(3,1fr)
+
+    div
+      background: rgba(0,0,0,0.5)
+      &.window
+        border: 2px solid var(--color-tertiary-1)
+        animation: 0.4s ease-in-out infinite alternate pulse-tertiary
+        background: transparent
 
   .toast
+    pointer-events: all
+    position: absolute
+    right: 0
+    bottom: 0
+    max-width: 30vw
+    margin: 1rem
     display: flex
     gap: 0.5rem
     padding: 0.75rem 0.5rem
-    background: var(--color-primary-3)
     border: 1px solid var(--color-tertiary-1)
     z-index: 100
     border-radius: var(--border-radius)
+    background: var(--color-primary-3)
 
   .toast-icon
     display: flex
@@ -134,17 +172,10 @@
     margin-top: auto
     text-align: right
 
-#active-tutorial-item
-  z-index: 1000
-  pointer-events: none
-  position: fixed
-  border: 2px solid var(--color-tertiary-1)
-  animation: 0.4s ease-in-out infinite alternate pulse-tertiary
-
-  @keyframes pulse-tertiary
-    0%
-      border-color: var(--color-primary-3)
-    100%
-      border-color: var(--color-tertiary-1)
+@keyframes pulse-tertiary
+  0%
+    border-color: var(--color-primary-3)
+  100%
+    border-color: var(--color-tertiary-1)
 
 </style>
