@@ -50,7 +50,7 @@ export const successMetrics = derived(
 
     const hasFailed =
       year.current >= year.end ||
-      proteinPerPersonPerDay < 60 ||
+      proteinPerPersonPerDay < $gameState.nutritionalRequirements.protein ||
       emissionsChange > 0.05 ||
       waterUseChange > 0.1 ||
       eutrophyChange > 0.1
@@ -62,10 +62,10 @@ export const successMetrics = derived(
       caloriesPerPersonPerDay,
       proteinPerPersonPerDay: {
         value: proteinPerPersonPerDay,
-        label: "Protein",
+        label: "Protein per capita",
         suffix: "g",
-        objective: "Keep above 60",
-        warn: proteinPerPersonPerDay < 64
+        objective: `Keep above ${$gameState.nutritionalRequirements.protein}`,
+        warn: proteinPerPersonPerDay < $gameState.nutritionalRequirements.protein + 5
       },
       emissionsChange: {
         value: emissionsChange,

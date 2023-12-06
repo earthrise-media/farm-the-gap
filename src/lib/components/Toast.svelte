@@ -119,7 +119,7 @@
     bottom: 0
     display: flex
     justify-content: center
-    font-size: 0.625rem
+    font-size: 0.75rem
     padding: 1rem
     z-index: 100
     pointer-events: none

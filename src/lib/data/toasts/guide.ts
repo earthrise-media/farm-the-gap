@@ -9,7 +9,7 @@ export const guide = [
   {
     id: 0,
     img: "guide.png",
-    title: "Welcome to your farm",
+    title: "Welcome to the farm",
     message: `Your job is to increase food production by ${prettyPercent(
       $gameSettings.gap
     )} in the next ${
@@ -38,7 +38,7 @@ export const guide = [
     img: "guide.png",
     title: "Key impact metrics",
     message:
-      "Monitor your impact and nutrition metrics here. Be careful – it's game over if you fail any one of these!",
+      "Monitor your impact and nutrition metrics here. Be careful – it's game over if you fail on any one of these!",
     button: "Next",
     target: ".block-game-state",
     next: 3,

@@ -44,7 +44,7 @@ export class Inventory {
 
 export class NutritionalRequirements {
   carbs = 275
-  protein = 70
+  protein = 50
   calories = 2250
 }
 
