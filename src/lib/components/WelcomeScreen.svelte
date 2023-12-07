@@ -128,7 +128,8 @@
           <div class="slide" out:fade in:fly={flyIn}>
             <h3 class="slide-title-3">You decide how to feed the future</h3>
             <p>
-              You have {$gameState.year.end - $gameState.year.current} moves to close the food gap.
+              You have {$gameState.year.end - $gameState.year.current} years to close the food gap. You
+              are allowed one move per year.
             </p>
             <p>
               Your must deliver a nutritionally-balanced diet to a growing population, while meeting
