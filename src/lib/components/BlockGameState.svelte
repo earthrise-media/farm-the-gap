@@ -25,10 +25,10 @@
             <div class="flex align-center">
               {#if suffix === "%"}
                 <span class="label sign">{value >= 0 ? "+" : "-"}</span>
-                <span>{(100 * Math.abs(value)).toFixed(0)}</span>
+                <Number value={100 * Math.abs(value)} />
                 <span class="label suffix text-secondary-2">{suffix}</span>
               {:else}
-                <span>{value}</span>
+                <Number {value} />
                 <span class="label suffix text-secondary-2">{suffix}</span>
               {/if}
             </div>

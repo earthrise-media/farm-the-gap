@@ -64,7 +64,7 @@ export const successMetrics = derived(
         value: proteinPerPersonPerDay,
         label: "Protein per capita",
         suffix: "g",
-        objective: `Keep above ${$gameState.nutritionalRequirements.protein}`,
+        objective: `Keep above ${$gameState.nutritionalRequirements.protein}g`,
         warn: proteinPerPersonPerDay < $gameState.nutritionalRequirements.protein + 5
       },
       emissionsChange: {

@@ -60,10 +60,10 @@
   </div>
   <FoodInformationCard />
   <Tooltip />
-  <WelcomeScreen />
-  <EndScreen />
+  <!-- <WelcomeScreen /> -->
+  <!-- <EndScreen /> -->
   <AboutScreen />
-  <Toast />
+  <!-- <Toast /> -->
 </main>
 
 <style lang="sass">

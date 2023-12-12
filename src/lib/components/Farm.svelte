@@ -34,10 +34,28 @@
             class="land-cell"
             class:tall={x == 4}
             data-tooltip={food.name}
+            class:is-only={$farm.getCropCount(food.id) === 1}
             class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
             class:swappable={$userState.itemSelectedForSwap && isSwappable(food)}
-            on:click={(e) =>
-              $userState.itemSelectedForSwap && isSwappable(food) && swapFoodItem(e, x, y)}
+            on:click={(e) => {
+              const isOnly = $farm.getCropCount(food.id) === 1
+              if (isOnly) {
+                // show toast popup here
+                console.log(
+                  `You must keep at least one ${food.name.replace(
+                    /s$/,
+                    ""
+                  )} square on the board at all times.`
+                )
+              }
+
+              return (
+                $userState.itemSelectedForSwap &&
+                !isOnly &&
+                isSwappable(food) &&
+                swapFoodItem(e, x, y)
+              )
+            }}
           >
             <div class="food-item-avatar bg-{food.colorId}" />
           </button>

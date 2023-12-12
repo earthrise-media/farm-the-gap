@@ -109,14 +109,18 @@ export class Farm {
     )
   }
 
-  getFarmMetric(fn: (item: Food) => number, unit: Unit): FarmMetric {
-    const total = this.getTotalSum(fn)
-    const byFood = this.getSumByFoodType(fn, unit)
-    return { total, byFood }
+  getCropCount(id: FoodId) {
+    return this.grid.flat().filter((o) => o?.id === id).length
   }
 
   plantCrop(x: number, y: number, foodItem: Food) {
     this.grid[y][x] = JSON.parse(JSON.stringify(foodItem))
+  }
+
+  getFarmMetric(fn: (item: Food) => number, unit: Unit): FarmMetric {
+    const total = this.getTotalSum(fn)
+    const byFood = this.getSumByFoodType(fn, unit)
+    return { total, byFood }
   }
 
   getTotalSum(fn: (item: Food) => number): number {

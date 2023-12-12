@@ -26,7 +26,7 @@ export const guide = [
     img: "guide.png",
     title: "Your food inventory",
     message:
-      "These are the foods available to you. You will close the food gap by replacing the squares on your global farm with these food items.",
+      "These are the foods available to you. Close the food gap by swapping these with the foods on your global farm. To maintain nutritional and market balance, you only have <b class='food-item-avatar bg-animal-1'>3</b> of each item to use. You must keep at least <b class='food-item-avatar bg-animal-1'>1</b> of each item on the farm at all times.",
     button: "Next",
     target: "#food-menu-wrapper",
     next: 2,

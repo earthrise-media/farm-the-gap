@@ -9,6 +9,16 @@
   import Button from "$lib/components/Button.svelte"
   import { largeNumber } from "$lib/utils/written"
 
+  type Key = "hectare" | "kilogram"
+  type Measure = { key: Key; label: string }
+  type KeyMetricGetter = { value: (f: Food) => string | number; sort: (a: Food, b: Food) => number }
+  type SortableData = { label: string; hectare: KeyMetricGetter; kilogram: KeyMetricGetter }
+
+  const measures: Measure[] = [
+    { key: "hectare", label: "per hectare land" },
+    { key: "kilogram", label: "per kilogram food" }
+  ]
+
   const impactPerHectare = (food: Food, xPerKg: number) =>
     xPerKg * food.yieldPerHa * $gameState.coefficients.yieldMultiplier
 
@@ -19,54 +29,114 @@
     $gameState.coefficients.yieldMultiplier *
     $gameState.coefficients.lossRatio
 
-  const columns = [
-    { label: "Name", sort: (a: Food, b: Food) => a.name.localeCompare(b.name) },
+  const data: SortableData[] = [
+    {
+      label: "Name",
+      hectare: {
+        value: (f: Food) => f.name,
+        sort: (a: Food, b: Food) => a.name.localeCompare(b.name)
+      },
+      kilogram: {
+        value: (f: Food) => f.name,
+        sort: (a: Food, b: Food) => a.name.localeCompare(b.name)
+      }
+    },
     {
       label: "Calories",
-      sort: (a: Food, b: Food) =>
-        nutritionPerHectare(b, b.calorieRatio) - nutritionPerHectare(a, a.calorieRatio)
+      hectare: {
+        value: (f: Food) => largeNumber(nutritionPerHectare(f, f.calorieRatio)),
+        sort: (a: Food, b: Food) =>
+          nutritionPerHectare(b, b.calorieRatio) - nutritionPerHectare(a, a.calorieRatio)
+      },
+      kilogram: {
+        value: (f: Food) => f.calorieRatio.toFixed(0),
+        sort: (a: Food, b: Food) => b.calorieRatio - a.calorieRatio
+      }
     },
     {
       label: "Protein",
-      sort: (a: Food, b: Food) =>
-        nutritionPerHectare(b, b.proteinRatio, $gameState.coefficients.proteinMultiplier) -
-        nutritionPerHectare(a, a.proteinRatio, $gameState.coefficients.proteinMultiplier)
+      hectare: {
+        value: (f: Food) =>
+          largeNumber(
+            nutritionPerHectare(f, f.proteinRatio, $gameState.coefficients.proteinMultiplier)
+          ),
+        sort: (a: Food, b: Food) =>
+          nutritionPerHectare(b, b.proteinRatio, $gameState.coefficients.proteinMultiplier) -
+          nutritionPerHectare(a, a.proteinRatio, $gameState.coefficients.proteinMultiplier)
+      },
+      kilogram: {
+        value: (f: Food) => f.proteinRatio.toFixed(0),
+        sort: (a: Food, b: Food) => b.proteinRatio - a.proteinRatio
+      }
     },
     {
       label: "Emissions",
-      sort: (a: Food, b: Food) => impactPerHectare(b, b.ghgPerKg) - impactPerHectare(a, a.ghgPerKg)
+      hectare: {
+        value: (f: Food) => largeNumber(impactPerHectare(f, f.ghgPerKg)),
+        sort: (a: Food, b: Food) =>
+          impactPerHectare(b, b.ghgPerKg) - impactPerHectare(a, a.ghgPerKg)
+      },
+      kilogram: {
+        value: (f: Food) => f.ghgPerKg.toFixed(1),
+        sort: (a: Food, b: Food) => b.ghgPerKg - a.ghgPerKg
+      }
     },
     {
       label: "Water",
-      sort: (a: Food, b: Food) =>
-        impactPerHectare(b, b.waterPerKg) - impactPerHectare(a, a.waterPerKg)
+      hectare: {
+        value: (f: Food) => largeNumber(impactPerHectare(f, f.waterPerKg)),
+        sort: (a: Food, b: Food) =>
+          impactPerHectare(b, b.waterPerKg) - impactPerHectare(a, a.waterPerKg)
+      },
+      kilogram: {
+        value: (f: Food) => f.waterPerKg.toFixed(0),
+        sort: (a: Food, b: Food) => b.waterPerKg - a.waterPerKg
+      }
     }
   ]
 
-  let sortFunction = columns[1].sort
+  let currentMeasure: Measure = measures[0]
+  let sortFunction = data[1][currentMeasure.key].sort
 
   $: foods = foodItems.sort(sortFunction)
 </script>
 
 <div class="food-items-grid block">
   <h3 class="block-title flex align-center">
-    Food output per hectare
+    Food output data
     <sup class="label" data-tooltip-title="Sources" data-tooltip="Our World in Data; USDA.">ⓘ</sup>
   </h3>
+  <div class="measure-buttons label-caps flex align-center">
+    {#each measures as { key, label }}
+      <Button
+        active={currentMeasure.key === key}
+        onClick={() => {
+          const sortedIndex = data.findIndex((o) => o[currentMeasure.key].sort === sortFunction)
+
+          currentMeasure = measures.find((m) => m.key === key) ?? measures[0]
+
+          sortFunction = data[sortedIndex][currentMeasure.key].sort
+        }}
+        classList="label-caps"
+      >
+        {label}
+      </Button>
+    {/each}
+  </div>
   <div class="food-items-grid-body">
     <div class="food-card table-head">
-      {#each columns as { label, sort }, i}
+      {#each data as column, i}
         <div class="th">
           <Button
             classList="bare bold"
             color="secondary"
-            active={sortFunction === sort}
+            active={sortFunction === column[currentMeasure.key].sort}
             onClick={() => {
-              if (sortFunction === sort) foods = foods.reverse()
-              else sortFunction = sort
+              if (sortFunction === column[currentMeasure.key].sort) foods = foods.reverse()
+              else sortFunction = column[currentMeasure.key].sort
             }}
           >
-            {label}
+            {column.label}
           </Button>
         </div>
       {/each}
@@ -80,14 +150,11 @@
       >
         <div class="food-item-avatar flex-center bg-{f.colorId}" />
         <strong class="name">{f.name}</strong>
-        <div class="td">{largeNumber(nutritionPerHectare(f, f.calorieRatio))}</div>
-        <div class="td">
-          {largeNumber(
-            nutritionPerHectare(f, f.proteinRatio, $gameState.coefficients.proteinMultiplier)
-          )}
-        </div>
-        <div class="td">{largeNumber(impactPerHectare(f, f.ghgPerKg))}</div>
-        <div class="td">{largeNumber(impactPerHectare(f, f.waterPerKg))}</div>
+        {#each data.slice(1) as column}
+          <div class="td">
+            {column[currentMeasure.key].value(f)}
+          </div>
+        {/each}
       </div>
     {/each}
   </div>
@@ -97,6 +164,10 @@
 .block-title
   sup
     margin-left: 0.5em
+
+.measure-buttons
+  gap: 0.25rem
+  margin: 0.25rem 0 0
 
 .food-items-grid
   gap: 0.25rem
