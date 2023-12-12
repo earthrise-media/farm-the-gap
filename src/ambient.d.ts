@@ -22,19 +22,20 @@ declare global {
     name: string
     type: string
     proteinType: string
+    landAllocation: number
     yieldPerHa: number
+    productionSources: string
     proteinRatio: number
     calorieRatio: number
     carbRatio: number
     fatRatio: number
-    vitamins: string
+    nutritionSources: string
     ghgPerKg: number
-    landPerKg: number
     waterPerKg: number
     eutrophyPerKg: number
-    landAllocation: number
-    sources: string
-    description: string
+    landPerKg: number
+    impactSources: string
+    description?: string
     colorId?: string
   }
 
