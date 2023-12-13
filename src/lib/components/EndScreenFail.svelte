@@ -108,7 +108,7 @@
   display: grid
   grid-template-columns: repeat(2, minmax(0, 1fr))
   grid-template-rows: repeat(2, minmax(0, 1fr))
-  gap: 2rem
+  gap: 1rem
 
 section
   display: flex
@@ -121,7 +121,7 @@ section
   overflow: hidden
 
 #summary
-  padding-top: 0
+  padding: 0
   grid-column: 1/-1
   border-bottom: 1px solid var(--color-error-2)
 

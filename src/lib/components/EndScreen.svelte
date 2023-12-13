@@ -67,7 +67,6 @@
   display: flex
   flex-direction: column
   align-items: center
-  justify-content: center
   text-align: center
   top: 0
   left: 0
@@ -76,6 +75,7 @@
   font-size: 0.875rem
   font-size: 1.125rem
   line-height: 1.3
+  padding: 1rem
 
 .slide-title
   font-size: 2rem
@@ -83,7 +83,7 @@
 .buttons
   gap: 0.75rem
 
-:global(#end-screen .scroller-contents.scroller-y)
-  overflow: hidden
+// :global(#end-screen .scroller-contents.scroller-y)
+  // overflow: hidden
 
 </style>

@@ -115,6 +115,7 @@ $radius: 1rem
 
   .w-full &
     width: 100%
+    padding: 0
 
   .has-title &
     padding: $radius
