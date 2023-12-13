@@ -3,13 +3,20 @@
   export let yMax: number = 100
   export let yMin: number = 0
   export let yLimit: number | null = null
-  export let yDatum: number = data[0] ?? 0
+  export let yDatum: number | null = null
   export let warn: boolean = false
 
   const fy = (y: number) => 100 * (1 - (y - yMin) / (yMax - yMin))
+  const isNumber = (n: any): boolean => typeof n === "number" && !isNaN(n)
+
+  const yAreaBaseline: number =
+    yDatum !== null && isNumber(yDatum)
+      ? yDatum
+      : yLimit !== null && isNumber(yLimit)
+      ? yLimit
+      : data[0]
 
   $: length = 10 * Math.ceil(data.length / 10)
-  $: console.log(data, data.slice(1))
   $: d = `
         M0,${fy(data[0])}
         ${data
@@ -27,15 +34,15 @@
     </linearGradient>
   </defs>
   <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-    {#if data.length}
-      {#key data}
-        <path class="datum" d="M0,{fy(yDatum)} h100" />
-        <path class="data-area" d="{d} V{fy(yDatum)} H0 Z" fill="url(#gradient)" />
-        <path class="data-line" {d} />
-      {/key}
+    {#if yDatum !== null}
+      <path class="datum" d="M0,{fy(yDatum)} h100" />
     {/if}
     {#if yLimit !== null}
       <path class="limit" d="M0,{fy(yLimit)} h100" />
+    {/if}
+    {#if data.length}
+      <path class="data-area" d="{d} V{fy(yAreaBaseline)} H0 Z" fill="url(#gradient)" />
+      <path class="data-line" {d} />
     {/if}
   </svg>
   <svg class="text" />

@@ -95,7 +95,7 @@ export const successMetrics = derived(
       warn: proteinPerPersonPerDayValue < proteinPerPersonPerDayLimit + 3,
       history: $gameHistory.map((o) => o.proteinPerPersonPerDay),
       chartSettings: {
-        yDatum: proteinPerPersonPerDayLimit,
+        yLimit: proteinPerPersonPerDayLimit,
         yMin: proteinPerPersonPerDayLimit,
         yMax: proteinPerPersonPerDayLimit + 10
       }
