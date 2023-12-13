@@ -95,7 +95,10 @@ export const successMetrics = derived(
       limit: proteinPerPersonPerDayLimit,
       objective: `Keep above ${proteinPerPersonPerDayLimit}g`,
       warn: proteinPerPersonPerDayValue < proteinPerPersonPerDayLimit + 3,
+      fail: proteinPerPersonPerDayValue < proteinPerPersonPerDayLimit,
       history: $gameHistory.map((o) => o.proteinPerPersonPerDay),
+      farmMetricKey: "protein",
+      foodMetricKey: "proteinRatio",
       chartSettings: {
         yLimit: proteinPerPersonPerDayLimit,
         yMin: proteinPerPersonPerDayLimit,
@@ -111,7 +114,10 @@ export const successMetrics = derived(
       limit: emissionsChangeLimit,
       objective: `Keep below +${100 * emissionsChangeLimit}%`,
       warn: emissionsChangeValue > emissionsChangeLimit - 0.02,
+      fail: emissionsChangeValue > emissionsChangeLimit,
       history: $gameHistory.map((o) => o.emissionsChange),
+      farmMetricKey: "emissions",
+      foodMetricKey: "emissionsPerKg",
       chartSettings: {
         yDatum: 0,
         yLimit: emissionsChangeLimit,
@@ -128,7 +134,10 @@ export const successMetrics = derived(
       limit: waterUseChangeLimit,
       objective: `Keep below +${100 * waterUseChangeLimit}%`,
       warn: waterUseChangeValue > waterUseChangeLimit - 0.05,
+      fail: waterUseChangeValue > waterUseChangeLimit,
       history: $gameHistory.map((o) => o.waterUseChange),
+      farmMetricKey: "waterUse",
+      foodMetricKey: "waterUsePerKg",
       chartSettings: {
         yDatum: 0,
         yLimit: waterUseChangeLimit,
@@ -144,7 +153,10 @@ export const successMetrics = derived(
       limit: eutrophyChangeLimit,
       objective: `Keep below +${100 * eutrophyChangeLimit}%`,
       warn: eutrophyChangeValue > eutrophyChangeLimit - 0.05,
+      fail: eutrophyChangeValue > eutrophyChangeLimit,
       history: $gameHistory.map((o) => o.eutrophyChange),
+      farmMetricKey: "eutrophy",
+      foodMetricKey: "eutrophyPerKg",
       chartSettings: {
         yDatum: 0,
         yLimit: eutrophyChangeLimit,

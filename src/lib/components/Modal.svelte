@@ -8,6 +8,7 @@
   export let close = () => {}
   export let classList = ""
   export let isError = false
+  export let fullWidth = false
   export let fullscreen = false
   export let durationIn = 200
   export let durationOut = 100
@@ -33,6 +34,7 @@
   aria-modal="true"
   class:fullscreen
   class:error={isError}
+  class:w-full={fullWidth}
   on:click={close}
   on:keydown={handleKeydown}
   in:fade={{ duration: durationIn }}
@@ -110,6 +112,9 @@ $radius: 1rem
     border-radius: 0
     color: var(--color-secondary-1)
     background: transparent
+
+  .w-full &
+    width: 100%
 
   .has-title &
     padding: $radius

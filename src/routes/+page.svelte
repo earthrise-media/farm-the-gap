@@ -63,7 +63,7 @@
   <FoodInformationCard />
   <Tooltip />
   <!-- <WelcomeScreen /> -->
-  <!-- <EndScreen /> -->
+  <EndScreen />
   <AboutScreen />
   <!-- <Toast /> -->
 </main>
