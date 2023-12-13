@@ -1,10 +1,15 @@
 <script lang="ts">
+  import { text } from "@sveltejs/kit"
+
   export let data: number[] = []
   export let yMax: number = 100
   export let yMin: number = 0
   export let yLimit: number | null = null
   export let yDatum: number | null = null
   export let warn: boolean = false
+  export let length: number = 0
+  export let labels: boolean = false
+  export let labelFormat: (n: number) => string = (n) => n.toFixed(0)
 
   const fy = (y: number) => 100 * (1 - (y - yMin) / (yMax - yMin))
   const isNumber = (n: any): boolean => typeof n === "number" && !isNaN(n)
@@ -16,12 +21,12 @@
       ? yLimit
       : data[0]
 
-  $: length = 10 * Math.ceil(data.length / 10)
+  $: xTicks = length ? length : 10 * Math.ceil(data.length / 10)
   $: d = `
         M0,${fy(data[0])}
         ${data
           .slice(1)
-          .map((d, i) => `L${((i + 1) * 100) / length},${fy(d)}`)
+          .map((d, i) => `L${((i + 1) * 100) / xTicks},${fy(d)}`)
           .join(" ")}
       `.replace(/\s+/g, " ")
 </script>
@@ -45,7 +50,20 @@
       <path class="data-line" {d} />
     {/if}
   </svg>
-  <svg class="text" />
+  {#if labels}
+    <svg class="text">
+      {#if yDatum !== null}
+        <text x="-4" y="{fy(yDatum)}%" text-anchor="end">
+          {yDatum === 0 ? 0 : labelFormat(yDatum)}
+        </text>
+      {/if}
+      {#if yLimit !== null}
+        <text x="-4" y="{fy(yLimit)}%" text-anchor="end">
+          {labelFormat(yLimit)}
+        </text>
+      {/if}
+    </svg>
+  {/if}
 </svg>
 
 <style lang="sass">
@@ -76,4 +94,10 @@ path
 .datum
   stroke-dasharray: 1 3
   stroke-dasharray: 0
+
+.text
+  fill: currentColor
+  font-weight: bold
+  font-size: 7px
+  dominant-baseline: central
 </style>

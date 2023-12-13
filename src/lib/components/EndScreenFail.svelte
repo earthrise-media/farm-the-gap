@@ -30,21 +30,26 @@
   <div class="fail-screen-wrapper">
     <section id="summary">
       <p>
-        Nice try! In {$gameState.year.current - $gameState.year.start} years you managed to increase
-        food production by {prettyPercent($successMetrics.calorieProductionChange)} and feed an additional
-        {largeNumber($gameState.population.current - $gameState.population.start)} people.
+        Bad luck, it's challenging to close the food gap! Over {$gameState.year.current -
+          $gameState.year.start} years you {$successMetrics.calorieProductionChange > 0
+          ? "increased"
+          : "decreased"} global food production by {prettyPercent(
+          Math.abs($successMetrics.calorieProductionChange)
+        )}{$successMetrics.calorieProductionChange > 0 ? "," : "."}
+        {#if $successMetrics.calorieProductionChange > 0}
+          and fed an additional
+          {largeNumber($gameState.population.current - $gameState.population.start)} people without clearing
+          any more land for farming.
+        {:else}
+          Let's break that down.
+        {/if}
       </p>
-      <div class="flex align-center">
-        <Button color="error" onClick={reset}>Try again</Button>
-        <Button color="error" onClick={reset}>Undo last move</Button>
-      </div>
     </section>
     <section id="explanation">
-      <!-- <h3>Here's what went wrong</h3> -->
       <p>
         You failed to keep <b>{failedItem.label}</b>
         {failedItem.value > failedItem.limit ? "under" : "over"}
-        {failedItem.limit}{failedItem.suffix}.
+        {(failedItem.suffix === "%" ? 100 : 1) * failedItem.limit}{failedItem.suffix}.
       </p>
 
       <div class="column-chart flex-col">
@@ -52,6 +57,9 @@
         <div class="line-chart label flex-center">
           <LineChart
             warn
+            labels
+            labelFormat={failedItem.suffix === "%" && prettyPercent}
+            length={$gameState.year.current - $gameState.year.start}
             data={$successMetrics[failedItem.key].history}
             {...$successMetrics[failedItem.key].chartSettings}
           />
@@ -59,35 +67,35 @@
       </div>
     </section>
     <section id="recommendations">
+      <p class="bold">Harness this knowledge</p>
       <p>
-        {prettyList(foods.slice(0, 3).map((f) => f.name))}
+        {@html foods
+          .slice(0, 3)
+          .map(
+            (f) =>
+              `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
+          )
+          .join(" ")}
         have the highest
-        {failedItem.label}
-        per hectare of land, whereas
-        {prettyList(
-          foods
-            .slice(-3)
-            .map((f) => f.name)
-            .reverse()
-        )}
-        have the lowest. Harness this knowledge and try to close the food gap again!
+        <b>{failedItem.label}</b>
+        per hectare of land.
       </p>
-      <Button color="error" onClick={reset}>Try again</Button>
 
-      <!-- {#each foodList as { value, count, food, unit }, i (food.id)}
-        <div class="food-card">
-          <div class="label-index">#{i + 1}</div>
-          <div class="food-item-avatar flex-center bg-{food.colorId}">{count}</div>
-          <strong class="name">{food.name}</strong>
-          <div class="value percent-value">
-            {(100 * value) / $farm[farmMetricKey].total}<span class="text-secondary-3">%</span>
-          </div>
-          <div class="value absolute-value">
-            <Number {value} duration={200} />
-            <span class="text-secondary-3">{unit.suffix}</span>
-          </div>
-        </div>
-      {/each} -->
+      <p>
+        {@html foods
+          .slice(-3)
+          .map(
+            (f) =>
+              `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
+          )
+          .reverse()
+          .join(" ")}
+        have the lowest.
+      </p>
+    </section>
+    <section id="cta">
+      <p>Now try to close the food gap again!</p>
+      <Button color="error" onClick={reset}>Try again</Button>
     </section>
   </div>
 {:else}
@@ -107,7 +115,7 @@ section
   flex-direction: column
   text-align: center
   align-items: center
-  justify-content: start
+  justify-content: center
   gap: 0 1rem
   padding: 1rem 0
   overflow: hidden
@@ -122,11 +130,14 @@ section
 
 #explanation
   .line-chart
-    height: 4rem
+    height: 3rem
     position: relative
     margin: 1rem 0 0
 
 // #recommendations
+#cta
+  grid-column: 1 / -1
+  border-top: 1px solid var(--color-error-2)
 
 
 </style>
