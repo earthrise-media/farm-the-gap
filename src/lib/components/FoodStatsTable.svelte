@@ -190,6 +190,7 @@
 
 .food-items-grid
   gap: 0.25rem
+  padding-top: 0.25rem
 
 .food-items-grid-body
   display: grid

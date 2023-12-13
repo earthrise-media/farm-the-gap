@@ -25,8 +25,6 @@
     $gameHistory = $gameHistory
   }
 
-  $: console.log($gameHistory)
-
   onMount(() => ($gameState = $gameState))
 </script>
 
@@ -38,21 +36,19 @@
           <button
             in:scale={{ duration: 300, easing, start: 0.6, opacity: 0.5 }}
             class="land-cell"
-            class:tall={x == 4}
-            data-tooltip={food.name}
+            data-tooltip={$userState.itemSelectedForSwap && $farm.getCropCount(food.id) === 1
+              ? `Cannot swap. You must keep at least one ${food.name.replace(
+                  /s$/,
+                  ""
+                )} square on the board at all times.`
+              : food.name}
             class:is-only={$farm.getCropCount(food.id) === 1}
             class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
             class:swappable={$userState.itemSelectedForSwap && isSwappable(food)}
             on:click={(e) => {
               const isOnly = $farm.getCropCount(food.id) === 1
               if (isOnly) {
-                // show toast popup here
-                console.log(
-                  `You must keep at least one ${food.name.replace(
-                    /s$/,
-                    ""
-                  )} square on the board at all times.`
-                )
+                return
               }
 
               return (

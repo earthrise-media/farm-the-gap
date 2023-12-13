@@ -17,7 +17,7 @@ export const successMetrics = derived(
     const $gameHistory = get(gameHistory)
 
     const caloriesPerPersonPerDayValue = +(
-      ($farm.calories.total * nutrientConversion) /
+      ($farm.calories.total * nutrientConversion * coefficients.landRatio) /
       (population.current * 365)
     ).toFixed(0)
 
@@ -34,7 +34,10 @@ export const successMetrics = derived(
     // Protein
     const proteinPerPersonPerDayLimit = $gameState.nutritionalRequirements.protein
     const proteinPerPersonPerDayValue = +(
-      ($farm.protein.total * coefficients.proteinMultiplier * nutrientConversion) /
+      ($farm.protein.total *
+        coefficients.proteinMultiplier *
+        nutrientConversion *
+        coefficients.landRatio) /
       (population.current * 365)
     ).toFixed(0)
 
@@ -78,7 +81,6 @@ export const successMetrics = derived(
 
       const index = $gameHistory.findIndex((item) => item.year === year.current)
 
-      // if (index >= 0) $gameHistory[index] = snapshot
       if (index === -1) $gameHistory.push(snapshot)
 
       return $gameHistory
@@ -97,7 +99,7 @@ export const successMetrics = derived(
       chartSettings: {
         yLimit: proteinPerPersonPerDayLimit,
         yMin: proteinPerPersonPerDayLimit,
-        yMax: proteinPerPersonPerDayLimit + 10
+        yMax: proteinPerPersonPerDayLimit + 15
       }
     }
 

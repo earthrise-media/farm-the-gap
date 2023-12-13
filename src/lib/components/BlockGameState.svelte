@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { successMetrics } from "$lib/stores/state"
+  import { successMetrics, gameState } from "$lib/stores/state"
 
   import Number from "$lib/components/Number.svelte"
   import LineChart from "$lib/components/LineChart.svelte"
+  import { largeNumber } from "$lib/utils/written"
 
   $: data = [
     $successMetrics.proteinPerPersonPerDay,
@@ -10,13 +11,11 @@
     $successMetrics.waterUseChange,
     $successMetrics.eutrophyChange
   ]
-
-  // $: console.log($gameHistory.map((o) => o.proteinPerPersonPerDay))
 </script>
 
 <div class="block-game-state lock">
-  <div class="group">
-    <div class="label-caps">Game metrics</div>
+  <div class="group group-metrics">
+    <div class="group-title label-caps">Game metrics</div>
     <div class="items">
       {#each data as { value, history, label, suffix, objective, warn, chartSettings }}
         <div class="item" class:warn>
@@ -45,11 +44,37 @@
       {/each}
     </div>
   </div>
+  <div class="group group-population">
+    <div class="group-title label-caps">Population</div>
+    <div class="items">
+      <div class="column-chart flex-col">
+        <div class="line-chart label flex-center">
+          <LineChart
+            data={new Array($gameState.year.current - $gameState.year.start)
+              .fill($gameState.population.start)
+              .map((v, i) => v + i * $gameState.population.growth)}
+            yDatum={$gameState.population.start}
+            yMin={$gameState.population.start}
+            yMax={$gameState.population.end}
+          />
+        </div>
+      </div>
+      <div class="label text-center">
+        You are sustainably feeding <span class="text-tertiary-1 bold"
+          >{largeNumber($gameState.population.current)}</span
+        > people a nutritional diet.
+      </div>
+    </div>
+  </div>
 </div>
 
 <style lang="sass">
 .block-game-state
   gap: 0
+  height: 100%
+  display: flex
+  flex-direction: column
+  justify-content: space-between
   
 .block-title
   grid-column: 1 / -1
@@ -57,13 +82,16 @@
 .group
   display: flex
   flex-direction: column
-  gap: 0.5rem
-  margin-top: 1rem
+  gap: 0.125rem
 
   &:first-child
     margin-top: 0
-  &:last-child
-    border-bottom: none
+
+  &.group-population
+    .line-chart
+      height: 1.25rem
+    .group-title
+      margin-bottom: -0.5rem
 
 .items
   display: flex

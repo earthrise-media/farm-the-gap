@@ -21,6 +21,7 @@ export class YieldCoefficients {
   yieldMultiplier = 1 // accounts for improvements in yield per ha
   demandRatio = 0.5 // 0 = no animal products, 1 = only animal products
   lossRatio = 0.85 // % of nutrients retained (i.e. minus losses from waste, processing, storage, etc.)
+  landRatio = 24000000 // amount of real world land (ha) each square represents
 }
 
 export class GameMove {
@@ -83,8 +84,8 @@ export class Inventory {
 
 export class NutritionalRequirements {
   carbs = 275
-  protein = 50
-  calories = 2250
+  protein = 75
+  calories = 2000
 }
 
 export class GameState {
@@ -95,9 +96,10 @@ export class GameState {
   }
 
   population = {
-    start: 500,
-    end: 850,
-    current: 500
+    start: 7850000000,
+    current: 7850000000,
+    end: 1.5 * 7850000000,
+    growth: ~~((1.5 * 7850000000 - 7850000000) / (this.year.end - this.year.start))
   }
 
   moveHistory: GameMove[] = []
@@ -109,8 +111,7 @@ export class GameState {
     this.inventory.get(foodAdded.id).available--
     this.year.current++
     this.moveHistory.push(new GameMove(foodAdded, foodRemoved))
-    this.population.current +=
-      (this.population.end - this.population.start) / (this.year.end - this.year.start)
+    this.population.current += this.population.growth
   }
 
   reset() {
