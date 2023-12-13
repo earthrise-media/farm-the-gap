@@ -2,11 +2,11 @@
   import { fly } from "svelte/transition"
   import { backOut as easing } from "svelte/easing"
 
-  import Button from "./Button.svelte"
-  import Icon from "./Icon.svelte"
+  import Button from "$lib/components/Button.svelte"
+  import AnimatedIcon from "$lib/components/AnimatedIcon.svelte"
 
   import { qs } from "martha"
-  import { onDestroy, onMount } from "svelte"
+  import { onMount } from "svelte"
   import { spring } from "svelte/motion"
   import { gameState, userState } from "$lib/stores/state"
   import { activeToastId } from "$lib/stores/toast"
@@ -86,7 +86,7 @@
         {#if toast.img}
           <div class="toast-img"><img width="45" src="/img/{toast.img}" alt="" /></div>
         {:else if toast.icon}
-          <div class="toast-icon"><Icon name={toast.icon} /></div>
+          <div class="toast-icon"><AnimatedIcon name={toast.icon} /></div>
         {/if}
         <div class="toast-body">
           {#if toast.title}

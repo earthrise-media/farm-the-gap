@@ -1,13 +1,13 @@
 <script lang="ts">
   import { base } from "$app/paths"
-  import { farm, gameState, userState } from "$lib/stores/state"
+  import { farm, gameState, gameHistory, userState } from "$lib/stores/state"
 
   import Dock from "$lib/components/Dock.svelte"
   import Farm from "$lib/components/Farm.svelte"
   import Button from "$lib/components/Button.svelte"
   import FoodMenu from "$lib/components/FoodMenu.svelte"
   import BlockImpact from "$lib/components/BlockImpact.svelte"
-  import FoodStatsGrid from "$lib/components/FoodStatsGrid.svelte"
+  import FoodStatsTable from "$lib/components/FoodStatsTable.svelte"
   import FoodItemsGrid from "$lib/components/FoodItemsGrid.svelte"
   import BlockGameState from "$lib/components/BlockGameState.svelte"
   import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
@@ -26,9 +26,11 @@
       <Button
         onClick={() => {
           $farm.reset()
-          $farm = $farm
           $gameState.reset()
+          $gameHistory = []
+          $farm = $farm
           $gameState = $gameState
+          $gameHistory = $gameHistory
         }}
       >
         Reset
@@ -51,7 +53,7 @@
       <BlockGameState />
     </div>
     <div class="panel-2-3">
-      <FoodStatsGrid />
+      <FoodStatsTable />
       <!-- <BlockImpact type="emissions" />
       <BlockImpact type="water" />
       <BlockImpact type="eutrophy" /> -->

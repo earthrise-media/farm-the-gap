@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { gameState, successMetrics } from "$lib/stores/state"
-  import Icon from "$lib/components/Icon.svelte"
+  import { successMetrics } from "$lib/stores/state"
+
   import Number from "$lib/components/Number.svelte"
-  import DivergingBar from "$lib/components/DivergingBar.svelte"
+  import LineChart from "$lib/components/LineChart.svelte"
 
   $: data = [
     $successMetrics.proteinPerPersonPerDay,
@@ -10,19 +10,21 @@
     $successMetrics.waterUseChange,
     $successMetrics.eutrophyChange
   ]
+
+  // $: console.log($gameHistory.map((o) => o.proteinPerPersonPerDay))
 </script>
 
 <div class="block-game-state lock">
   <div class="group">
     <div class="label-caps">Game metrics</div>
     <div class="items">
-      {#each data as { value, label, suffix, objective, warn }}
+      {#each data as { value, history, label, suffix, objective, warn, chartSettings }}
         <div class="item" class:warn>
-          <div class="big-number flex-col">
+          <div class="column-number flex-col">
             <div class="label">
               {label}
             </div>
-            <div class="flex align-center">
+            <div class="big-number flex align-center">
               {#if suffix === "%"}
                 <span class="label sign">{value >= 0 ? "+" : "-"}</span>
                 <Number value={100 * Math.abs(value)} />
@@ -32,14 +34,12 @@
                 <span class="label suffix text-secondary-2">{suffix}</span>
               {/if}
             </div>
-            <div class="label objective text-secondary-3">{objective}</div>
           </div>
-          <div class="line-chart label flex-center">
-            {#if warn}
-              <span class="big-number bold">!</span>
-            {:else}
-              Line chart here
-            {/if}
+          <div class="column-chart flex-col">
+            <div class="line-chart label flex-center">
+              <LineChart data={history} {warn} {...chartSettings} />
+            </div>
+            <div class="label objective text-secondary-3">{objective}</div>
           </div>
         </div>
       {/each}
@@ -89,11 +89,18 @@
         background: var(--color-error-1)
 
     .line-chart
-        background: var(--color-error-1)
+        border-color: var(--color-error-1)
 
-.item,
-.big-number
-  gap: 0.375rem 1rem
+.item
+  gap: 0.375rem 0.5rem
+
+.column-number,
+.column-chart
+  position: relative
+  gap: 0.25rem
+
+.column-number
+  width: 25ch
 
 .label
   transition: color 0.3s, background 0.3s
@@ -105,14 +112,17 @@
     margin-left: 0.125rem
     align-self: flex-end
   &.objective
+    font-size: 8px
     margin-left: -0.125rem
+    margin-bottom: -0.125rem
     padding: 0.125rem
     border-radius: 0.125rem
-    white-space: nowrap
+    text-align: center
 
 .line-chart
-  transition: background 0.3s
-  border-bottom: 1px solid
+  height: 2rem
+  width: 100%
+  position: relative
   flex-grow: 1
 
 @media (hover: hover)

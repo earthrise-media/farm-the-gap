@@ -5,9 +5,10 @@
 
   import { foodItems } from "$lib/data/foods"
   import { gameState } from "$lib/stores/state"
-
-  import Button from "$lib/components/Button.svelte"
   import { largeNumber } from "$lib/utils/written"
+
+  import Icon from "$lib/components/Icon.svelte"
+  import Button from "$lib/components/Button.svelte"
 
   type Key = "hectare" | "kilogram"
   type Measure = { key: Key; label: string }
@@ -96,12 +97,14 @@
   ]
 
   let currentMeasure: Measure = measures[0]
-  let sortFunction = data[1][currentMeasure.key].sort
+  let sortedColumnIndex = 1
+  let sortedColumnDescending = true
+  let sortFunction = data[sortedColumnIndex][currentMeasure.key].sort
 
   $: foods = foodItems.sort(sortFunction)
 </script>
 
-<div class="food-items-grid block">
+<div class="food-items-grid block sorted-by-{sortedColumnIndex}">
   <h3 class="block-title flex align-center">
     Food output data
     <sup class="label" data-tooltip-title="Sources" data-tooltip="Our World in Data; USDA.">ⓘ</sup>
@@ -112,9 +115,7 @@
         active={currentMeasure.key === key}
         onClick={() => {
           const sortedIndex = data.findIndex((o) => o[currentMeasure.key].sort === sortFunction)
-
           currentMeasure = measures.find((m) => m.key === key) ?? measures[0]
-
           sortFunction = data[sortedIndex][currentMeasure.key].sort
         }}
         classList="label-caps"
@@ -126,17 +127,33 @@
   <div class="food-items-grid-body">
     <div class="food-card table-head">
       {#each data as column, i}
-        <div class="th">
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div
+          class="th"
+          on:click={() => {
+            if (sortFunction === column[currentMeasure.key].sort) {
+              foods = foods.reverse()
+              sortedColumnDescending = !sortedColumnDescending
+            } else {
+              sortFunction = column[currentMeasure.key].sort
+              sortedColumnIndex = i
+            }
+          }}
+        >
           <Button
-            classList="bare bold"
+            classList="bare bold flex align-center"
             color="secondary"
             active={sortFunction === column[currentMeasure.key].sort}
-            onClick={() => {
-              if (sortFunction === column[currentMeasure.key].sort) foods = foods.reverse()
-              else sortFunction = column[currentMeasure.key].sort
-            }}
           >
             {column.label}
+            <Icon
+              type={sortedColumnIndex === i
+                ? sortedColumnDescending
+                  ? "caret-sort-down"
+                  : "caret-sort-up"
+                : "caret-unsorted"}
+            />
           </Button>
         </div>
       {/each}
@@ -148,8 +165,10 @@
         role="button"
         tabindex="-1"
       >
-        <div class="food-item-avatar flex-center bg-{f.colorId}" />
-        <strong class="name">{f.name}</strong>
+        <div class="td name">
+          <div class="food-item-avatar flex-center bg-{f.colorId}" />
+          <strong>{f.name}</strong>
+        </div>
         {#each data.slice(1) as column}
           <div class="td">
             {column[currentMeasure.key].value(f)}
@@ -167,7 +186,7 @@
 
 .measure-buttons
   gap: 0.25rem
-  margin: 0.25rem 0 0
+  margin: 0.25rem 0 0.325rem
 
 .food-items-grid
   gap: 0.25rem
@@ -177,14 +196,13 @@
   grid-template-columns: 1fr
   font-size: 0.875rem
   overflow: hidden
-  gap: 1px
+  color: var(--color-secondary-2)
+  border-bottom: 1px solid var(--color-secondary-3)
 
 .food-card
   display: grid
-  grid-template-columns: auto 11ch repeat(4, minmax(0, 1fr))
-  gap: 0.125em
+  grid-template-columns: 12ch repeat(2, minmax(0, 1fr)) 10.5ch 7.5ch
   font-size: 0.625rem
-  padding: 0.25em 0
   height: 100%
   transition: filter 0.2s ease-in-out
   cursor: pointer
@@ -197,25 +215,39 @@
     text-overflow: ellipsis
 
   .name
-    margin-left: 0.25em
+    display: flex
+    align-items: center
+    gap: 2px
 
   .td, .th
+    padding: 0.25em
     text-align: right
+    transition: all 0.2s, background-color 0.8s ease-in
+
+    @for $i from 1 through 5
+      .sorted-by-#{$i - 1} &:nth-child(#{$i})
+        background-color: var(--color-primary-2)
+        filter: none!important
 
     &:first-child
       text-align: left
 
   .th
+    width: 100%
+    display: flex
+    justify-content: flex-end
+    border-bottom: 1px solid var(--color-secondary-3)
+
+    &:first-child
+      justify-content: flex-start
+
     &.active
       color: var(--color-secondary-1)
 
-.table-head
-  .th
-    &:first-child
-      grid-column: 1 / span 2
-
 @media (hover: hover)
   .food-card:not(:first-child):hover
-    filter: brightness(1.25)
+    .td
+      color: var(--color-secondary-1)
+      filter: brightness(1.25)
 
 </style>

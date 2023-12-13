@@ -23,6 +23,45 @@ export class YieldCoefficients {
   lossRatio = 0.85 // % of nutrients retained (i.e. minus losses from waste, processing, storage, etc.)
 }
 
+export class GameMove {
+  timestamp: number = Date.now()
+  foodAdded: Food
+  foodRemoved: Food
+
+  constructor(foodAdded: Food, foodRemoved: Food) {
+    this.foodAdded = foodAdded
+    this.foodRemoved = foodRemoved
+  }
+}
+
+export class GameSnapshot {
+  year: number
+  proteinPerPersonPerDay: number
+  emissionsChange: number
+  waterUseChange: number
+  eutrophyChange: number
+  hasSucceeded: boolean
+  hasFailed: boolean
+
+  constructor(
+    year: number,
+    proteinPerPersonPerDay: number,
+    emissionsChange: number,
+    waterUseChange: number,
+    eutrophyChange: number,
+    hasSucceeded: boolean,
+    hasFailed: boolean
+  ) {
+    this.year = year
+    this.proteinPerPersonPerDay = proteinPerPersonPerDay
+    this.emissionsChange = emissionsChange
+    this.waterUseChange = waterUseChange
+    this.eutrophyChange = eutrophyChange
+    this.hasSucceeded = hasSucceeded
+    this.hasFailed = hasFailed
+  }
+}
+
 export class Inventory {
   items: InventoryItem[]
 
@@ -61,13 +100,15 @@ export class GameState {
     current: 500
   }
 
+  moveHistory: GameMove[] = []
   inventory = new Inventory()
   coefficients = new YieldCoefficients()
   nutritionalRequirements = new NutritionalRequirements()
 
-  update(id: FoodId) {
-    this.inventory.get(id).available--
+  update(foodAdded: Food, foodRemoved: Food) {
+    this.inventory.get(foodAdded.id).available--
     this.year.current++
+    this.moveHistory.push(new GameMove(foodAdded, foodRemoved))
     this.population.current +=
       (this.population.end - this.population.start) / (this.year.end - this.year.start)
   }

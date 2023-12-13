@@ -1,9 +1,9 @@
 <script lang="ts">
   import { fade, scale } from "svelte/transition"
   import { backOut as easing } from "svelte/easing"
-  import { prettyNumber } from "$lib/utils/written"
 
-  import { farm, userState, gameState } from "$lib/stores/state"
+  import { farm, userState, gameState, gameHistory } from "$lib/stores/state"
+  import { onMount } from "svelte"
 
   export let levitate = false // animate the farm levitating
 
@@ -12,16 +12,22 @@
   const swapFoodItem = (e: MouseEvent, x: number, y: number) => {
     e.stopImmediatePropagation()
 
-    const food = $userState.itemSelectedForSwap
+    const foodAdded = JSON.parse(JSON.stringify($userState.itemSelectedForSwap))
+    const foodRemoved = JSON.parse(JSON.stringify($farm.grid[y][x]))
 
-    if (food === null || food === undefined) return
-    $farm.grid[y][x] = JSON.parse(JSON.stringify(food))
-    $gameState.update(food.id)
+    if (foodAdded === null || foodAdded === undefined) return
+    $farm.grid[y][x] = foodAdded
+    $gameState.update(foodAdded, foodRemoved)
 
-    if ($gameState.inventory.get(food.id).available <= 0) $userState.itemSelectedForSwap = null
+    if ($gameState.inventory.get(foodAdded.id).available <= 0) $userState.itemSelectedForSwap = null
 
     $gameState = $gameState
+    $gameHistory = $gameHistory
   }
+
+  $: console.log($gameHistory)
+
+  onMount(() => ($gameState = $gameState))
 </script>
 
 <div id="farm-wrapper" class:levitate>

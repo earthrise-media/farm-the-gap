@@ -8,7 +8,7 @@
   import Number from "$lib/components/Number.svelte"
   import Progress from "$lib/components/Progress.svelte"
   import DivergingBar from "$lib/components/DivergingBar.svelte"
-  import Icon from "./Icon.svelte"
+  import AnimatedIcon from "$lib/components/AnimatedIcon.svelte"
 
   export let type: "emissions" | "water" | "land" | "eutrophy" = "emissions"
   export let maxFoodItems = 3
@@ -71,7 +71,7 @@
 
 <div class="block-impact block">
   <h2 class="block-title flex align-center">
-    <Icon name={type} />
+    <AnimatedIcon name={type} />
     <span>{data.title}</span>
     <DivergingBar
       showValue
