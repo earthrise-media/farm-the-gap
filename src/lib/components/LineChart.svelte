@@ -11,7 +11,7 @@
   export let labels: boolean = false
   export let labelFormat: (n: number) => string = (n) => n.toFixed(0)
 
-  const fy = (y: number) => 100 * (1 - (y - yMin) / (yMax - yMin))
+  const fy = (y: number) => 100 * (1 - (y - min) / (max - min))
   const isNumber = (n: any): boolean => typeof n === "number" && !isNaN(n)
 
   const yAreaBaseline: number =
@@ -22,6 +22,8 @@
       : data[0]
 
   $: xTicks = length ? length : 10 * Math.ceil(data.length / 10)
+  $: min = Math.min(yMin, ...data)
+  $: max = Math.max(yMax, ...data)
   $: d = `
         M0,${fy(data[0])}
         ${data
@@ -38,18 +40,20 @@
       <stop offset="95%" stop-color="#ffffff" stop-opacity="0" />
     </linearGradient>
   </defs>
-  <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-    {#if yDatum !== null}
-      <path class="datum" d="M0,{fy(yDatum)} h100" />
-    {/if}
-    {#if yLimit !== null}
-      <path class="limit" d="M0,{fy(yLimit)} h100" />
-    {/if}
-    {#if data.length}
-      <path class="data-area" d="{d} V{fy(yAreaBaseline)} H0 Z" fill="url(#gradient)" />
-      <path class="data-line" {d} />
-    {/if}
-  </svg>
+  {#key min * max * data.length}
+    <svg class="lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+      {#if yDatum !== null}
+        <path class="datum" d="M0,{fy(yDatum)} h100" />
+      {/if}
+      {#if yLimit !== null}
+        <path class="limit" d="M0,{fy(yLimit)} h100" />
+      {/if}
+      {#if data.length}
+        <path class="data-area" d="{d} V{fy(yAreaBaseline)} H0 Z" fill="url(#gradient)" />
+        <path class="data-line" {d} />
+      {/if}
+    </svg>
+  {/key}
   {#if labels}
     <svg class="text">
       {#if yDatum !== null}

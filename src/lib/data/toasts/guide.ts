@@ -50,7 +50,7 @@ export const guide = [
     img: "guide.png",
     title: "Know your foods",
     message:
-      "<p>Study the per-hectare attributes of each food type in this table. Some foods are more resource-intensive and nutritonally-beneficial than others.</p><p>Your success in the game will come down to mastering the balance of these properties. Hint: try sorting a column by clicking on the column header.</p>",
+      "<p>This game is based on real-world data. Study the attributes of each food in this table. Some are more resource-intensive and nutritonally-beneficial than others, especially when compared on a per-hectare basis.</p><p>Use this table to inform your decisions – your success depends on mastering the balance of these properties.</p>",
     button: "Next",
     next: 4,
     target: ".food-items-grid",
@@ -62,7 +62,7 @@ export const guide = [
     img: "guide.png",
     title: "Make your first move",
     message:
-      "Select <b>Rice</b> and replace it with <b>Beef</b>. Watch how that impacts your key metrics.",
+      "Select <b>Corn</b> and replace it with <b>Lamb</b>. Watch how that impacts your key metrics.",
     task: (gameState) => gameState.year.current > gameState.year.start,
     next: 5,
     onEnter: () => {},
@@ -72,7 +72,8 @@ export const guide = [
     id: 5,
     img: "guide.png",
     title: "You made your first move!",
-    message: "Well done, now it's up to you to close the food gap. Good luck!",
+    message:
+      "Well done, you significantly increased the global calorie <em>and</em> protein supply with that move. Now it's over to you to close the food gap. Good luck!",
     button: "Close",
     onEnter: () => {},
     onDismiss: () => {}

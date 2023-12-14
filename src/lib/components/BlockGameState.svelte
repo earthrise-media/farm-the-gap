@@ -1,23 +1,16 @@
 <script lang="ts">
-  import { successMetrics, gameState } from "$lib/stores/state"
+  import { sparklineData, gameState } from "$lib/stores/state"
 
   import Number from "$lib/components/Number.svelte"
   import LineChart from "$lib/components/LineChart.svelte"
   import { largeNumber } from "$lib/utils/written"
-
-  $: data = [
-    $successMetrics.proteinPerPersonPerDay,
-    $successMetrics.emissionsChange,
-    $successMetrics.waterUseChange,
-    $successMetrics.eutrophyChange
-  ]
 </script>
 
 <div class="block-game-state lock">
   <div class="group group-metrics">
     <div class="group-title label-caps">Game metrics</div>
     <div class="items">
-      {#each data as { value, history, label, suffix, objective, warn, chartSettings }}
+      {#each $sparklineData as { value, history, label, suffix, objective, warn, chartSettings }}
         <div class="item" class:warn>
           <div class="column-number flex-col">
             <div class="label">
@@ -62,7 +55,8 @@
       <div class="label text-center">
         You are sustainably feeding <span class="text-tertiary-1 bold"
           >{largeNumber($gameState.population.current)}</span
-        > people a nutritional diet.
+        >
+        people a nutritional diet in <b>{$gameState.year.current}</b>.
       </div>
     </div>
   </div>

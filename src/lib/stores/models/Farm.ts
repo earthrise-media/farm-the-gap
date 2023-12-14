@@ -79,6 +79,24 @@ export class Farm {
     return this.getFarmMetric(fn, unit)
   }
 
+  get foodChanges() {
+    interface Count {
+      food: Food
+      initial: number
+      current: number
+      delta: number
+    }
+
+    const counts: Count[] = foods.map((food) => {
+      const initial = this.getCropCount(food.id, true)
+      const current = this.getCropCount(food.id)
+      const delta = current - initial
+      return { food, initial, current, delta }
+    })
+
+    return counts
+  }
+
   reset() {
     this.grid = JSON.parse(JSON.stringify(this.initialState.grid))
   }
@@ -109,8 +127,9 @@ export class Farm {
     )
   }
 
-  getCropCount(id: FoodId) {
-    return this.grid.flat().filter((o) => o?.id === id).length
+  getCropCount(id: FoodId, initial: boolean = false) {
+    const grid = initial ? this.initialState.grid : this.grid
+    return grid.flat().filter((o) => o?.id === id).length
   }
 
   plantCrop(x: number, y: number, foodItem: Food) {

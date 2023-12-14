@@ -80,6 +80,45 @@ declare global {
   // GameState related types
   type InventoryItem = { id: FoodId; name: string; available: number }
 
+  // Fail/success relatied types
+  class GameSnapshot {
+    year: number
+    proteinPerPersonPerDay: number
+    emissionsChange: number
+    waterUseChange: number
+    eutrophyChange: number
+    hasSucceeded: boolean
+    hasFailed: boolean
+  }
+
+  interface LineChartSettings {
+    yDatum?: number
+    yLimit?: number
+    yMax?: number
+    yMin?: number
+  }
+
+  type FailureMetricKey =
+    | "proteinPerPersonPerDay"
+    | "emissionsChange"
+    | "waterUseChange"
+    | "eutrophyChange"
+
+  interface FailureMetric {
+    value: number
+    key: FailureMetricKey
+    label: string
+    suffix: string
+    limit: number
+    objective: string
+    warn: boolean
+    fail: boolean
+    history: number[]
+    farmMetricKey: FarmMetricKey
+    foodMetricKey: keyof Food
+    chartSettings: LineChartSettings
+  }
+
   // Farm related types
   type FarmKey = keyof Farm
 

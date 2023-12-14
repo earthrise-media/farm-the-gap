@@ -1,74 +1,44 @@
 <script lang="ts">
-  import { successMetrics, gameState, farm } from "$lib/stores/state"
+  import { successMetrics, sparklineData, gameState, farm } from "$lib/stores/state"
 
-  import LineChart from "$lib/components/LineChart.svelte"
   import Button from "$lib/components/Button.svelte"
+  import LineChart from "$lib/components/LineChart.svelte"
+  import FoodChangesTable from "$lib/components/FoodChangesTable.svelte"
   import { largeNumber, prettyPercent, prettyList } from "$lib/utils/written"
   import { foodItems } from "$lib/data/foods"
 
+  type FailureMetric = typeof $successMetrics.emissionsChange
+
   export let reset = () => {}
+  export let failedMetric: FailureMetric | undefined
+  export let exhaustedTurns: boolean
 
-  type FailureItem = typeof $successMetrics.emissionsChange
+  let foods: Food[] = JSON.parse(JSON.stringify(foodItems))
 
-  const failedItem = [
-    $successMetrics.emissionsChange,
-    $successMetrics.eutrophyChange,
-    $successMetrics.waterUseChange,
-    $successMetrics.proteinPerPersonPerDay
-  ].find((o) => o.fail) as FailureItem
-
-  const farmMetricKey = failedItem.farmMetricKey as FarmMetricKey
-  const foodMetricKey = failedItem.foodMetricKey as keyof Food
-  const foodList = $farm[farmMetricKey].byFood
-  const foods = foodItems.sort(
-    (a, b) => b.yieldPerHa * b[foodMetricKey] - a.yieldPerHa * a[foodMetricKey]
-  )
-  console.log(foods)
+  if (failedMetric) {
+    let key = failedMetric.foodMetricKey
+    foods.sort(
+      (a, b) => (b.yieldPerHa * b[key]) / b.calorieRatio - (a.yieldPerHa * a[key]) / a.calorieRatio
+    )
+  }
 </script>
 
-{#if failedItem}
-  <div class="fail-screen-wrapper">
-    <section id="summary">
-      <p>
-        Bad luck, it's challenging to close the food gap! Over {$gameState.year.current -
-          $gameState.year.start} years you {$successMetrics.calorieProductionChange > 0
-          ? "increased"
-          : "decreased"} global food production by {prettyPercent(
-          Math.abs($successMetrics.calorieProductionChange)
-        )}{$successMetrics.calorieProductionChange > 0 ? "," : "."}
-        {#if $successMetrics.calorieProductionChange > 0}
-          and fed an additional
-          {largeNumber($gameState.population.current - $gameState.population.start)} people without clearing
-          any more land for farming.
-        {:else}
-          Let's break that down.
-        {/if}
-      </p>
-    </section>
+<div class="fail-screen-wrapper">
+  {#if failedMetric}
     <section id="explanation">
-      <p>
-        You failed to keep <b>{failedItem.label}</b>
-        {failedItem.value > failedItem.limit ? "under" : "over"}
-        {(failedItem.suffix === "%" ? 100 : 1) * failedItem.limit}{failedItem.suffix}.
-      </p>
-
-      <div class="column-chart flex-col">
-        <div class="label objective text-secondary-3">{failedItem.label}</div>
-        <div class="line-chart label flex-center">
-          <LineChart
-            warn
-            labels
-            labelFormat={failedItem.suffix === "%" && prettyPercent}
-            length={$gameState.year.current - $gameState.year.start}
-            data={$successMetrics[failedItem.key].history}
-            {...$successMetrics[failedItem.key].chartSettings}
-          />
-        </div>
+      <p>Here's how you changed the global agricultural landscape:</p>
+      <div class="change-table">
+        <FoodChangesTable />
       </div>
     </section>
     <section id="recommendations">
       <p class="bold">Harness this knowledge</p>
-      <p>
+      <p class="label">
+        Foods with the highest
+        <b>{failedMetric.label}</b>
+        per calorie.
+      </p>
+      <div class="flex">
         {@html foods
           .slice(0, 3)
           .map(
@@ -76,12 +46,13 @@
               `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
           )
           .join(" ")}
-        have the highest
-        <b>{failedItem.label}</b>
-        per hectare of land.
+      </div>
+      <p class="label">
+        Foods with the lowest
+        <b>{failedMetric.label}</b>
+        per calorie.
       </p>
-
-      <p>
+      <div class="flex">
         {@html foods
           .slice(-3)
           .map(
@@ -90,17 +61,26 @@
           )
           .reverse()
           .join(" ")}
-        have the lowest.
+      </div>
+    </section>
+  {:else if exhaustedTurns}
+    <section id="explanation">
+      <p>You ran out of turns before you could close the food gap.</p>
+    </section>
+    <section id="recommendations">
+      <p>
+        Try to increase the yield of the most productive crops, and reduce the yield of the least
+        productive crops.
       </p>
     </section>
-    <section id="cta">
-      <p>Now try to close the food gap again!</p>
-      <Button color="error" onClick={reset}>Try again</Button>
-    </section>
-  </div>
-{:else}
-  <p>An error has occurred.</p>
-{/if}
+  {:else}
+    <p>An error has occurred.</p>
+  {/if}
+  <section id="cta">
+    <p>Now try to close the food gap again!</p>
+    <Button color="error" onClick={reset}>Try again</Button>
+  </section>
+</div>
 
 <style lang="sass">
 
@@ -108,6 +88,7 @@
   display: grid
   grid-template-columns: repeat(2, minmax(0, 1fr))
   grid-template-rows: repeat(2, minmax(0, 1fr))
+  border-top: 1px solid var(--color-error-2)
   gap: 1rem
 
 section
@@ -134,7 +115,10 @@ section
     position: relative
     margin: 1rem 0 0
 
-// #recommendations
+// #recommendations, #explanation
+//   border-top: 1px solid var(--color-error-2)
+  // border-bottom: 1px solid var(--color-error-2)
+
 #cta
   grid-column: 1 / -1
   border-top: 1px solid var(--color-error-2)

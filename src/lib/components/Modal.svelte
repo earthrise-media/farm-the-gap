@@ -85,7 +85,7 @@ $radius: 1rem
     background: var(--color-primary-0)
 
   &.error
-    background: var(--color-animal-1)
+    background: var(--color-error-0)
 
 .modal
   display: flex

@@ -17,6 +17,7 @@
   import Tooltip from "$lib/components/Tooltip.svelte"
   import Toast from "$lib/components/Toast.svelte"
   import Modal from "$lib/components/Modal.svelte"
+  import FoodChangesTable from "$lib/components/FoodChangesTable.svelte"
 </script>
 
 <main>
@@ -54,6 +55,7 @@
     </div>
     <div class="panel-2-3">
       <FoodStatsTable />
+      <FoodChangesTable />
       <!-- <BlockImpact type="emissions" />
       <BlockImpact type="water" />
       <BlockImpact type="eutrophy" /> -->
@@ -62,10 +64,10 @@
   </div>
   <FoodInformationCard />
   <Tooltip />
-  <!-- <WelcomeScreen /> -->
+  <WelcomeScreen />
   <EndScreen />
   <AboutScreen />
-  <!-- <Toast /> -->
+  <Toast />
 </main>
 
 <style lang="sass">

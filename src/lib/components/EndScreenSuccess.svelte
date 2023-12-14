@@ -5,8 +5,9 @@
   export let reset = () => {}
 </script>
 
-<p>Congratulations, you closed the food gap!</p>
-<Farm levitate />
+<div class="farm-container">
+  <Farm levitate />
+</div>
 <div class="flex buttons">
   <Button
     color="primary"
@@ -17,3 +18,9 @@
   </Button>
   <Button color="secondary" onClick={reset}>Play again</Button>
 </div>
+
+<style lang="sass">
+.farm-container
+  position: relative
+  max-width: 400px
+</style>

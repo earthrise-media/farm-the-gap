@@ -87,7 +87,7 @@ export const successMetrics = derived(
     })
 
     // Metric monitors
-    const proteinPerPersonPerDay = {
+    const proteinPerPersonPerDay: FailureMetric = {
       value: proteinPerPersonPerDayValue,
       key: "proteinPerPersonPerDay",
       label: "Protein per capita",
@@ -106,7 +106,7 @@ export const successMetrics = derived(
       }
     }
 
-    const emissionsChange = {
+    const emissionsChange: FailureMetric = {
       value: emissionsChangeValue,
       key: "emissionsChange",
       label: "GHG Emissions",
@@ -117,7 +117,7 @@ export const successMetrics = derived(
       fail: emissionsChangeValue > emissionsChangeLimit,
       history: $gameHistory.map((o) => o.emissionsChange),
       farmMetricKey: "emissions",
-      foodMetricKey: "emissionsPerKg",
+      foodMetricKey: "ghgPerKg",
       chartSettings: {
         yDatum: 0,
         yLimit: emissionsChangeLimit,
@@ -126,7 +126,7 @@ export const successMetrics = derived(
       }
     }
 
-    const waterUseChange = {
+    const waterUseChange: FailureMetric = {
       value: waterUseChangeValue,
       key: "waterUseChange",
       label: "Freshwater use",
@@ -137,7 +137,7 @@ export const successMetrics = derived(
       fail: waterUseChangeValue > waterUseChangeLimit,
       history: $gameHistory.map((o) => o.waterUseChange),
       farmMetricKey: "waterUse",
-      foodMetricKey: "waterUsePerKg",
+      foodMetricKey: "waterPerKg",
       chartSettings: {
         yDatum: 0,
         yLimit: waterUseChangeLimit,
@@ -145,7 +145,7 @@ export const successMetrics = derived(
         yMin: -0.5 * waterUseChangeLimit
       }
     }
-    const eutrophyChange = {
+    const eutrophyChange: FailureMetric = {
       value: eutrophyChangeValue,
       key: "eutrophyChange",
       label: "Water pollution",
@@ -179,3 +179,10 @@ export const successMetrics = derived(
     }
   }
 )
+
+export const sparklineData = derived(successMetrics, ($successMetrics) => [
+  $successMetrics.proteinPerPersonPerDay,
+  $successMetrics.emissionsChange,
+  $successMetrics.waterUseChange,
+  $successMetrics.eutrophyChange
+])
