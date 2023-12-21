@@ -3,7 +3,6 @@ import groupBy from "lodash.groupby"
 
 // Assign an id to each food in the format of `{food.proteinType}-{index}`, where index is the index of the food in the array of foods with the same protein type
 const foodItems = (foods as Food[])
-  // .filter((o) => o.name !== "Mushrooms")
   .sort(
     (a, b) =>
       // Sort by protein type, then by type, then by name
@@ -19,6 +18,7 @@ const foodItems = (foods as Food[])
       colorId: `${food.proteinType}-${index}`
     }
   })
+  .filter((o) => o.name !== "Mushrooms")
 
 const foodItemsGrouped = groupBy(foodItems, "proteinType")
 

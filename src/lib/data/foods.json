@@ -4,7 +4,7 @@
     "name": "Beef",
     "type": "Ruminant meat",
     "proteinType": "animal",
-    "landAllocation": 52,
+    "landAllocation": 53,
     "yieldPerHa": 50,
     "productionSources": "Production: 2020 Beef used for human food (World);\nYield: Derived from landPerKg (m2/ha ÷ m2/kg)",
     "proteinRatio": 175,
