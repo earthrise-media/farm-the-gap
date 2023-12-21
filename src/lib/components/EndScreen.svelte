@@ -13,6 +13,7 @@
   } from "$lib/stores/state"
 
   import Modal from "$lib/components/Modal.svelte"
+  import Progress from "$lib/components/Progress.svelte"
   import LineChart from "$lib/components/LineChart.svelte"
   import EndScreenFail from "$lib/components/EndScreenFail.svelte"
   import EndScreenSuccess from "$lib/components/EndScreenSuccess.svelte"
@@ -21,17 +22,10 @@
 
   let slideIndex = 0
 
-  let exhaustedTurns = false
+  let exhaustedTurns: boolean = false
   let farmMetricKey: FarmMetricKey
   let foodMetricKey: keyof Food
   let failedMetric: FailureMetric | undefined = $sparklineData?.find((o) => o.fail)
-
-  if (!failedMetric) {
-    exhaustedTurns = true
-  } else {
-    farmMetricKey = failedMetric.farmMetricKey
-    foodMetricKey = failedMetric.foodMetricKey
-  }
 
   const flyIn = { y: 8, easing, delay: 600, duration: 1200 }
 
@@ -45,6 +39,14 @@
   }
 
   $: $userState.isGameComplete = $successMetrics.hasSucceeded || $successMetrics.hasFailed
+  $: exhaustedTurns = $gameState.year.current >= $gameState.year.end
+  $: {
+    failedMetric = $sparklineData?.find((o) => o.fail)
+    if (failedMetric) {
+      farmMetricKey = failedMetric.farmMetricKey
+      foodMetricKey = failedMetric.foodMetricKey
+    }
+  }
 </script>
 
 {#if $userState.isGameComplete}
@@ -65,7 +67,7 @@
                 : ""}{(failedMetric.suffix === "%" ? 100 : 1) *
                 failedMetric.limit}{failedMetric.suffix}! 😮‍💨
             {:else}
-              <p>An error has occurred.</p>
+              <p>An error has occurrede.</p>
             {/if}
           </h2>
           <section id="summary">
@@ -73,8 +75,7 @@
               {#if $successMetrics.hasSucceeded}
                 Amazing job! You closed the food gap and ensured a sustainble food future!
               {:else}
-                Bad luck, it's a challenging job to close the food gap. But you made great progress
-                –
+                Bad luck! It's a challenging job to close the food gap, but you made great progress.
               {/if}
               Over {$gameState.year.current - $gameState.year.start} years you {$successMetrics.calorieProductionChange >
               0
@@ -91,6 +92,23 @@
               {/if}
             </p>
           </section>
+          <div class="progress-bar label-caps">
+            <span
+              >Food gap: <span class="text-tertiary-1">
+                {prettyPercent($successMetrics.calorieProductionChange)} / {prettyPercent(
+                  $gameSettings.gap
+                )}</span
+              ></span
+            >
+            <Progress
+              isPercent
+              max={$gameSettings.gap}
+              showLabels={false}
+              showValue={false}
+              value={$successMetrics.calorieProductionChange}
+            />
+          </div>
+          <div class="label-caps">Key game metrics</div>
           <div class="summary-charts">
             {#each $sparklineData as { fail, history, label, suffix, objective, warn, chartSettings }}
               <div class="summary-chart" class:warn>
@@ -119,7 +137,7 @@
             <!-- Run out of turns -->
             <p>You run out of turns!</p>
           {:else}
-            <p>An error has occurred.</p>
+            <p>An error has occurredd.</p>
           {/if}
         </div>
       </div>
@@ -158,12 +176,14 @@
 .buttons
   gap: 0.75rem
 
+#summary
+  max-width: 700px
 
 .summary-charts
   display: flex
   position: relative
   gap: 4rem
-  padding: 2rem 0
+  padding: 1rem 0 2rem
 
   .line-chart
     width: 5rem
@@ -172,4 +192,11 @@
 .summary-chart
   .chart-emoji
     margin-top: 0.5rem
+
+.progress-bar
+  width: 50%
+  margin-bottom: 1rem
+  display: flex
+  flex-direction: column
+  gap: 0.375rem
 </style>

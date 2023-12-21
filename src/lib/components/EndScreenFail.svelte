@@ -25,43 +25,60 @@
 
 <div class="fail-screen-wrapper">
   {#if failedMetric}
-    <section id="explanation">
-      <p>Here's how you changed the global agricultural landscape:</p>
-      <div class="change-table">
-        <FoodChangesTable />
+    <section id="failed-metric">
+      <div class="col">
+        <div class="food-item-avatar bg-plant-2">1</div>
+        <div class="label">
+          <div>Use the data table to sort foods by <b>{failedMetric.label} per hectare</b>.</div>
+          <span>&darr;</span>
+        </div>
+        <img class="food-table-preview" src="/img/table.png" alt="Food stats table preview" />
       </div>
-    </section>
-    <section id="recommendations">
-      <p class="bold">Harness this knowledge</p>
-      <p class="label">
-        Foods with the highest
-        <b>{failedMetric.label}</b>
-        per calorie.
-      </p>
-      <div class="flex">
-        {@html foods
-          .slice(0, 3)
-          .map(
-            (f) =>
-              `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
-          )
-          .join(" ")}
+      <div class="col">
+        <div class="food-item-avatar bg-plant-2">2</div>
+        <div class="recommendation-efficiency-group">
+          <p>
+            Foods with the highest
+            <b>{failedMetric.label}</b>
+            per calorie.
+          </p>
+          <div class="flex food-item-pill-group">
+            {@html foods
+              .slice(0, 3)
+              .map(
+                (f) =>
+                  `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
+              )
+              .join(" ")}
+          </div>
+        </div>
+        <div class="recommendation-efficiency-group">
+          <p>
+            Foods with the lowest
+            <b>{failedMetric.label}</b>
+            per calorie.
+          </p>
+          <div class="flex food-item-pill-group">
+            {@html foods
+              .slice(-3)
+              .map(
+                (f) =>
+                  `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
+              )
+              .reverse()
+              .join(" ")}
+          </div>
+        </div>
       </div>
-      <p class="label">
-        Foods with the lowest
-        <b>{failedMetric.label}</b>
-        per calorie.
-      </p>
-      <div class="flex">
-        {@html foods
-          .slice(-3)
-          .map(
-            (f) =>
-              `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
-          )
-          .reverse()
-          .join(" ")}
+      <div class="col">
+        <div class="food-item-avatar bg-plant-2">3</div>
+        <p>
+          Remember your objective is to maximise calorie production, but you must keep environmental
+          impacts in check.
+        </p>
+        <p>Now try to close the food gap again!</p>
       </div>
+      <Button color="error-invert" onClick={reset}>Try again<br />&rarr;</Button>
     </section>
   {:else if exhaustedTurns}
     <section id="explanation">
@@ -74,54 +91,56 @@
       </p>
     </section>
   {:else}
-    <p>An error has occurred.</p>
+    <p>An error has occurredy.</p>
   {/if}
-  <section id="cta">
-    <p>Now try to close the food gap again!</p>
-    <Button color="error" onClick={reset}>Try again</Button>
-  </section>
 </div>
 
 <style lang="sass">
-
 .fail-screen-wrapper
   display: grid
-  grid-template-columns: repeat(2, minmax(0, 1fr))
-  grid-template-rows: repeat(2, minmax(0, 1fr))
-  border-top: 1px solid var(--color-error-2)
+  grid-template-columns: repeat(4, minmax(200px, 1fr))
+  grid-template-rows: repeat(1, minmax(0, 1fr))
+  border-top: 2px solid var(--color-error-1)
   gap: 1rem
 
 section
-  display: flex
-  flex-direction: column
-  text-align: center
-  align-items: center
-  justify-content: center
   gap: 0 1rem
   padding: 1rem 0
   overflow: hidden
 
-#summary
-  padding: 0
+#failed-metric
+  font-size: 0.875rem
+  display: flex
   grid-column: 1/-1
-  border-bottom: 1px solid var(--color-error-2)
 
-  > *
-    max-width: 550px
+  .col
+    flex: 1
 
-#explanation
-  .line-chart
-    height: 3rem
-    position: relative
-    margin: 1rem 0 0
+    &.border
+      border: 2px solid var(--color-error-1)
+      padding: 1rem
+      border-radius: var(--border-radius)
 
-// #recommendations, #explanation
-//   border-top: 1px solid var(--color-error-2)
-  // border-bottom: 1px solid var(--color-error-2)
+#explanation,
+#recommendations
+  p
+    font-size: 0.75rem
+    margin-bottom: 0
 
-#cta
-  grid-column: 1 / -1
-  border-top: 1px solid var(--color-error-2)
+#recommendations
+  .failed-metric &
+    gap: 1rem
 
+  .food-item-pill-group
+    gap: 0.5rem
+    font-size: 0.875em
+    justify-content: center
+    margin-top: 0.25rem
+
+.food-table-preview
+  width: 75%
+  margin: auto
+  border: 1px solid var(--color-error-1)
+  border-radius: 0.75rem
 
 </style>

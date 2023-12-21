@@ -7,11 +7,11 @@
 
   $: data = [
     {
-      label: "Increased share ↗",
+      label: "Increased ↗",
       list: $farm.foodChanges.filter((o) => o.delta > 0).sort(descending)
     },
     {
-      label: "Reduced share ↘",
+      label: "Reduced ↘",
       list: $farm.foodChanges.filter((o) => o.delta < 0).sort(ascending)
     }
   ]
@@ -23,10 +23,13 @@
       <div class="th label bold">{label}</div>
       {#each list as { delta, food }}
         <div class="item label">
-          <div class="td label">
-            {food.name}
+          <div class="flex align-center">
+            <div class="td food-item-avatar bg-{food.colorId}" />
+            <div class="td label">
+              {food.name}
+            </div>
           </div>
-          <div class="td food-item-avata">
+          <div class="td">
             <Number value={delta} duration={0} showSign={delta !== 0} />
           </div>
         </div>
@@ -38,9 +41,10 @@
 <style lang="sass">
   .food-changes-table
     display: flex
-    gap: 0.75rem
+    gap: 1rem
 
   .group
+    min-width: 100px
     display: flex
     flex-direction: column
 

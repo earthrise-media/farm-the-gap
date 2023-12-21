@@ -2,7 +2,7 @@
   export let onClick = (e: MouseEvent | KeyboardEvent) => {}
   export let disabled: boolean = false
   export let type: "button" | "submit" | "reset" = "button"
-  export let color: "primary" | "secondary" | "tertiary" | "error" = "primary"
+  export let color: "primary" | "secondary" | "tertiary" | "error" | "error-invert" = "primary"
   export let active: boolean = false
   export let classList: string = "default"
   export let link: string = ""
@@ -76,6 +76,10 @@ a, button
 .color-error
   color: var(--color-animal-1)
   background: var(--color-secondary-2)
+
+.color-error-invert
+  background: var(--color-animal-1)
+  color: var(--color-secondary-2)
 
 .bare
   background: none
