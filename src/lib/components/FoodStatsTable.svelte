@@ -163,6 +163,7 @@
         class="food-card"
         animate:flip={{ duration: 800, easing, delay: 8 * i }}
         on:mouseenter={() => ($userState.itemHighlighted = f)}
+        on:mouseleave={() => ($userState.itemHighlighted = null)}
         role="button"
         tabindex="-1"
       >
