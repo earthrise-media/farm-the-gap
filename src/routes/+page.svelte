@@ -55,7 +55,7 @@
     </div>
     <div class="panel-2-3">
       <FoodStatsTable />
-      <FoodChangesTable />
+      <!-- <FoodChangesTable /> -->
       <!-- <BlockImpact type="emissions" />
       <BlockImpact type="water" />
       <BlockImpact type="eutrophy" /> -->

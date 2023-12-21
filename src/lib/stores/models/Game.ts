@@ -11,6 +11,7 @@ export class UserState {
   showAboutPage: boolean = false
   hasBeenWelcomed: boolean = false
   itemInspecting: Food | null = null
+  itemHighlighted: Food | null = null
   itemSelectedForSwap: Food | null = null
   milestonesAchieved: string[] = []
   isGameComplete: boolean = false

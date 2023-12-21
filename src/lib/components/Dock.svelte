@@ -22,7 +22,7 @@
       <Number showSign isPercent value={$successMetrics.calorieProductionChange} />
     </strong>
     <div class="label">Calorie production</div>
-    <div class="label text-secondary-3">Target: {prettyPercent($gameSettings.gap)}</div>
+    <div class="label text-secondary-3">Target: +{prettyPercent($gameSettings.gap)}</div>
   </div>
   <div class="dock-item flex-col flex-grow progress-calorie">
     <Progress

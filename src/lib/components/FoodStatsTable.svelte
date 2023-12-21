@@ -4,7 +4,7 @@
   import { quintInOut as easing } from "svelte/easing"
 
   import { foodItems } from "$lib/data/foods"
-  import { gameState } from "$lib/stores/state"
+  import { gameState, userState } from "$lib/stores/state"
   import { largeNumber } from "$lib/utils/written"
 
   import Icon from "$lib/components/Icon.svelte"
@@ -162,6 +162,7 @@
       <div
         class="food-card"
         animate:flip={{ duration: 800, easing, delay: 8 * i }}
+        on:mouseenter={() => ($userState.itemHighlighted = f)}
         role="button"
         tabindex="-1"
       >

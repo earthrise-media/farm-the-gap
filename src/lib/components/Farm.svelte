@@ -43,6 +43,7 @@
                 )} square on the board at all times.`
               : food.name}
             class:is-only={$farm.getCropCount(food.id) === 1}
+            class:highlighted={$userState.itemHighlighted?.id === food.id}
             class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
             class:swappable={$userState.itemSelectedForSwap && isSwappable(food)}
             on:click={(e) => {
@@ -153,7 +154,10 @@
   &.swappable
     background: var(--color-primary-1)
   &.unswappable
+    background: var(--color-tertiary-2)
+  &.highlighted
     background: var(--color-primary-3)
+    animation: flash 0.5s ease-in-out infinite alternate
 
 .food-item-avatar
   position: relative
@@ -179,6 +183,11 @@
   .land-cell:not(.unswappable):hover .food-item-avatar
     transform: rotateZ(-16deg) rotateY(-40deg) rotateX(60deg) scale(1.25, 1.75) translate(20%, -40%)
 
+@keyframes flash
+  0%
+    filter: brightness(1)
+  100%
+    filter: brightness(1.125)
 
 @keyframes levitate
   0%

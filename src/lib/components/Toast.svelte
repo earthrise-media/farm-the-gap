@@ -23,7 +23,10 @@
   })
 
   const onGlobalInteraction = () => {
-    if (toast?.task?.($gameState)) setTimeout(onDismiss, 250)
+    setTimeout(() => {
+      let hasCompletedTask = toast?.task?.($gameState)
+      if (hasCompletedTask) setTimeout(onDismiss, 250)
+    }, 5)
 
     const newMilestone = milestones.find(
       (t) => !$userState.milestonesAchieved.includes(t.id) && t.trigger($gameState)
@@ -36,8 +39,6 @@
   }
 
   const onDismiss = () => {
-    if (toast.target) qs(toast.target).classList.remove("active-tutorial-item")
-
     toast.onDismiss?.()
 
     $activeToastId = toast.next
@@ -77,14 +78,20 @@
         style="grid-template-columns: {$coords.x}px  {$coords.w}px 1fr; grid-template-rows: {$coords.y}px {$coords.h}px 1fr;"
       >
         {#each Array(9) as _, i}
-          <div class:window={i === 4} />
+          {#if i === 4}
+            <div class="window">
+              <div id="active-tutorial-item" />
+            </div>
+          {:else}
+            <div />
+          {/if}
         {/each}
       </div>
     {/if}
     {#key toast.id}
       <div class="toast" out:fly={{ y: 32, easing }} in:fly={{ y: 32, easing, delay: 400 }}>
         {#if toast.img}
-          <div class="toast-img"><img width="45" src="/img/{toast.img}" alt="" /></div>
+          <div class="toast-img"><img width="100%" src="/img/{toast.img}" alt="" /></div>
         {:else if toast.icon}
           <div class="toast-icon"><AnimatedIcon name={toast.icon} /></div>
         {/if}
@@ -103,10 +110,6 @@
         {/if}
       </div>
     {/key}
-    <div
-      id="active-tutorial-item"
-      style="left: {$coords.x}px; top: {$coords.y}px; width: {$coords.w}px; height: {$coords.h}px; border-radius: {$coords.r}px"
-    />
   </div>
 {/if}
 
@@ -120,6 +123,7 @@
     display: flex
     justify-content: center
     font-size: 0.75rem
+    line-height: 1.2
     padding: 1rem
     z-index: 100
     pointer-events: none
@@ -136,14 +140,16 @@
     grid-template-rows: repeat(3,1fr)
     grid-template-columns: repeat(3,1fr)
 
-    div
+    > div
       pointer-events: all
       background: rgba(0,0,0,0.5)
+
       &.window
+        position: relative
+        background: transparent
         pointer-events: none
         border: 2px solid var(--color-tertiary-1)
         animation: 0.4s ease-in-out infinite alternate pulse-tertiary
-        background: transparent
 
   .toast
     pointer-events: all
@@ -151,19 +157,26 @@
     right: 0
     bottom: 0
     max-width: 30vw
-    margin: 1rem
+    margin: 0.75rem
     display: flex
-    gap: 0.5rem
+    gap: 0 0.5rem
     padding: 0.75rem 0.5rem
     border: 1px solid var(--color-tertiary-1)
     z-index: 100
     border-radius: var(--border-radius)
     background: var(--color-primary-3)
+    display: grid
+    grid-template-columns: auto 1fr
 
+  .toast-img,
   .toast-icon
+    width: 35px
     display: flex
-    align-items: center
+    align-items: end
     justify-content: center
+
+    img
+      width: 30px
 
   .toast-body
     display: flex
@@ -171,8 +184,11 @@
     gap: 0.25rem
 
   .toast-button
-    margin-top: auto
     text-align: right
+    grid-column: 1/-1
+
+:global(.toast-message p:last-child)
+  margin-bottom: 0
 
 @keyframes pulse-tertiary
   0%
