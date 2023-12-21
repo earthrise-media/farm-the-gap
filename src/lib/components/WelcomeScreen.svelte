@@ -65,8 +65,8 @@
 <svelte:window
   on:click={onClick}
   on:keydown={(e) => {
-    if (["ArrowRight", "Enter"].includes(e.key)) onClick()
-    if (e.key === "ArrowLeft" && slideIndex > 0) slideIndex -= 1
+    if (["ArrowDown", "ArrowRight", "Enter"].includes(e.key)) onClick()
+    if (["ArrowUp", "ArrowLeft"].includes(e.key) && slideIndex > 0) slideIndex -= 1
     if (e.key === "Escape") close()
   }}
 />
@@ -87,7 +87,7 @@
         </div>
         {#if slideIndex === 0}
           <div class="slide" out:fade in:fly={flyIn}>
-            <h1 class="title slide-title-0">The Food Gap Challenge</h1>
+            <h1 class="title slide-title slide-title-0">The Food Gap Challenge</h1>
             <p>
               The world faces a food gap. By {$gameState.year.end}, we must produce {prettyPercent(
                 $gameSettings.gap
@@ -98,17 +98,21 @@
           </div>
         {:else if slideIndex === 1}
           <div class="slide" out:fade in:fly={flyIn}>
-            <h3 class="slide-title-1">The environmental impact of food</h3>
+            <h3 class="slide-title slide-title-1">The environmental impact of food</h3>
             <p>
-              Food systems have a significant global footprint. To meet the food gap, we must better
-              utilise our finite land and water resources, and reduce emissions and pollution.
+              Food systems have a significant global footprint.<sup
+                ><a href="https://ourworldindata.org/environmental-impacts-of-food" target="_blank"
+                  >1</a
+                ></sup
+              > To close the food gap, we must better utilise our finite land and water resources, and
+              reduce emissions and pollution.
             </p>
             <div class="impact-charts flex">
               {#each impactCharts as { title, percent, description }}
                 <div class="flex-col align-center text-center justify-center">
                   <div class="label-caps text-secondary-3">{title}</div>
                   <div class="big-number">
-                    {percent}<span class="text-secondary-3 labe">%</span>
+                    {percent}<span class="text-secondary-3">%</span>
                   </div>
                   <div class="label text-secondary-3">{description}</div>
                 </div>
@@ -117,23 +121,23 @@
           </div>
         {:else if slideIndex === 2}
           <div class="slide" out:fade in:fly={flyIn}>
-            <h3 class="slide-title-2">This is our global farm</h3>
+            <h3 class="slide-title slide-title-2">This is our global farm</h3>
             <p>
               Each square on this 10&hairsp;×&hairsp;10 plot represents 1% of global land used for
-              agriculture. 77% is used for livestock farming, and 23% for crops such as fruit,
-              vegetables, and grains.
+              agriculture. 77% is used for livestock farming, and 23% for crops for human
+              consumption, such as fruit, vegetables, and grains.
             </p>
           </div>
         {:else if slideIndex === 3}
           <div class="slide" out:fade in:fly={flyIn}>
-            <h3 class="slide-title-3">You decide how to feed the future</h3>
+            <h3 class="slide-title slide-title-3">You decide how to feed the future</h3>
             <p>
-              You have {$gameState.year.end - $gameState.year.current} years to close the food gap. You
-              are allowed one move per year.
+              You have {$gameState.year.end - $gameState.year.current} years to close the food gap by
+              changing what food we grow. You are allowed one move per year.
             </p>
             <p>
-              Your must deliver a nutritionally-balanced diet to a growing population, while meeting
-              market demands and keeping environmental impacts in check.
+              Your must continually deliver a nutritionally-balanced diet to a growing population,
+              while meeting market demands and keeping environmental impacts in check.
             </p>
             <p>
               <b class="text-tertiary-1"> Let's play! </b>
@@ -183,12 +187,11 @@
   font-size: 1.125rem
   line-height: 1.3
 
-.slide-title-0
-    padding-top: 5rem
-.slide-title-2
-    padding-top: 6rem
-.slide-title-3
-    padding-top: 6rem
+.slide-title
+  padding-top: 8rem
+
+  &.slide-title-1
+    padding-top: 0
 
 .pager-wrap
   position: relative
@@ -239,17 +242,17 @@
 
   .slide-0 &
     transition: all 0.8s ease
-    transform: scale(0.5) translate(0, 15%)
+    transform: scale(0.5) translate(0, 0%)
 
   .slide-1 &
-    transform: scale(2) translate(0, -29%)
+    transform: scale(2) translate(0, -30%)
     opacity: 1
 
   .slide-2 &
-    transform: scale(0.95) translate(0, 15%)
+    transform: scale(0.9) translate(0, 10%)
 
   .slide-3 &
-    transform: scale(0.6) translate(0, 20%)
+    transform: scale(0.6) translate(0, 0%)
 
 .impact-charts
   gap: 0 1.25rem
