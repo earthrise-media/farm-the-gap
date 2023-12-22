@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from "$app/paths"
   import { fly } from "svelte/transition"
   import { backOut as easing } from "svelte/easing"
 
@@ -91,7 +92,7 @@
     {#key toast.id}
       <div class="toast" out:fly={{ y: 32, easing }} in:fly={{ y: 32, easing, delay: 400 }}>
         {#if toast.img}
-          <div class="toast-img"><img width="100%" src="/img/{toast.img}" alt="" /></div>
+          <div class="toast-img"><img width="100%" src="{base}/img/{toast.img}" alt="" /></div>
         {:else if toast.icon}
           <div class="toast-icon"><AnimatedIcon name={toast.icon} /></div>
         {/if}
