@@ -56,18 +56,20 @@
         <div class="slide" out:fade in:fly={flyIn}>
           <h2 class="slide-title">
             {#if $successMetrics.hasSucceeded}
-              You Won 🎊
+              <span class="text-tertiary-1">You Won! 🎊</span>
             {:else if $successMetrics.hasFailed && exhaustedTurns && !failedMetric}
-              You ran out of turns! 😮‍💨
+              <span class="text-error-2"> You ran out of turns! </span>
             {:else if $successMetrics.hasFailed && failedMetric}
-              <b>{failedMetric.label}</b>
-              {failedMetric.value > failedMetric.limit ? "exceeded" : "fell under"}
-              {failedMetric.suffix === "%" && failedMetric.value > 0
-                ? "+"
-                : ""}{(failedMetric.suffix === "%" ? 100 : 1) *
-                failedMetric.limit}{failedMetric.suffix}! 😮‍💨
+              <span class="text-error-2">
+                <b>{failedMetric.label}</b>
+                {failedMetric.value > failedMetric.limit ? "exceeded" : "fell under"}
+                {failedMetric.suffix === "%" && failedMetric.value > 0
+                  ? "+"
+                  : ""}{(failedMetric.suffix === "%" ? 100 : 1) *
+                  failedMetric.limit}{failedMetric.suffix}!
+              </span>
             {:else}
-              <p>An error has occurrede.</p>
+              <p>An error has occurred.</p>
             {/if}
           </h2>
           <section id="summary">

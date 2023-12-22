@@ -9,12 +9,8 @@
   <Farm levitate />
 </div>
 <div class="flex buttons">
-  <Button
-    color="primary"
-    target="_blank"
-    link="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-    onClick={reset}
-    >Share
+  <Button color="primary" target="_blank" link="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+    Share
   </Button>
   <Button color="secondary" onClick={reset}>Play again</Button>
 </div>
@@ -23,4 +19,7 @@
 .farm-container
   position: relative
   max-width: 400px
+
+.buttons
+  gap: 1rem
 </style>

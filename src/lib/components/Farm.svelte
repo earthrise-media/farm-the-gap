@@ -183,12 +183,6 @@
   .land-cell:not(.unswappable):hover .food-item-avatar
     transform: rotateZ(-16deg) rotateY(-40deg) rotateX(60deg) scale(1.25, 1.75) translate(20%, -40%)
 
-@keyframes flash
-  0%
-    filter: brightness(1)
-  100%
-    filter: brightness(1.125)
-
 @keyframes levitate
   0%
     transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateZ(0)

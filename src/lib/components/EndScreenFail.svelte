@@ -17,109 +17,117 @@
 
   if (failedMetric) {
     let key = failedMetric.foodMetricKey
-    foods.sort(
-      (a, b) => (b.yieldPerHa * b[key]) / b.calorieRatio - (a.yieldPerHa * a[key]) / a.calorieRatio
-    )
+    foods.sort((a, b) => b[key] / b.calorieRatio - a[key] / a.calorieRatio)
   }
 </script>
 
 <div class="fail-screen-wrapper">
-  {#if failedMetric}
-    <section id="failed-metric">
+  {#if failedMetric || exhaustedTurns}
+    <section>
       <div class="col">
-        <div class="food-item-avatar bg-plant-2">1</div>
+        <div class="step-counter">1</div>
+        <p>
+          {#if exhaustedTurns}
+            You ran out of turns before you could close the food gap.
+          {/if}
+          Remember your objective is to maximise calorie production, {#if exhaustedTurns}
+            so trade the least efficient foods out for the most efficient ones.
+          {:else}but you must maintain protein levels and keep environmental impacts in check.{/if}
+        </p>
+      </div>
+      <div class="col">
+        <div class="step-counter">2</div>
         <div class="label">
-          <div>Use the data table to sort foods by <b>{failedMetric.label} per hectare</b>.</div>
+          {#if exhaustedTurns}
+            <div>Use the data table to sort foods by calorie efficiency.</div>
+          {:else if failedMetric}
+            <div>
+              Use the data table to sort foods by <b>{failedMetric.label}</b> and other metrics.
+            </div>
+          {/if}
           <span>&darr;</span>
         </div>
         <img class="food-table-preview" src="/img/table.png" alt="Food stats table preview" />
       </div>
-      <div class="col">
-        <div class="food-item-avatar bg-plant-2">2</div>
-        <div class="recommendation-efficiency-group">
-          <p>
-            Foods with the highest
-            <b>{failedMetric.label}</b>
-            per calorie.
-          </p>
-          <div class="flex food-item-pill-group">
-            {@html foods
-              .slice(0, 3)
-              .map(
-                (f) =>
-                  `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
-              )
-              .join(" ")}
+      {#if failedMetric}
+        <div class="col">
+          <div class="step-counter">3</div>
+          <div class="label">
+            <div>Check out these foods</div>
+            <span>&darr;</span>
+          </div>
+          <div class="recommendation-efficiency-group">
+            <p>
+              These foods have the highest
+              <b>{failedMetric.label} per calorie:</b>
+            </p>
+            <div class="flex food-item-pill-group">
+              {@html foods
+                .slice(0, 3)
+                .map(
+                  (f) =>
+                    `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
+                )
+                .join(" ")}
+            </div>
+          </div>
+          <div class="recommendation-efficiency-group">
+            <p>These foods have the lowest:</p>
+            <div class="flex food-item-pill-group">
+              {@html foods
+                .slice(-3)
+                .map(
+                  (f) =>
+                    `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
+                )
+                .reverse()
+                .join(" ")}
+            </div>
           </div>
         </div>
-        <div class="recommendation-efficiency-group">
-          <p>
-            Foods with the lowest
-            <b>{failedMetric.label}</b>
-            per calorie.
-          </p>
-          <div class="flex food-item-pill-group">
-            {@html foods
-              .slice(-3)
-              .map(
-                (f) =>
-                  `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
-              )
-              .reverse()
-              .join(" ")}
-          </div>
+      {/if}
+      <div class="col">
+        <div class="step-counter">{failedMetric ? 4 : 3}</div>
+        <div class="label">
+          <div>Try to close the food gap one&nbsp;more&nbsp;time!</div>
+          <span>&darr;</span>
+        </div>
+        <div class="button-retry-wrap">
+          <Button color="secondary" onClick={reset}>Try again &rarr;</Button>
         </div>
       </div>
-      <div class="col">
-        <div class="food-item-avatar bg-plant-2">3</div>
-        <p>
-          Remember your objective is to maximise calorie production, but you must keep environmental
-          impacts in check.
-        </p>
-        <p>Now try to close the food gap again!</p>
-      </div>
-      <Button color="error-invert" onClick={reset}>Try again<br />&rarr;</Button>
-    </section>
-  {:else if exhaustedTurns}
-    <section id="explanation">
-      <p>You ran out of turns before you could close the food gap.</p>
-    </section>
-    <section id="recommendations">
-      <p>
-        Try to increase the yield of the most productive crops, and reduce the yield of the least
-        productive crops.
-      </p>
     </section>
   {:else}
-    <p>An error has occurredy.</p>
+    <p>An error has occurred.</p>
   {/if}
 </div>
 
 <style lang="sass">
 .fail-screen-wrapper
   display: grid
-  grid-template-columns: repeat(4, minmax(200px, 1fr))
-  grid-template-rows: repeat(1, minmax(0, 1fr))
+  grid-template-columns: repeat(4, minmax(0, 1fr))
   border-top: 2px solid var(--color-error-1)
   gap: 1rem
 
 section
   gap: 0 1rem
   padding: 1rem 0
-  overflow: hidden
-
-#failed-metric
-  font-size: 0.875rem
   display: flex
+  overflow: hidden
+  font-size: 0.875rem
   grid-column: 1/-1
 
-  .col
-    flex: 1
+.col
+  flex: 1
+  display: flex
+  flex-direction: column
+  align-items: center
+  height: 100%
 
-    &.border
-      border: 2px solid var(--color-error-1)
-      padding: 1rem
-      border-radius: var(--border-radius)
+  &.border
+    border: 2px solid var(--color-error-1)
+    padding: 1rem
+    border-radius: var(--border-radius)
 
 #explanation,
 #recommendations
@@ -131,16 +139,42 @@ section
   .failed-metric &
     gap: 1rem
 
-  .food-item-pill-group
-    gap: 0.5rem
-    font-size: 0.875em
-    justify-content: center
-    margin-top: 0.25rem
+.recommendation-efficiency-group
+  display: flex
+  margin: 0.5rem 0
+  flex-direction: column
+  align-items: center
+  p
+    margin-bottom: 0.25rem
+
+.food-item-pill-group
+  gap: 0.5rem
+  justify-content: center
 
 .food-table-preview
   width: 75%
   margin: auto
-  border: 1px solid var(--color-error-1)
-  border-radius: 0.75rem
+  border-radius: 0.25rem
+
+.step-counter
+  background: var(--color-plant-2)
+  height: 1.5rem
+  width: 1.5rem
+  line-height: 1.5rem
+  border-radius: 1rem
+  margin-bottom: 0.75rem
+
+.button-retry-wrap
+  flex: 1
+  display: flex
+  align-items: center
+  justify-self: center
+
+  :global(button)
+    width: 100%
+    padding: 2rem
+    border: 1px solid var(--color-tertiary-1)
+    animation: flash 0.5s ease-in-out infinite alternate
+
 
 </style>
