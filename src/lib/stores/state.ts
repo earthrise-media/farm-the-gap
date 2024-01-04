@@ -113,7 +113,7 @@ export const successMetrics = derived(
       suffix: "%",
       limit: emissionsChangeLimit,
       objective: `Keep below +${100 * emissionsChangeLimit}%`,
-      warn: emissionsChangeValue > emissionsChangeLimit - 0.02,
+      warn: emissionsChangeValue > emissionsChangeLimit - 0.05,
       fail: emissionsChangeValue > emissionsChangeLimit,
       history: $gameHistory.map((o) => o.emissionsChange),
       farmMetricKey: "emissions",

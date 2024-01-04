@@ -137,7 +137,7 @@
               changing what food we grow. You are allowed one move per year.
             </p>
             <p>
-              Your must continually deliver a nutritionally-balanced diet to a growing population,
+              You must continually deliver a nutritionally-balanced diet to a growing population,
               while meeting market demands and keeping environmental impacts in check.
             </p>
             <p>

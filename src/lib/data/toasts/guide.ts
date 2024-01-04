@@ -23,7 +23,7 @@ export const guide = [
     title: "Welcome to the farm!",
     message: `Your job is to increase food production by ${prettyPercent($gameSettings.gap)} in ${
       $gameState.year.end - $gameState.year.start
-    } years. Keep an eye on your progress and moves remaining here.`,
+    } years. Keep an eye on your progress and remaining moves here.`,
     button: "Next",
     target: "#dock",
     next: 1,
@@ -71,7 +71,7 @@ export const guide = [
     img: "guide.png",
     title: "Make your first move",
     // prettier-ignore
-    message: `<p>You're ready to get started!</p><p>Select <span class="bg-primary-2 inline-flex align-center bold">${avatar(6,"","plant")}&nbsp;Corn</span> from your food inventory and replace it with <span class="bg-primary-2 inline-flex align-center bold">${avatar(2)}&nbsp;Lamb</span> on the farm grid.</p><p>Then watch how your key metrics change.</p>`,
+    message: `<p>You're ready to get started!</p><p>Click <span class="bg-primary-2 inline-flex align-center bold">${avatar(6,"","plant")}&nbsp;Corn</span> from your food inventory and replace it with <span class="bg-primary-2 inline-flex align-center bold">${avatar(2)}&nbsp;Lamb</span> on the farm grid.</p><p>Then watch how your key metrics change.</p>`,
     next: 5,
     target: ".button-group.group-plant button:nth-child(6)",
     onEnter: () => {

@@ -75,7 +75,7 @@
           <section id="summary">
             <p>
               {#if $successMetrics.hasSucceeded}
-                Amazing job! You closed the food gap and ensured a sustainble food future!
+                Amazing job! You closed the food gap and ensured a sustainable food future!
               {:else}
                 Bad luck! It's a challenging job to close the food gap, but you made great progress.
               {/if}
