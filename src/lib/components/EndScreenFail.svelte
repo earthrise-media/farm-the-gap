@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { base } from "$app/paths"
   import { successMetrics, sparklineData, gameState, farm } from "$lib/stores/state"
 
   import Button from "$lib/components/Button.svelte"
@@ -47,7 +48,7 @@
           {/if}
           <span>&darr;</span>
         </div>
-        <img class="food-table-preview" src="/img/table.png" alt="Food stats table preview" />
+        <img class="food-table-preview" src="{base}/img/table.png" alt="Food stats table preview" />
       </div>
       {#if failedMetric}
         <div class="col">
