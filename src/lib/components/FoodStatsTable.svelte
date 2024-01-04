@@ -1,6 +1,5 @@
 <script lang="ts">
   import { flip } from "svelte/animate"
-  import { fade } from "svelte/transition"
   import { quintInOut as easing } from "svelte/easing"
 
   import { foodItems } from "$lib/data/foods"
@@ -10,14 +9,22 @@
   import Icon from "$lib/components/Icon.svelte"
   import Button from "$lib/components/Button.svelte"
 
-  type Key = "hectare" | "kilogram"
-  type Measure = { key: Key; label: string }
+  type Key = "hectare" | "calorie"
+  type Measure = { key: Key; label: string; description: string }
   type KeyMetricGetter = { value: (f: Food) => string | number; sort: (a: Food, b: Food) => number }
-  type SortableData = { label: string; hectare: KeyMetricGetter; kilogram: KeyMetricGetter }
+  type SortableData = { label: string; hectare: KeyMetricGetter; calorie: KeyMetricGetter }
 
   const measures: Measure[] = [
-    { key: "hectare", label: "per hectare land" },
-    { key: "kilogram", label: "per kilogram food" }
+    {
+      key: "hectare",
+      label: "per hectare land",
+      description: "Comparing food output and impacts per unit of land."
+    },
+    {
+      key: "calorie",
+      label: "per calorie",
+      description: "Comparing food output and impacts per 1000 calories."
+    }
   ]
 
   const impactPerHectare = (food: Food, xPerKg: number) =>
@@ -37,7 +44,7 @@
         value: (f: Food) => f.name,
         sort: (a: Food, b: Food) => a.name.localeCompare(b.name)
       },
-      kilogram: {
+      calorie: {
         value: (f: Food) => f.name,
         sort: (a: Food, b: Food) => a.name.localeCompare(b.name)
       }
@@ -49,8 +56,8 @@
         sort: (a: Food, b: Food) =>
           nutritionPerHectare(b, b.calorieRatio) - nutritionPerHectare(a, a.calorieRatio)
       },
-      kilogram: {
-        value: (f: Food) => f.calorieRatio.toFixed(0),
+      calorie: {
+        value: (f: Food) => (f.calorieRatio / f.calorieRatio).toFixed(0),
         sort: (a: Food, b: Food) => b.calorieRatio - a.calorieRatio
       }
     },
@@ -65,9 +72,10 @@
           nutritionPerHectare(b, b.proteinRatio, $gameState.coefficients.proteinMultiplier) -
           nutritionPerHectare(a, a.proteinRatio, $gameState.coefficients.proteinMultiplier)
       },
-      kilogram: {
-        value: (f: Food) => f.proteinRatio.toFixed(0),
-        sort: (a: Food, b: Food) => b.proteinRatio - a.proteinRatio
+      calorie: {
+        value: (f: Food) => ((1000 * f.proteinRatio) / f.calorieRatio).toFixed(0),
+        sort: (a: Food, b: Food) =>
+          b.proteinRatio / b.calorieRatio - a.proteinRatio / a.calorieRatio
       }
     },
     {
@@ -77,9 +85,9 @@
         sort: (a: Food, b: Food) =>
           impactPerHectare(b, b.ghgPerKg) - impactPerHectare(a, a.ghgPerKg)
       },
-      kilogram: {
-        value: (f: Food) => f.ghgPerKg.toFixed(1),
-        sort: (a: Food, b: Food) => b.ghgPerKg - a.ghgPerKg
+      calorie: {
+        value: (f: Food) => ((1000 * f.ghgPerKg) / f.calorieRatio).toFixed(1),
+        sort: (a: Food, b: Food) => b.ghgPerKg / b.calorieRatio - a.ghgPerKg / a.calorieRatio
       }
     },
     {
@@ -89,14 +97,15 @@
         sort: (a: Food, b: Food) =>
           impactPerHectare(b, b.waterPerKg) - impactPerHectare(a, a.waterPerKg)
       },
-      kilogram: {
-        value: (f: Food) => f.waterPerKg.toFixed(0),
-        sort: (a: Food, b: Food) => b.waterPerKg - a.waterPerKg
+      calorie: {
+        value: (f: Food) => ((1000 * f.waterPerKg) / f.calorieRatio).toFixed(0),
+        sort: (a: Food, b: Food) => b.waterPerKg / b.calorieRatio - a.waterPerKg / a.calorieRatio
       }
     }
   ]
 
   let currentMeasure: Measure = measures[0]
+  let isSorting = false
   let sortedColumnIndex = 1
   let sortedColumnDescending = true
   let sortFunction = data[sortedColumnIndex][currentMeasure.key].sort
@@ -123,6 +132,9 @@
         {label}
       </Button>
     {/each}
+  </div>
+  <div class="description label">
+    {currentMeasure.description}
   </div>
   <div class="food-items-grid-body">
     <div class="food-card table-head">
@@ -162,8 +174,10 @@
       <div
         class="food-card"
         animate:flip={{ duration: 800, easing, delay: 8 * i }}
-        on:mouseenter={() => ($userState.itemHighlighted = f)}
-        on:mouseleave={() => ($userState.itemHighlighted = null)}
+        on:animationstart={() => (isSorting = true)}
+        on:animationend={() => (isSorting = false)}
+        on:mouseenter={() => (!isSorting ? ($userState.itemHighlighted = f) : "")}
+        on:mouseleave={() => (!isSorting ? ($userState.itemHighlighted = null) : "")}
         role="button"
         tabindex="-1"
       >
@@ -188,7 +202,10 @@
 
 .measure-buttons
   gap: 0.25rem
-  margin: 0.25rem 0 0.325rem
+  margin: 0.125rem 0 0
+
+.description
+  margin-bottom: 0.25rem
 
 .food-items-grid
   gap: 0.25rem
