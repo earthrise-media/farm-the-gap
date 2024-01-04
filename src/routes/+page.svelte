@@ -70,10 +70,10 @@
 
   <TooltipFoodItem />
 
-  <!-- <WelcomeScreen /> -->
+  <WelcomeScreen />
   <EndScreen />
   <AboutScreen />
-  <!-- <Toast /> -->
+  <Toast />
 </main>
 
 <style lang="sass">
