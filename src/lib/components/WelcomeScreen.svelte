@@ -55,21 +55,22 @@
     $userState.hasBeenWelcomed = true
   }
 
-  const onClick = () => {
+  const onClick = (e: InteractionEvent) => {
+    const target = e.target as HTMLElement
+    if (target?.tagName === "A") return
     if (slideIndex < 0) return
     if (slideIndex === slides.length - 1) close()
     else slideIndex += 1
   }
-</script>
 
-<svelte:window
-  on:click={onClick}
-  on:keydown={(e) => {
-    if (["ArrowDown", "ArrowRight", "Enter"].includes(e.key)) onClick()
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (["ArrowDown", "ArrowRight", "Enter", " "].includes(e.key)) onClick(e)
     if (["ArrowUp", "ArrowLeft"].includes(e.key) && slideIndex > 0) slideIndex -= 1
     if (e.key === "Escape") close()
-  }}
-/>
+  }
+</script>
+
+<svelte:window on:click={onClick} on:keydown={onKeyDown} />
 
 {#if !$userState.hasBeenWelcomed}
   <Modal id="welcome-screen" fullscreen durationOut={800}>
