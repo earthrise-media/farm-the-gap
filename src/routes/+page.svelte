@@ -19,9 +19,10 @@
   import Modal from "$lib/components/Modal.svelte"
   import FoodChangesTable from "$lib/components/FoodChangesTable.svelte"
   import ButtonUndo from "$lib/components/ButtonUndo.svelte"
+  import TooltipFoodItem from "$lib/components/TooltipFoodItem.svelte"
 </script>
 
-<main>
+<main class:food-item-selected={$userState.itemSelectedForSwap}>
   <header class="flex align-center justify-between">
     <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
     <div class="buttons">
@@ -66,10 +67,13 @@
   </div>
   <FoodInformationCard />
   <Tooltip />
-  <WelcomeScreen />
+
+  <TooltipFoodItem />
+
+  <!-- <WelcomeScreen /> -->
   <EndScreen />
   <AboutScreen />
-  <Toast />
+  <!-- <Toast /> -->
 </main>
 
 <style lang="sass">
@@ -83,6 +87,9 @@ main
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
   grid-template-areas: "header header" "game data"
   background: var(--color-primary-1)
+
+  // &.food-item-selected
+  //   cursor: none
 
 .panel
   position: relative

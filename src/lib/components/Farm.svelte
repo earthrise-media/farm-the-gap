@@ -41,6 +41,8 @@
                   /s$/,
                   ""
                 )} square on the board at all times.`
+              : $userState.itemSelectedForSwap && isSwappable(food)
+              ? `Replace ${food.name} with ${$userState.itemSelectedForSwap.name}`
               : food.name}
             class:is-only={$farm.getCropCount(food.id) === 1}
             class:highlighted={$userState.itemHighlighted?.id === food.id}
@@ -48,9 +50,14 @@
             class:swappable={$userState.itemSelectedForSwap && isSwappable(food)}
             on:click={(e) => {
               const isOnly = $farm.getCropCount(food.id) === 1
-              if (isOnly) {
-                return
-              }
+
+              if (isOnly) return
+
+              // if (!$userState.itemSelectedForSwap) {
+              //   e.stopPropagation()
+              //   $userState.itemSelectedForSwap = food
+              //   return
+              // }
 
               return (
                 $userState.itemSelectedForSwap &&
@@ -145,7 +152,6 @@
   justify-content: center
   font-size: 1rem
   overflow: hidden
-  cursor: pointer
   color: var(--color-secondary-3)
   overflow: hidden
   aspect-ratio: 1

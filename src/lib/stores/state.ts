@@ -79,6 +79,7 @@ export const successMetrics = derived(
         hasFailed
       )
 
+      // If year already exists in history, replace it with the new snapshot. This is necessary because all values are tweened.
       const index = $gameHistory.findIndex((item) => item.year === year.current)
 
       if (index === -1) $gameHistory.push(snapshot)
