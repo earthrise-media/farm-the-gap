@@ -164,9 +164,11 @@
   overflow: hidden
   width: 0.75em
   height: 0.75em
+  max-width: 220%
+  max-height: 60%
   transition: all 0.3s ease-out
   box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25)
-  transform: rotateZ(-16deg) rotateY(-40deg) rotateX(60deg) scale(1.25, 1.75) translate(15%, -30%)
+  transform: rotateZ(-14deg) rotateY(-40deg) rotateX(60deg) scale(1.125, 1.75) translate(10%, -20%)
 
   &::after
     content: ""
@@ -181,7 +183,7 @@
   .land-cell:not(.unswappable):hover
     background: var(--color-secondary-3)
   .land-cell:not(.unswappable):hover .food-item-avatar
-    transform: rotateZ(-16deg) rotateY(-40deg) rotateX(60deg) scale(1.25, 1.75) translate(20%, -40%)
+    transform: rotateZ(-14deg) rotateY(-40deg) rotateX(60deg) scale(1.125, 1.75) translate(17%, -28%)
 
 @keyframes levitate
   0%
