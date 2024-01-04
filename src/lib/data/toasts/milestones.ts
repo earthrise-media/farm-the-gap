@@ -1,7 +1,7 @@
 export const milestones = [
   {
     id: "milestone-1",
-    icon: "land",
+    img: "guide.png",
     title: "10 year milestone!",
     trigger: (gameState) => gameState.year.current === gameState.year.start + 10,
     message:

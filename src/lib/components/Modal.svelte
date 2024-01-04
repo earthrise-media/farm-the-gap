@@ -12,6 +12,7 @@
   export let fullscreen = false
   export let durationIn = 200
   export let durationOut = 100
+  export let hideCloseButton = false
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -37,8 +38,8 @@
   class:w-full={fullWidth}
   on:click={close}
   on:keydown={handleKeydown}
-  in:fade={{ duration: durationIn }}
-  out:fade={{ duration: durationOut }}
+  in:fade|global={{ duration: durationIn }}
+  out:fade|global={{ duration: durationOut }}
 >
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
@@ -49,9 +50,9 @@
     on:click={(e) => !fullscreen && e.stopPropagation()}
     on:keydown={(e) => !fullscreen && e.stopPropagation()}
   >
-    {#if !fullscreen}
+    {#if !fullscreen && !hideCloseButton}
       <div class="modal-close-button">
-        <Button onClick={close}>Close</Button>
+        <Button color={isError ? "error-invert" : "primary"} onClick={close}>Close</Button>
       </div>
     {/if}
     {#if title}
@@ -84,9 +85,9 @@ $radius: 1rem
   &.fullscreen
     background: var(--color-primary-0)
 
-  &.error
-    background: var(--color-k)
-    border: 2px solid var(--color-error-1)
+    &.error
+      background: var(--color-k)
+      border: 2px solid var(--color-error-1)
 
 .modal
   display: flex
@@ -103,6 +104,9 @@ $radius: 1rem
   border-radius: $radius
   color: var(--color-primary-1)
   background: var(--color-secondary-1)
+
+  .error &
+    color: var(--color-error-1)
 
   .fullscreen &
     max-height: 100vh

@@ -5,6 +5,7 @@ export class GameSettings {
   region: Region = regions[0]
   mode: number = 0
   gap: number = 0.5 // Food gap
+  undoLimit: number = 3 // # of undos allowed
 }
 
 export class UserState {
@@ -13,7 +14,7 @@ export class UserState {
   itemInspecting: Food | null = null
   itemHighlighted: Food | null = null
   itemSelectedForSwap: Food | null = null
-  milestonesAchieved: string[] = []
+  milestonesAchieved: string[] | number[] = []
   isGameComplete: boolean = false
 }
 
@@ -29,10 +30,14 @@ export class GameMove {
   timestamp: number = Date.now()
   foodAdded: Food
   foodRemoved: Food
+  x: number
+  y: number
 
-  constructor(foodAdded: Food, foodRemoved: Food) {
+  constructor(foodAdded: Food, foodRemoved: Food, x: number, y: number) {
     this.foodAdded = foodAdded
     this.foodRemoved = foodRemoved
+    this.x = x
+    this.y = y
   }
 }
 
@@ -103,21 +108,38 @@ export class GameState {
     growth: ~~((1.5 * 7850000000 - 7850000000) / (this.year.end - this.year.start))
   }
 
+  undosRemaining = new GameSettings().undoLimit
   moveHistory: GameMove[] = []
   inventory = new Inventory()
   coefficients = new YieldCoefficients()
   nutritionalRequirements = new NutritionalRequirements()
 
-  update(foodAdded: Food, foodRemoved: Food) {
+  update(foodAdded: Food, foodRemoved: Food, x: number, y: number) {
     this.inventory.get(foodAdded.id).available--
     this.year.current++
-    this.moveHistory.push(new GameMove(foodAdded, foodRemoved))
+    this.moveHistory.push(new GameMove(foodAdded, foodRemoved, x, y))
     this.population.current += this.population.growth
+  }
+
+  undo(): GameMove | undefined {
+    if (this.moveHistory.length === 0 || this.undosRemaining === 0) return undefined
+
+    const move = this.moveHistory.pop()
+
+    if (move) {
+      this.inventory.get(move.foodAdded.id).available++
+      this.year.current--
+      this.population.current -= this.population.growth
+      this.undosRemaining--
+    }
+
+    return move
   }
 
   reset() {
     this.inventory.reset()
     this.year.current = this.year.start
     this.population.current = this.population.start
+    this.undosRemaining = new GameSettings().undoLimit
   }
 }

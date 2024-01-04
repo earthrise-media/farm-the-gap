@@ -18,12 +18,14 @@
   import Toast from "$lib/components/Toast.svelte"
   import Modal from "$lib/components/Modal.svelte"
   import FoodChangesTable from "$lib/components/FoodChangesTable.svelte"
+  import ButtonUndo from "$lib/components/ButtonUndo.svelte"
 </script>
 
 <main>
-  <header class="flex justify-between">
+  <header class="flex align-center justify-between">
     <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
     <div class="buttons">
+      <ButtonUndo />
       <Button
         onClick={() => {
           $farm.reset()
@@ -36,7 +38,7 @@
       >
         Reset
       </Button>
-      <Button onClick={() => ($userState.showAboutPage = true)}>About</Button>
+      <!-- <Button onClick={() => ($userState.showAboutPage = true)}>About</Button> -->
     </div>
   </header>
   <div class="panel-game-area panel">
@@ -57,8 +59,8 @@
       <FoodStatsTable />
       <!-- <FoodChangesTable /> -->
       <!-- <BlockImpact type="emissions" />
-      <BlockImpact type="water" />
-      <BlockImpact type="eutrophy" /> -->
+        <BlockImpact type="water" />
+        <BlockImpact type="eutrophy" /> -->
     </div>
     <!-- <BlockNutrition type="protein" /> -->
   </div>
@@ -112,5 +114,11 @@ header
     background: var(--color-primary-2)
     border-radius: var(--border-radius)
     padding: var(--border-radius)
+
+.buttons
+  gap: 0.25rem
+  display: flex
+  align-items: center
+  justify-content: space-between
 
 </style>

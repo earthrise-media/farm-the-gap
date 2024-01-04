@@ -17,7 +17,7 @@
 
     if (foodAdded === null || foodAdded === undefined) return
     $farm.grid[y][x] = foodAdded
-    $gameState.update(foodAdded, foodRemoved)
+    $gameState.update(foodAdded, foodRemoved, x, y)
 
     if ($gameState.inventory.get(foodAdded.id).available <= 0) $userState.itemSelectedForSwap = null
 

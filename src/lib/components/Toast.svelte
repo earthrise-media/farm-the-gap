@@ -13,7 +13,6 @@
   import { activeToastId } from "$lib/stores/toast"
 
   import { toasts } from "$lib/data/toasts"
-  import { milestones } from "$lib/data/toasts/milestones"
 
   let toast
   let mounted
@@ -29,13 +28,13 @@
       if (hasCompletedTask) setTimeout(onDismiss, 250)
     }, 5)
 
-    const newMilestone = milestones.find(
-      (t) => !$userState.milestonesAchieved.includes(t.id) && t.trigger($gameState)
+    const newToast = toasts.find(
+      (t) => !$userState.milestonesAchieved.includes(t.id) && t.trigger?.($gameState)
     )
 
-    if (newMilestone) {
-      $userState.milestonesAchieved.push(newMilestone.id)
-      toast = newMilestone
+    if (newToast) {
+      $userState.milestonesAchieved.push(newToast.id)
+      toast = newToast
     }
   }
 
@@ -90,7 +89,11 @@
       </div>
     {/if}
     {#key toast.id}
-      <div class="toast" out:fly={{ y: 32, easing }} in:fly={{ y: 32, easing, delay: 400 }}>
+      <div
+        class="toast"
+        out:fly|global={{ y: 32, easing }}
+        in:fly|global={{ y: 32, easing, delay: 400 }}
+      >
         {#if toast.img}
           <div class="toast-img"><img width="100%" src="{base}/img/{toast.img}" alt="" /></div>
         {:else if toast.icon}

@@ -8,6 +8,7 @@
   export let link: string = ""
   export let target: "_blank" | "_self" | "_parent" | "_top" = "_self"
   export let tooltip: string | null = null
+  export let bare: boolean = false
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -22,6 +23,7 @@
   {type}
   {target}
   {disabled}
+  class:bare
   class:active
   class="{classList} color-{color}"
   role="button"
@@ -51,10 +53,6 @@ a, button
 
   &.bare
     background: none
-    font-family: inherit
-    padding: 0
-    margin: 0
-    border-radius: 0
 
   &:disabled
     cursor: not-allowed
@@ -74,11 +72,11 @@ a, button
   background: var(--color-tertiary-1)
 
 .color-error
-  color: var(--color-animal-1)
+  color: var(--color-error-1)
   background: var(--color-secondary-2)
 
 .color-error-invert
-  background: var(--color-animal-1)
+  background: var(--color-error-1)
   color: var(--color-secondary-2)
 
 .bare

@@ -9,7 +9,6 @@ import { foodItems } from "../foods"
 
 const $gameSettings = get(gameSettings)
 const $gameState = get(gameState)
-const $userState = get(userState)
 
 const avatar = (cid = 1, n = "", t = "animal") =>
   `<b class="food-item-avatar bg-${t}-${cid}">${n}</b>`
