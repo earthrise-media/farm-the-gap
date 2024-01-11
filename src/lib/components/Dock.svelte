@@ -19,7 +19,11 @@
 <div id="dock">
   <div class="dock-item flex-col">
     <strong class="big-number">
-      <Number showSign isPercent value={$successMetrics.calorieProductionChange} />
+      <Number
+        showSign
+        isPercent
+        value={Math.floor(100 * $successMetrics.calorieProductionChange) / 100}
+      />
     </strong>
     <div class="label">Calorie production</div>
     <div class="label text-secondary-3">Target: +{prettyPercent($gameSettings.gap)}</div>

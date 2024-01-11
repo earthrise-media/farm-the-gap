@@ -19,7 +19,7 @@
             <div class="big-number flex align-center">
               {#if suffix === "%"}
                 <span class="label sign">{value >= 0 ? "+" : "-"}</span>
-                <Number value={100 * Math.abs(value)} />
+                <Number value={100 * Math.abs(Math.floor(100 * value) / 100)} />
                 <span class="label suffix text-secondary-2">{suffix}</span>
               {:else}
                 <Number {value} />
