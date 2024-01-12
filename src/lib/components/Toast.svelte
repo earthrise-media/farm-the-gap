@@ -1,6 +1,6 @@
 <script lang="ts">
   import { base } from "$app/paths"
-  import { fly } from "svelte/transition"
+  import { fade, fly } from "svelte/transition"
   import { backOut as easing } from "svelte/easing"
 
   import Button from "$lib/components/Button.svelte"
@@ -9,7 +9,7 @@
   import { qs } from "martha"
   import { onMount } from "svelte"
   import { spring } from "svelte/motion"
-  import { gameState, userState, successMetrics, farm } from "$lib/stores/state"
+  import { gameState, userState, successMetrics, gameSettings, farm } from "$lib/stores/state"
   import { activeToastId } from "$lib/stores/toast"
 
   import { toasts } from "$lib/data/toasts"
@@ -23,15 +23,14 @@
 
   onMount(() => {
     mounted = true
-    document.addEventListener("click", (e) => setTimeout(() => onGlobalInteraction(e), 10), true)
+    document.addEventListener("click", (e) => setTimeout(() => onGlobalInteraction(e), 25), true)
   })
 
   const onGlobalInteraction = (e: InteractionEvent) => {
-    // check if button
-    if (!(e.target instanceof HTMLButtonElement)) return
-
     let hasCompletedTask = toast?.task?.(callbackProps)
-    if (hasCompletedTask) setTimeout(onDismiss, 200)
+    if (hasCompletedTask) onDismiss(true)
+
+    if (!(e.target instanceof HTMLButtonElement)) return
 
     const newMilestone: Toast | undefined = toasts.find(
       (t) => !$userState.toastIdsShown.includes(t.id) && t.trigger?.(callbackProps)
@@ -66,6 +65,7 @@
     farm: $farm,
     userState: $userState,
     gameState: $gameState,
+    gameSettings: $gameSettings,
     successMetrics: $successMetrics
   } // todo: fix this type error
 
@@ -89,6 +89,7 @@
   <div class="toast-wrapper">
     {#if toast.target}
       <div
+        transition:fade|global
         class="toast-mask"
         style="grid-template-columns: {$coords.x}px  {$coords.w}px 1fr; grid-template-rows: {$coords.y}px {$coords.h}px 1fr;"
       >
@@ -122,7 +123,7 @@
         </div>
         {#if toast.button}
           <div class="toast-button">
-            {#if dev}
+            {#if dev && toast.next}
               <Button onClick={() => onDismiss(false)}>Skip</Button>
             {/if}
             <Button onClick={(e) => onDismiss(true)}>
@@ -206,6 +207,7 @@
     gap: 0.25rem
 
   .toast-button
+    margin-top: 0.375rem
     text-align: right
     grid-column: 1/-1
 

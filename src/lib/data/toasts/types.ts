@@ -1,4 +1,4 @@
-import type { GameState, UserState } from "$lib/stores/models/Game"
+import type { GameState, UserState, GameSettings } from "$lib/stores/models/Game"
 
 type ToastType = "milestone" | "guide" | "warning" | "quote"
 
@@ -6,6 +6,7 @@ export type CallBackProps = {
   farm: Farm
   userState: UserState
   gameState: GameState
+  gameSettings: GameSettings
   successMetrics: SuccessMetrics
 }
 

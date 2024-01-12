@@ -23,6 +23,7 @@
       <div class="label">{key} Proteins</div>
       {#each foodItemsGrouped[key] as food, i}
         <Button
+          attributes={{ "data-food-id": food.id, "data-food-name": food.name }}
           disabled={$gameState.inventory.get(food.id).available <= 0}
           active={food === $userState.itemSelectedForSwap}
           color={food === $userState.itemSelectedForSwap ? "tertiary" : "primary"}

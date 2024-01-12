@@ -120,10 +120,10 @@ declare global {
   }
 
   interface SuccessMetrics {
-    hectaresPerPerson: FailureMetric
-    peopleAdequateCalories: FailureMetric
-    calorieProductionChange: FailureMetric
-    caloriesPerPersonPerDayValue: FailureMetric
+    hectaresPerPerson: number
+    peopleAdequateCalories: number
+    calorieProductionChange: number
+    caloriesPerPersonPerDayValue: number
     proteinPerPersonPerDay: FailureMetric
     emissionsChange: FailureMetric
     waterUseChange: FailureMetric

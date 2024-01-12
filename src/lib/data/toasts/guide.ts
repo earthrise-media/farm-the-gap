@@ -1,8 +1,6 @@
 import { get } from "svelte/store"
-import { gameSettings, gameState } from "$lib/stores/state"
+import { gameSettings, gameState, userState } from "$lib/stores/state"
 import { prettyPercent } from "$lib/utils/written"
-import { activeToastId } from "$lib/stores/toast"
-import { once, qs } from "martha"
 
 import type { Toast } from "./types"
 import { foodItems } from "../foods"
@@ -67,12 +65,8 @@ export const guide: Toast[] = [
     // prettier-ignore
     message: `<p>You're ready to get started!</p><p>Click <span class="bg-primary-2 inline-flex align-center bold">${avatar(6,"","plant")}&nbsp;Corn</span> from your food inventory and replace it with <span class="bg-primary-2 inline-flex align-center bold">${avatar(2)}&nbsp;Lamb</span> on the farm grid.</p><p>Then watch how your key metrics change.</p>`,
     next: 5,
-    target: ".button-group.group-plant button:nth-child(6)",
-    onEnter: () => {
-      once(qs(".button-group.group-plant button:nth-child(6)"), "click", () => {
-        activeToastId.set(5)
-      })
-    },
+    target: "#food-menu-wrapper [data-food-name='Corn']",
+    task: ({ userState }) => userState.itemSelectedForSwap?.name === "Corn",
     onDismiss: () => {}
   },
   {
@@ -85,9 +79,13 @@ export const guide: Toast[] = [
     next: 6,
     target: "#land-grid",
     task: ({ gameState }) => gameState.year.current > gameState.year.start,
-    trigger: ({ gameState }) => gameState.year.current === gameState.year.start + 3,
-    onEnter: ({ userState }) =>
-      (userState.itemHighlighted = foodItems.find((f) => f.name === "Lamb") ?? null)
+    onEnter: () => {
+      userState.update(($u) => {
+        $u.itemSelectedForSwap = foodItems.find((f) => f.name === "Corn") ?? null
+        $u.itemHighlighted = foodItems.find((f) => f.name === "Lamb") ?? null
+        return $u
+      })
+    }
   },
   {
     id: 6,
@@ -97,6 +95,12 @@ export const guide: Toast[] = [
     message:
       "Well done, you significantly increased the global calorie <em>and</em> protein supply with that move. Now it's over to you to close the rest of the food gap. Good luck!",
     button: "Close",
-    onEnter: ({ userState }) => (userState.itemHighlighted = null)
+    task: ({ gameState }) => gameState.year.current > gameState.year.start + 1,
+    onEnter: () => {
+      userState.update(($u) => {
+        $u.itemHighlighted = null
+        return $u
+      })
+    }
   }
 ]

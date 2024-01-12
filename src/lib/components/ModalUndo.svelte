@@ -20,6 +20,8 @@
             Your last move made
             <span class="bold">
               {failedMetric.label}
+            </span>
+            <span>
               {failedMetric.value > failedMetric.limit ? "exceed" : "fall under"}
               {failedMetric.suffix === "%" && failedMetric.value > 0
                 ? "+"

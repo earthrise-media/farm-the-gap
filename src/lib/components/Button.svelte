@@ -9,6 +9,7 @@
   export let target: "_blank" | "_self" | "_parent" | "_top" = "_self"
   export let tooltip: string | null = null
   export let bare: boolean = false
+  export let attributes = {}
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
@@ -23,6 +24,7 @@
   {type}
   {target}
   {disabled}
+  {...attributes}
   class:bare
   class:active
   class="{classList} color-{color}"
