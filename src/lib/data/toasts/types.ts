@@ -3,10 +3,10 @@ import type { GameState, UserState } from "$lib/stores/models/Game"
 type ToastType = "milestone" | "guide" | "warning" | "quote"
 
 export type CallBackProps = {
-  farm?: Farm
-  userState?: UserState
-  gameState?: GameState
-  successMetrics?: SuccessMetrics
+  farm: Farm
+  userState: UserState
+  gameState: GameState
+  successMetrics: SuccessMetrics
 }
 
 export type Toast = {
@@ -19,8 +19,8 @@ export type Toast = {
   button?: string
   target?: string
   next?: number
-  task?: (props?: CallBackProps) => boolean
-  trigger?: (props?: CallBackProps) => boolean
-  onEnter?: (props?: CallBackProps) => void
-  onDismiss?: (props?: CallBackProps) => void
+  task?: (props: CallBackProps) => boolean
+  trigger?: (props: CallBackProps) => boolean
+  onEnter?: (props: CallBackProps) => void
+  onDismiss?: (props: CallBackProps) => void
 }

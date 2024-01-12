@@ -1,10 +1,9 @@
 import { get } from "svelte/store"
-import { gameSettings, gameState, userState } from "$lib/stores/state"
+import { gameSettings, gameState } from "$lib/stores/state"
 import { prettyPercent } from "$lib/utils/written"
 import { activeToastId } from "$lib/stores/toast"
 import { once, qs } from "martha"
 
-import type { GameState } from "$lib/stores/models/Game"
 import type { Toast } from "./types"
 import { foodItems } from "../foods"
 
@@ -85,14 +84,10 @@ export const guide: Toast[] = [
     message: `Corn is selected. Now click on a <span class="bg-primary-2 inline-flex align-center bold">${avatar(2)}&nbsp;Lamb</span> cell on the farm grid to complete the swap.`,
     next: 6,
     target: "#land-grid",
-    task: ($gameState: GameState) => $gameState.year.current > $gameState.year.start,
-    onEnter: () => {
-      userState.update(($u) => {
-        $u.itemHighlighted = foodItems.find((f) => f.name === "Lamb") ?? null
-        return $u
-      })
-    },
-    onDismiss: () => {}
+    task: ({ gameState }) => gameState.year.current > gameState.year.start,
+    trigger: ({ gameState }) => gameState.year.current === gameState.year.start + 3,
+    onEnter: ({ userState }) =>
+      (userState.itemHighlighted = foodItems.find((f) => f.name === "Lamb") ?? null)
   },
   {
     id: 6,
@@ -102,12 +97,6 @@ export const guide: Toast[] = [
     message:
       "Well done, you significantly increased the global calorie <em>and</em> protein supply with that move. Now it's over to you to close the rest of the food gap. Good luck!",
     button: "Close",
-    onEnter: () => {
-      userState.update(($u) => {
-        $u.itemHighlighted = null
-        return $u
-      })
-    },
-    onDismiss: () => {}
+    onEnter: ({ userState }) => (userState.itemHighlighted = null)
   }
 ]
