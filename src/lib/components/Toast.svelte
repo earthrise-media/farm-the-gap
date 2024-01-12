@@ -9,29 +9,32 @@
   import { qs } from "martha"
   import { onMount } from "svelte"
   import { spring } from "svelte/motion"
-  import { gameState, userState } from "$lib/stores/state"
+  import { gameState, userState, successMetrics, farm } from "$lib/stores/state"
   import { activeToastId } from "$lib/stores/toast"
 
   import { toasts } from "$lib/data/toasts"
   import { dev } from "$app/environment"
 
-  import type { Toast } from "$lib/data/toasts/types"
+  import type { Toast, CallBackProps } from "$lib/data/toasts/types"
 
   let toast: Toast | undefined = undefined
   let mounted: boolean = false
+  let callbackProps: CallBackProps
 
   onMount(() => {
     mounted = true
-    document.addEventListener("click", () => setTimeout(onGlobalInteraction, 10), true)
+    document.addEventListener("click", (e) => setTimeout(() => onGlobalInteraction(e), 10), true)
   })
 
-  const onGlobalInteraction = () => {
-    // toast?.trigger?.($gameState)
-    let hasCompletedTask = toast?.task?.($gameState)
+  const onGlobalInteraction = (e: InteractionEvent) => {
+    // check if button
+    if (!(e.target instanceof HTMLButtonElement)) return
+
+    let hasCompletedTask = toast?.task?.(callbackProps)
     if (hasCompletedTask) setTimeout(onDismiss, 200)
 
     const newMilestone: Toast | undefined = toasts.find(
-      (t) => !$userState.toastIdsShown.includes(t.id) && t.trigger?.($gameState)
+      (t) => !$userState.toastIdsShown.includes(t.id) && t.trigger?.(callbackProps)
     )
 
     if (newMilestone?.id) {
@@ -43,7 +46,7 @@
   }
 
   const onDismiss = (goToNext = true) => {
-    toast?.onDismiss?.()
+    toast?.onDismiss?.(callbackProps)
 
     if (goToNext) $activeToastId = toast?.next
     else $activeToastId = undefined
@@ -59,9 +62,16 @@
 
   $: toast = toasts.find((t) => t.id === $activeToastId)
 
+  $: callbackProps = {
+    farm: $farm,
+    userState: $userState,
+    gameState: $gameState,
+    successMetrics: $successMetrics
+  } // todo: fix this type error
+
   $: {
     if (mounted && toast) {
-      toast?.onEnter?.()
+      toast?.onEnter?.(callbackProps)
       if (toast.target) {
         const element = qs(toast.target)
         const style = getComputedStyle(element)

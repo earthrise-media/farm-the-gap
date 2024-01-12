@@ -119,6 +119,19 @@ declare global {
     chartSettings: LineChartSettings
   }
 
+  interface SuccessMetrics {
+    hectaresPerPerson: FailureMetric
+    peopleAdequateCalories: FailureMetric
+    calorieProductionChange: FailureMetric
+    caloriesPerPersonPerDayValue: FailureMetric
+    proteinPerPersonPerDay: FailureMetric
+    emissionsChange: FailureMetric
+    waterUseChange: FailureMetric
+    eutrophyChange: FailureMetric
+    hasSucceeded: boolean
+    hasFailed: boolean
+  }
+
   // Farm related types
   type FarmKey = keyof Farm
 

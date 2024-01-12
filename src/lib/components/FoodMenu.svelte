@@ -40,7 +40,7 @@
               </div>
               <span>{food.name}</span>
             </div>
-            <Button classList="bare" onClick={(e) => showFoodDetail(e, food)}>ⓘ</Button>
+            <!-- <Button classList="bare" onClick={(e) => showFoodDetail(e, food)}>ⓘ</Button> -->
           </div>
         </Button>
       {/each}
@@ -87,6 +87,7 @@
   justify-content: space-between
   font-weight: bold
   font-size: 12px
+  pointer-events: none
 
 .food-item-avatar
   margin-right: 0.5em

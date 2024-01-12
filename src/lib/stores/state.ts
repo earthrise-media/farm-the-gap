@@ -3,11 +3,11 @@ import { get, writable, derived } from "svelte/store"
 import { GameSettings, UserState, GameState, GameSnapshot } from "./models/Game"
 import { Farm } from "./models/Farm"
 
-export const gameSettings = writable(new GameSettings())
-export const userState = writable(new UserState())
-export const gameState = writable(new GameState())
-export const gameHistory = writable([] as GameSnapshot[])
-export const farm = writable(new Farm(get(gameSettings)))
+export const gameSettings = writable<GameSettings>(new GameSettings())
+export const userState = writable<UserState>(new UserState())
+export const gameState = writable<GameState>(new GameState())
+export const gameHistory = writable<GameSnapshot[]>([] as GameSnapshot[])
+export const farm = writable<Farm>(new Farm(get(gameSettings)))
 
 export const successMetrics = derived(
   [farm, gameState, gameSettings],

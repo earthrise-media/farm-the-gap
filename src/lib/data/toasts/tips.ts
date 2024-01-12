@@ -16,3 +16,8 @@ export const milestones = [
     button: "Dismiss"
   }
 ]
+
+// Undo
+// Population growth
+// Using the table and charts
+//
