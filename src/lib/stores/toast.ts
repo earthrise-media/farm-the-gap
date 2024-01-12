@@ -1,3 +1,5 @@
 import { writable } from "svelte/store"
 
-export const activeToastId = writable(0)
+type Id = number | string | undefined
+
+export const activeToastId = writable<Id>(0)

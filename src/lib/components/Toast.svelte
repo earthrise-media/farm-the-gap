@@ -13,35 +13,40 @@
   import { activeToastId } from "$lib/stores/toast"
 
   import { toasts } from "$lib/data/toasts"
+  import { dev } from "$app/environment"
 
-  let toast
-  let mounted
+  import type { Toast } from "$lib/data/toasts/types"
+
+  let toast: Toast | undefined = undefined
+  let mounted: boolean = false
 
   onMount(() => {
     mounted = true
-    document.addEventListener("click", onGlobalInteraction, true)
+    document.addEventListener("click", () => setTimeout(onGlobalInteraction, 10), true)
   })
 
   const onGlobalInteraction = () => {
-    setTimeout(() => {
-      let hasCompletedTask = toast?.task?.($gameState)
-      if (hasCompletedTask) setTimeout(onDismiss, 250)
-    }, 5)
+    // toast?.trigger?.($gameState)
+    let hasCompletedTask = toast?.task?.($gameState)
+    if (hasCompletedTask) setTimeout(onDismiss, 200)
 
-    const newToast = toasts.find(
-      (t) => !$userState.milestonesAchieved.includes(t.id) && t.trigger?.($gameState)
+    const newMilestone: Toast | undefined = toasts.find(
+      (t) => !$userState.toastIdsShown.includes(t.id) && t.trigger?.($gameState)
     )
 
-    if (newToast) {
-      $userState.milestonesAchieved.push(newToast.id)
-      toast = newToast
+    if (newMilestone?.id) {
+      $userState.toastIdsShown.push(newMilestone.id)
+      $activeToastId = newMilestone.id
+    } else if (toast && $userState.toastIdsShown.includes(toast.id)) {
+      onDismiss()
     }
   }
 
-  const onDismiss = () => {
-    toast.onDismiss?.()
+  const onDismiss = (goToNext = true) => {
+    toast?.onDismiss?.()
 
-    $activeToastId = toast.next
+    if (goToNext) $activeToastId = toast?.next
+    else $activeToastId = undefined
   }
 
   const coords = spring(
@@ -92,7 +97,7 @@
       <div
         class="toast"
         out:fly|global={{ y: 32, easing }}
-        in:fly|global={{ y: 32, easing, delay: 400 }}
+        in:fly|global={{ y: 32, easing, delay: 200 }}
       >
         {#if toast.img}
           <div class="toast-img"><img width="100%" src="{base}/img/{toast.img}" alt="" /></div>
@@ -107,7 +112,10 @@
         </div>
         {#if toast.button}
           <div class="toast-button">
-            <Button onClick={onDismiss}>
+            {#if dev}
+              <Button onClick={() => onDismiss(false)}>Skip</Button>
+            {/if}
+            <Button onClick={(e) => onDismiss(true)}>
               {@html toast.button}
             </Button>
           </div>

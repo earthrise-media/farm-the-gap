@@ -14,8 +14,8 @@ export class UserState {
   itemInspecting: Food | null = null
   itemHighlighted: Food | null = null
   itemSelectedForSwap: Food | null = null
-  milestonesAchieved: string[] | number[] = []
   isGameComplete: boolean = false
+  toastIdsShown: (string | number)[] = []
 }
 
 export class YieldCoefficients {
