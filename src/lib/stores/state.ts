@@ -67,10 +67,10 @@ export const successMetrics = derived(
       eutrophyChangeValue > eutrophyChangeLimit
 
     // Update snapshot history
-
     gameHistory.update(($gameHistory) => {
       const snapshot = new GameSnapshot(
         year.current,
+        calorieProductionChange,
         proteinPerPersonPerDayValue,
         emissionsChangeValue,
         waterUseChangeValue,

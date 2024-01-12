@@ -43,6 +43,7 @@ export class GameMove {
 
 export class GameSnapshot {
   year: number
+  calorieProductionChange: number
   proteinPerPersonPerDay: number
   emissionsChange: number
   waterUseChange: number
@@ -52,6 +53,7 @@ export class GameSnapshot {
 
   constructor(
     year: number,
+    calorieProductionChange: number,
     proteinPerPersonPerDay: number,
     emissionsChange: number,
     waterUseChange: number,
@@ -60,6 +62,7 @@ export class GameSnapshot {
     hasFailed: boolean
   ) {
     this.year = year
+    this.calorieProductionChange = calorieProductionChange
     this.proteinPerPersonPerDay = proteinPerPersonPerDay
     this.emissionsChange = emissionsChange
     this.waterUseChange = waterUseChange

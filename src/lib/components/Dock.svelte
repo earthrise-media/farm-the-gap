@@ -1,19 +1,30 @@
 <script lang="ts">
-  import { gameSettings, gameState, successMetrics } from "$lib/stores/state"
+  import { gameHistory, gameSettings, gameState, successMetrics } from "$lib/stores/state"
   import Progress from "$lib/components/Progress.svelte"
   import Number from "$lib/components/Number.svelte"
   import { prettyPercent } from "$lib/utils/written"
+  import { fly } from "svelte/transition"
+  import { backOut } from "svelte/easing"
 
-  $: data = [
-    {
-      label: "Population",
-      value: $gameState.population.current
-    },
-    {
-      label: "Moves left",
-      value: $gameState.year.end - $gameState.year.current
+  let nMoves = 0
+  let calorieChange = 0
+  let showFlyNumber = true
+  let flyNumberTimeout: number
+
+  $: {
+    nMoves = $gameHistory.length - 1
+
+    if (nMoves > 0) {
+      showFlyNumber = true
+
+      calorieChange =
+        $gameHistory[nMoves].calorieProductionChange -
+        $gameHistory[nMoves - 1].calorieProductionChange
+
+      clearTimeout(flyNumberTimeout)
+      flyNumberTimeout = setTimeout(() => (showFlyNumber = false), 2500)
     }
-  ]
+  }
 </script>
 
 <div id="dock">
@@ -29,6 +40,16 @@
     <div class="label text-secondary-3">Target: +{prettyPercent($gameSettings.gap)}</div>
   </div>
   <div class="dock-item flex-col flex-grow progress-calorie">
+    {#if $gameHistory.length > 1 && showFlyNumber}
+      <div
+        transition:fly={{ y: 16, easing: backOut }}
+        class="progress-change-fly bold label"
+        class:text-tertiary-1={calorieChange >= 0}
+        class:text-error-2={calorieChange < 0}
+      >
+        <Number showSign isPercent precision={1} value={calorieChange} />
+      </div>
+    {/if}
     <Progress
       isPercent
       max={$gameSettings.gap}
