@@ -177,9 +177,9 @@
   .toast
     pointer-events: all
     position: absolute
-    right: 0
+    left: 0
     bottom: 0
-    max-width: 30vw
+    max-width: calc(33vw - 1rem)
     margin: 0.75rem
     display: flex
     gap: 0 0.5rem

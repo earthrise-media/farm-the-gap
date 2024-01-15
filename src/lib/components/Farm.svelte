@@ -55,12 +55,6 @@
 
               if (isOnly) return
 
-              // if (!$userState.itemSelectedForSwap) {
-              //   e.stopPropagation()
-              //   $userState.itemSelectedForSwap = food
-              //   return
-              // }
-
               return (
                 $userState.itemSelectedForSwap &&
                 !isOnly &&
@@ -161,11 +155,11 @@
   
   &.swappable
     background: var(--color-primary-1)
-  &.unswappable
-    background: var(--color-tertiary-2)
   &.highlighted
     background: var(--color-primary-3)
     animation: flash 0.5s ease-in-out infinite alternate
+  &.unswappable
+    background: var(--color-tertiary-2)
 
 .food-item-avatar
   position: relative
