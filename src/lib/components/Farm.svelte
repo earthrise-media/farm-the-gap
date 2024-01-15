@@ -29,7 +29,8 @@
 </script>
 
 <div id="farm-wrapper" class:levitate>
-  <div id="land-grid">
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <div id="land-grid" on:mouseleave={() => ($userState.itemHighlighted = null)}>
     {#each $farm.grid as row, y}
       {#each row as food, x}
         {#key food.id}
@@ -48,6 +49,7 @@
             class:highlighted={$userState.itemHighlighted?.id === food.id}
             class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
             class:swappable={$userState.itemSelectedForSwap && isSwappable(food)}
+            on:mouseenter={() => ($userState.itemHighlighted = food)}
             on:click={(e) => {
               const isOnly = $farm.getCropCount(food.id) === 1
 

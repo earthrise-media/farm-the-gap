@@ -1,5 +1,7 @@
 <script lang="ts">
   export let onClick = (e: MouseEvent | KeyboardEvent) => {}
+  export let onMouseEnter = (e: MouseEvent) => {}
+  export let onMouseLeave = (e: MouseEvent) => {}
   export let disabled: boolean = false
   export let type: "button" | "submit" | "reset" = "button"
   export let color: "primary" | "secondary" | "tertiary" | "error" | "error-invert" = "primary"
@@ -32,6 +34,8 @@
   tabindex="0"
   data-tooltip={tooltip}
   on:click={(e) => onClick(e)}
+  on:mouseenter={(e) => onMouseEnter(e)}
+  on:mouseleave={(e) => onMouseLeave(e)}
   on:keydown={handleKeydown}
 >
   <slot />

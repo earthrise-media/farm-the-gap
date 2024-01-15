@@ -12,7 +12,12 @@
   type Key = "hectare" | "calorie"
   type Measure = { key: Key; label: string; description: string }
   type KeyMetricGetter = { value: (f: Food) => string | number; sort: (a: Food, b: Food) => number }
-  type SortableData = { label: string; hectare: KeyMetricGetter; calorie: KeyMetricGetter }
+  type SortableData = {
+    key: keyof Food
+    label: string
+    hectare: KeyMetricGetter
+    calorie: KeyMetricGetter
+  }
 
   const measures: Measure[] = [
     {
@@ -39,6 +44,7 @@
 
   const data: SortableData[] = [
     {
+      key: "name",
       label: "Name",
       hectare: {
         value: (f: Food) => f.name,
@@ -50,6 +56,7 @@
       }
     },
     {
+      key: "calorieRatio",
       label: "Calories",
       hectare: {
         value: (f: Food) => largeNumber(nutritionPerHectare(f, f.calorieRatio)),
@@ -62,6 +69,7 @@
       }
     },
     {
+      key: "proteinRatio",
       label: "Protein",
       hectare: {
         value: (f: Food) =>
@@ -79,6 +87,7 @@
       }
     },
     {
+      key: "ghgPerKg",
       label: "Emissions",
       hectare: {
         value: (f: Food) => largeNumber(impactPerHectare(f, f.ghgPerKg)),
@@ -91,6 +100,7 @@
       }
     },
     {
+      key: "waterPerKg",
       label: "Water",
       hectare: {
         value: (f: Food) => largeNumber(impactPerHectare(f, f.waterPerKg)),
@@ -100,6 +110,20 @@
       calorie: {
         value: (f: Food) => ((1000 * f.waterPerKg) / f.calorieRatio).toFixed(0),
         sort: (a: Food, b: Food) => b.waterPerKg / b.calorieRatio - a.waterPerKg / a.calorieRatio
+      }
+    },
+    {
+      key: "eutrophyPerKg",
+      label: "Eutrophy",
+      hectare: {
+        value: (f: Food) => largeNumber(impactPerHectare(f, f.eutrophyPerKg)),
+        sort: (a: Food, b: Food) =>
+          impactPerHectare(b, b.eutrophyPerKg) - impactPerHectare(a, a.eutrophyPerKg)
+      },
+      calorie: {
+        value: (f: Food) => ((1000 * f.eutrophyPerKg) / f.calorieRatio).toFixed(0),
+        sort: (a: Food, b: Food) =>
+          b.eutrophyPerKg / b.calorieRatio - a.eutrophyPerKg / a.calorieRatio
       }
     }
   ]
@@ -113,7 +137,11 @@
   $: foods = foodItems.sort(sortFunction)
 </script>
 
-<div class="food-items-grid block sorted-by-{sortedColumnIndex}">
+<div
+  class="food-items-grid block sorted-by-{sortedColumnIndex} metric-hovering-{data.findIndex(
+    (o) => o.key === $userState.gameMetricHovering
+  ) + 1}"
+>
   <h3 class="block-title flex align-center">
     Food output data
     <sup class="label" data-tooltip-title="Sources" data-tooltip="Our World in Data; USDA.">ⓘ</sup>
@@ -173,6 +201,7 @@
     {#each foods as f, i (f.id)}
       <div
         class="food-card"
+        class:is-highlighted={$userState.itemHighlighted?.id === f.id}
         animate:flip={{ duration: 800, easing, delay: 8 * i }}
         on:animationstart={() => (isSorting = true)}
         on:animationend={() => (isSorting = false)}
@@ -221,13 +250,18 @@
 
 .food-card
   display: grid
-  grid-template-columns: 12ch repeat(2, minmax(0, 1fr)) 10.5ch 7.5ch
+  grid-template-columns: minmax(12ch, 1fr) minmax(10.5ch, 1fr) minmax(9.5ch, 1fr) minmax(12ch, 1fr) minmax(8ch, 1fr) minmax(11ch, 1fr)
   font-size: 0.625rem
   height: 100%
-  transition: filter 0.2s ease-in-out
   cursor: pointer
   position: relative
   overflow: hidden
+
+  &.is-highlighted
+    .td
+      background: var(--color-primary-2)
+      color: var(--color-secondary-1)
+      filter: brightness(1.1)
 
   .name, .td, .th
     overflow: hidden
@@ -242,12 +276,18 @@
   .td, .th
     padding: 0.25em
     text-align: right
-    transition: all 0.2s, background-color 0.8s ease-in
+    transition: all 0.2s, background-color 0.1s ease-out
 
-    @for $i from 1 through 5
+    @for $i from 1 through 6
       .sorted-by-#{$i - 1} &:nth-child(#{$i})
         background-color: var(--color-primary-2)
-        filter: none!important
+
+      .metric-hovering-#{$i} &:nth-child(#{$i})
+        background-color: var(--color-primary-2)
+
+      .sorted-by-#{$i - 1}.metric-hovering-#{$i} &:nth-child(#{$i})
+        background-color: var(--color-primary-3)
+      
 
     &:first-child
       text-align: left
@@ -257,17 +297,29 @@
     display: flex
     justify-content: flex-end
     border-bottom: 1px solid var(--color-secondary-3)
+    padding-right: 0
+
+    :global(button)
+      padding-right: 0.25em
+      gap: 0.125em
 
     &:first-child
       justify-content: flex-start
+      padding-left: 0.125em
 
     &.active
       color: var(--color-secondary-1)
 
-@media (hover: hover)
-  .food-card:not(:first-child):hover
-    .td
-      color: var(--color-secondary-1)
-      filter: brightness(1.25)
+@media (max-width: 1380px)
+  // hide eutrophy column
+  .food-card
+    grid-template-columns: minmax(12ch, 1fr) minmax(10.5ch, 1fr) minmax(9.5ch, 1fr) minmax(12ch, 1fr) minmax(8ch, 1fr)
 
+    .td,.th
+      &:nth-child(6)
+        display: none
+
+@media (max-width: 1120px)
+  .food-card
+    grid-template-columns: repeat(4, 1fr) 0.75fr
 </style>

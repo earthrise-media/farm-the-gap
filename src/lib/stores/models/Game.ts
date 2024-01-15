@@ -16,6 +16,7 @@ export class UserState {
   itemSelectedForSwap: Food | null = null
   isGameComplete: boolean = false
   toastIdsShown: (string | number)[] = []
+  gameMetricHovering: keyof Food | null = null
 }
 
 export class YieldCoefficients {

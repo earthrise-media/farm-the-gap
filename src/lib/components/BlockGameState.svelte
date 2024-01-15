@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { sparklineData, gameState } from "$lib/stores/state"
+  import { sparklineData, gameState, userState } from "$lib/stores/state"
 
   import Number from "$lib/components/Number.svelte"
   import LineChart from "$lib/components/LineChart.svelte"
@@ -10,8 +10,14 @@
   <div class="group group-metrics">
     <div class="group-title label-caps">Game metrics</div>
     <div class="items">
-      {#each $sparklineData as { value, history, label, suffix, objective, warn, chartSettings }}
-        <div class="item" class:warn>
+      {#each $sparklineData as { value, history, label, suffix, objective, warn, foodMetricKey, chartSettings }}
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div
+          class="item"
+          class:warn
+          on:mouseenter={() => ($userState.gameMetricHovering = foodMetricKey)}
+          on:mouseleave={() => ($userState.gameMetricHovering = null)}
+        >
           <div class="column-number flex-col">
             <div class="label">
               {label}

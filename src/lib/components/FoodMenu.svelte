@@ -27,15 +27,17 @@
           disabled={$gameState.inventory.get(food.id).available <= 0}
           active={food === $userState.itemSelectedForSwap}
           color={food === $userState.itemSelectedForSwap ? "tertiary" : "primary"}
+          onMouseEnter={() => ($userState.itemHighlighted = food)}
+          onMouseLeave={() => ($userState.itemHighlighted = null)}
           onClick={(e) => selectFoodItem(e, food)}
           tooltip={$gameState.inventory.get(food.id).available <= 0
             ? food.name + " supply exhaused."
             : null}
         >
           <div class="food-item-button">
-            <div class="flex align-center">
+            <div class="flex align-center label">
               <div class="food-item-avatar text-secondary-3 bg-{food.colorId}">
-                <span class="label">
+                <span>
                   {$gameState.inventory.get(food.id).available}
                 </span>
               </div>
@@ -91,10 +93,11 @@
   pointer-events: none
 
 .food-item-avatar
-  margin-right: 0.5em
+  margin-right: 0.375em
+  padding: 0.625em
 
 :global(#food-menu-wrapper button)
-  padding: 0.125em 0.25em
+  padding: 0.125em 0.125em
 
 :global(#food-menu-wrapper .food-item-button button)
   padding: 0
