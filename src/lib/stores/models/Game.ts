@@ -6,6 +6,7 @@ export class GameSettings {
   mode: number = 0
   gap: number = 0.5 // Food gap
   undoLimit: number = 3 // # of undos allowed
+  populationStart: number = 8 * 1000 * 1000 * 1000 // World population
 }
 
 export class UserState {
@@ -24,7 +25,7 @@ export class YieldCoefficients {
   yieldMultiplier = 1 // accounts for improvements in yield per ha
   demandRatio = 0.5 // 0 = no animal products, 1 = only animal products
   lossRatio = 0.85 // % of nutrients retained (i.e. minus losses from waste, processing, storage, etc.)
-  landRatio = 24000000 // amount of real world land (ha) each square represents
+  landRatio = 24 * 1000 * 1000 // amount of real world land (ha) each square represents
 }
 
 export class GameMove {
@@ -94,22 +95,15 @@ export class Inventory {
 
 export class NutritionalRequirements {
   carbs = 275
-  protein = 70
-  calories = 2000
+  protein = 68
+  calories = 2250
 }
 
 export class GameState {
   year = {
-    start: 2020,
-    end: 2050,
-    current: 2020
-  }
-
-  population = {
-    start: 7850000000,
-    current: 7850000000,
-    end: 1.5 * 7850000000,
-    growth: ~~((1.5 * 7850000000 - 7850000000) / (this.year.end - this.year.start))
+    start: 2024,
+    end: 2054,
+    current: 2024
   }
 
   undosRemaining = new GameSettings().undoLimit
@@ -122,7 +116,6 @@ export class GameState {
     this.inventory.get(foodAdded.id).available--
     this.year.current++
     this.moveHistory.push(new GameMove(foodAdded, foodRemoved, x, y))
-    this.population.current += this.population.growth
   }
 
   undo(): GameMove | undefined {
@@ -133,7 +126,6 @@ export class GameState {
     if (move) {
       this.inventory.get(move.foodAdded.id).available++
       this.year.current--
-      this.population.current -= this.population.growth
       this.undosRemaining--
     }
 
@@ -143,7 +135,6 @@ export class GameState {
   reset() {
     this.inventory.reset()
     this.year.current = this.year.start
-    this.population.current = this.population.start
     this.undosRemaining = new GameSettings().undoLimit
   }
 }

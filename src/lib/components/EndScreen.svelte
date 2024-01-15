@@ -95,8 +95,10 @@
                 )}{$successMetrics.calorieProductionChange > 0 ? "," : "."}
                 {#if $successMetrics.calorieProductionChange > 0}
                   and fed an additional
-                  {largeNumber($gameState.population.current - $gameState.population.start)} people without
-                  clearing any more land for farming. That's something to be proud of!
+                  {largeNumber(
+                    $successMetrics.currentPopulationFed - $gameSettings.populationStart
+                  )} people without clearing any more land for farming. That's something to be proud
+                  of!
                 {:else}
                   Let's break that down.
                 {/if}

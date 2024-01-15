@@ -45,7 +45,7 @@
         transition:fly={{ y: 16, easing: backOut }}
         class="progress-change-fly bold label"
         class:text-tertiary-1={calorieChange >= 0}
-        class:text-error-2={calorieChange < 0}
+        class:text-error-3={calorieChange < 0}
       >
         <Number showSign isPercent precision={1} value={calorieChange} />
       </div>

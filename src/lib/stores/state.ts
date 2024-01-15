@@ -12,33 +12,26 @@ export const farm = writable<Farm>(new Farm(get(gameSettings)))
 export const successMetrics = derived(
   [farm, gameState, gameSettings],
   ([$farm, $gameState, $gameSettings]) => {
-    const { population, year, coefficients, nutritionalRequirements } = $gameState
+    const { year, coefficients, nutritionalRequirements } = $gameState
     const nutrientConversion = coefficients.yieldMultiplier * coefficients.lossRatio
     const $gameHistory = get(gameHistory)
-
-    const caloriesPerPersonPerDayValue = +(
-      ($farm.calories.total * nutrientConversion * coefficients.landRatio) /
-      (population.current * 365)
-    ).toFixed(0)
 
     const calorieProductionChange =
       ($farm.calories.total - $farm.initialState.calories.total) / $farm.initialState.calories.total
 
-    const hectaresPerPerson = +(($farm.rows * $farm.cols) / population.current).toFixed(2)
+    const currentPopulationFed = (1 + calorieProductionChange) * $gameSettings.populationStart
+    const hectaresPerPerson = +(($farm.rows * $farm.cols) / currentPopulationFed).toFixed(2)
 
-    const peopleAdequateCalories = +(
-      (nutrientConversion * $farm.calories.total) /
-      (365 * nutritionalRequirements.calories)
-    ).toFixed(0)
+    console.log(currentPopulationFed)
 
     // Protein
-    const proteinPerPersonPerDayLimit = $gameState.nutritionalRequirements.protein
+    const proteinPerPersonPerDayLimit = nutritionalRequirements.protein
     const proteinPerPersonPerDayValue = +(
       ($farm.protein.total *
         coefficients.proteinMultiplier *
         nutrientConversion *
         coefficients.landRatio) /
-      (population.current * 365)
+      (currentPopulationFed * 365)
     ).toFixed(0)
 
     // Emissions
@@ -168,9 +161,8 @@ export const successMetrics = derived(
 
     return {
       hectaresPerPerson,
-      peopleAdequateCalories,
+      currentPopulationFed,
       calorieProductionChange,
-      caloriesPerPersonPerDayValue,
       proteinPerPersonPerDay,
       emissionsChange,
       waterUseChange,

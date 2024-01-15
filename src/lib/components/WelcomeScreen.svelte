@@ -43,13 +43,7 @@
     setTimeout(() => (slideIndex = 0), 400)
   })
 
-  const numberTween = tweened($gameState.population.start, { duration: 4000 })
   const flyIn = { y: 8, easing, delay: 600, duration: 1200 }
-
-  $: {
-    if (slideIndex === 2) $numberTween = $gameState.population.end
-    else numberTween.set($gameState.population.start, { duration: 0, delay: 400 })
-  }
 
   const close = () => {
     $userState.hasBeenWelcomed = true

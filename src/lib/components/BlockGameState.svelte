@@ -1,5 +1,12 @@
 <script lang="ts">
-  import { sparklineData, gameState, userState } from "$lib/stores/state"
+  import {
+    sparklineData,
+    gameSettings,
+    gameState,
+    userState,
+    gameHistory,
+    successMetrics
+  } from "$lib/stores/state"
 
   import Number from "$lib/components/Number.svelte"
   import LineChart from "$lib/components/LineChart.svelte"
@@ -44,23 +51,26 @@
     </div>
   </div>
   <div class="group group-population">
-    <div class="group-title label-caps">Population</div>
+    <div class="group-title label-caps">Population fed</div>
     <div class="items">
-      <div class="column-chart flex-col">
-        <div class="line-chart label flex-center">
-          <LineChart
-            data={new Array($gameState.year.current - $gameState.year.start)
-              .fill($gameState.population.start)
-              .map((v, i) => v + i * $gameState.population.growth)}
-            yDatum={$gameState.population.start}
-            yMin={$gameState.population.start}
-            yMax={$gameState.population.end}
-          />
-        </div>
+      <div class="line-chart label flex-center">
+        <LineChart
+          length={$gameState.year.end - $gameState.year.start}
+          data={$gameHistory.map((o) => o.calorieProductionChange)}
+          yDatum={0}
+          yLimit={$gameSettings.gap}
+          yMax={$gameSettings.gap}
+          yMin={-0.1}
+        />
       </div>
       <div class="label text-center">
-        You are sustainably feeding <span class="text-tertiary-1 bold"
-          >{largeNumber($gameState.population.current)}</span
+        You are sustainably feeding <span
+          class="bold {$successMetrics.calorieProductionChange >= 0
+            ? 'text-tertiary-1'
+            : 'text-error-3'}"
+          >{largeNumber(
+            $gameSettings.populationStart * (1 + $successMetrics.calorieProductionChange)
+          )}</span
         >
         people a nutritional diet in <b>{$gameState.year.current}</b>.
       </div>
@@ -89,9 +99,8 @@
 
   &.group-population
     .line-chart
-      height: 1.25rem
-    .group-title
-      margin-bottom: -0.5rem
+      height: 2rem
+      margin-top: 0.5rem
 
 .items
   display: flex

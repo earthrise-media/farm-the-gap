@@ -41,7 +41,7 @@ export const guide: Toast[] = [
     type: "guide",
     title: "Key impact metrics",
     message:
-      "Monitor your environmental impact and nutritional stats here. The population grows each year and it will be game over if you fail any metric. Be careful!",
+      "Monitor your environmental impact and nutritional stats here. The population changes each year and it will be game over if you fail on any metric. Be careful!",
     button: "Next",
     target: ".panel-1-3",
     next: 3
@@ -93,7 +93,7 @@ export const guide: Toast[] = [
     type: "guide",
     title: "You made your first move!",
     message:
-      "Well done, you significantly increased the global calorie <em>and</em> protein supply with that move. Now it's over to you to close the rest of the food gap. Good luck!",
+      "Well done, you significantly increased total food production with that move. You are already feeding an additional 600M people! Now it's over to you to close the rest of the food gap. Good luck!",
     button: "Close",
     task: ({ gameState }) => gameState.year.current > gameState.year.start + 1,
     onEnter: () => {
