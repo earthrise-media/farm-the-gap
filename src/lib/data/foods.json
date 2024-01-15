@@ -222,10 +222,10 @@
     "fatRatio": 10.3,
     "nutritionSources": "Rice, white, long grain, unenriched, raw",
     "ghgPerKg": 3.9,
-    "waterPerKg": 2114.4,
+    "waterPerKg": 1057.2,
     "eutrophyPerKg": 26.5,
     "landPerKg": 2.9,
-    "impactSources": "Rice (food product)"
+    "impactSources": "Rice (food product). Reduced by 50% to reflect local abundance."
   },
   {
     "id": "f14",
