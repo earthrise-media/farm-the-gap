@@ -32,6 +32,13 @@
     }
   ]
 
+  const getCaveat = (food: Food, key: keyof Food) => {
+    if (food.name === "Rice" && key === "waterPerKg")
+      return "Rice water usage is discounted 50% due to freshwater abundance in growing regions."
+
+    return undefined
+  }
+
   const impactPerHectare = (food: Food, xPerKg: number) =>
     xPerKg * food.yieldPerHa * $gameState.coefficients.yieldMultiplier
 
@@ -215,8 +222,10 @@
           <strong>{f.name}</strong>
         </div>
         {#each data.slice(1) as column}
-          <div class="td">
-            {column[currentMeasure.key].value(f)}
+          <div class="td" data-tooltip={getCaveat(f, column.key)}>
+            {column[currentMeasure.key].value(f)}{#if getCaveat(f, column.key)}<span
+                class="text-secondary-1">*</span
+              >{/if}
           </div>
         {/each}
       </div>
