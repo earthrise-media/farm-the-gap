@@ -60,7 +60,8 @@
 .food-items-grid
   display: flex
   flex-direction: column
-  padding: 1em
+  padding: 1rem
+  padding-left: 0.5rem
   background: var(--color-primary-1)
 
 .block-title

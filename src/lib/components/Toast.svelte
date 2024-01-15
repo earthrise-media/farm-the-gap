@@ -10,7 +10,7 @@
   import { onMount } from "svelte"
   import { spring } from "svelte/motion"
   import { gameState, userState, successMetrics, gameSettings, farm } from "$lib/stores/state"
-  import { activeToastId } from "$lib/stores/toast"
+  import { activeToastId, activeTipId } from "$lib/stores/toast"
 
   import { toasts } from "$lib/data/toasts"
   import { dev } from "$app/environment"
@@ -46,6 +46,8 @@
 
   const onDismiss = (goToNext = true) => {
     toast?.onDismiss?.(callbackProps)
+
+    if (toast?.type === "tip") $activeTipId = $activeToastId
 
     if (goToNext) $activeToastId = toast?.next
     else $activeToastId = undefined
@@ -134,6 +136,15 @@
       </div>
     {/key}
   </div>
+{:else}
+  <button
+    class="guide-img-button"
+    data-tooltip="Give me a tip"
+    transition:fly={{ x: -40 }}
+    on:click={() => ($activeToastId = $activeTipId)}
+  >
+    <img width="100%" src="{base}/img/guide.png" alt="graphic of game guide" />
+  </button>
 {/if}
 
 <style lang="sass">
@@ -200,6 +211,17 @@
 
     img
       width: 30px
+
+  .guide-img-button
+    left: 0
+    bottom: 0
+    width: 35px
+    z-index: 10
+    border: none
+    margin: 0.75rem
+    pointer-events: all
+    background: transparent
+    position: absolute
 
   .toast-body
     display: flex
