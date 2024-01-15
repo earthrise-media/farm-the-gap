@@ -67,10 +67,7 @@
         You are sustainably feeding <span
           class="bold {$successMetrics.calorieProductionChange >= 0
             ? 'text-tertiary-1'
-            : 'text-error-3'}"
-          >{largeNumber(
-            $gameSettings.populationStart * (1 + $successMetrics.calorieProductionChange)
-          )}</span
+            : 'text-error-3'}">{largeNumber($successMetrics.currentPopulationFed)}</span
         >
         people a nutritional diet in <b>{$gameState.year.current}</b>.
       </div>
