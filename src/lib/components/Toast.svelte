@@ -125,7 +125,7 @@
         </div>
         {#if toast.button}
           <div class="toast-button">
-            {#if dev && toast.next}
+            {#if toast.next}
               <Button onClick={() => onDismiss(false)}>Skip</Button>
             {/if}
             <Button onClick={(e) => onDismiss(true)}>
