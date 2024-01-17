@@ -22,8 +22,6 @@ export const successMetrics = derived(
     const currentPopulationFed = (1 + calorieProductionChange) * $gameSettings.populationStart
     const hectaresPerPerson = +(($farm.rows * $farm.cols) / currentPopulationFed).toFixed(2)
 
-    console.log(currentPopulationFed)
-
     // Protein
     const proteinPerPersonPerDayLimit = nutritionalRequirements.protein
     const proteinPerPersonPerDayValue = +(

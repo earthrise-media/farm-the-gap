@@ -1,19 +1,21 @@
 <script lang="ts">
-  import { onMount } from "svelte"
-  import { tweened } from "svelte/motion"
-  import { fly, fade } from "svelte/transition"
-  import { backOut as easing, linear } from "svelte/easing"
+  import { fade } from "svelte/transition"
+  import { backOut as easing } from "svelte/easing"
 
-  import { userState, gameState, gameSettings, successMetrics } from "$lib/stores/state"
+  import { userState, gameState, gameSettings } from "$lib/stores/state"
+  import { prettyPercent } from "$lib/utils/written"
 
   import Farm from "$lib/components/Farm.svelte"
   import Modal from "$lib/components/Modal.svelte"
-  import { prettyPercent } from "$lib/utils/written"
+  import Slide from "$lib/components/Slide.svelte"
+  import Slides from "$lib/components/Slides.svelte"
 
-  let mounted = false
   let slideIndex = 0
+  let slides = ["Welcome", "Context", "Gameplay", "Challenge"]
 
-  const slides = ["Welcome", "Context", "Gameplay", "Challenge"]
+  const close = () => {
+    $userState.hasBeenWelcomed = true
+  }
 
   const impactCharts = [
     {
@@ -37,34 +39,7 @@
       description: "of ocean and freshwater eutrophication is caused by agriculture"
     }
   ]
-
-  onMount(() => {
-    mounted = true
-    setTimeout(() => (slideIndex = 0), 400)
-  })
-
-  const flyIn = { y: 8, easing, delay: 600, duration: 1200 }
-
-  const close = () => {
-    $userState.hasBeenWelcomed = true
-  }
-
-  const onClick = (e: InteractionEvent) => {
-    const target = e.target as HTMLElement
-    if (target?.tagName === "A") return
-    if (slideIndex < 0) return
-    if (slideIndex === slides.length - 1) close()
-    else slideIndex += 1
-  }
-
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (["ArrowDown", "ArrowRight", "Enter", " "].includes(e.key)) onClick(e)
-    if (["ArrowUp", "ArrowLeft"].includes(e.key) && slideIndex > 0) slideIndex -= 1
-    if (e.key === "Escape") close()
-  }
 </script>
-
-<svelte:window on:click={onClick} on:keydown={onKeyDown} />
 
 {#if !$userState.hasBeenWelcomed}
   <Modal id="welcome-screen" fullscreen durationOut={800}>
@@ -74,14 +49,19 @@
       tabindex="0"
       in:fade={{ duration: 2000, delay: 100, easing }}
     >
-      <div class="slide-wrap">
+      <Slides
+        bind:slideIndex
+        {slides}
+        {close}
+        showPagers={slideIndex > 0 && slideIndex < slides.length - 1}
+      >
         <div out:fade class="backing-screen">
           <div class="welcome-farm-wrapper">
             <Farm levitate />
           </div>
         </div>
         {#if slideIndex === 0}
-          <div class="slide" out:fade in:fly={flyIn}>
+          <Slide>
             <h1 class="title slide-title slide-title-0">The Food Gap Challenge</h1>
             <p>
               The world faces a food gap. By {$gameState.year.end}, we must produce {prettyPercent(
@@ -90,9 +70,9 @@
             </p>
             <p>Can you reimagine agriculture to feed the future sustainably?</p>
             <p class="label text-tertiary-1">Click anywhere to begin</p>
-          </div>
+          </Slide>
         {:else if slideIndex === 1}
-          <div class="slide" out:fade in:fly={flyIn}>
+          <Slide>
             <h3 class="slide-title slide-title-1">The environmental impact of food</h3>
             <p>
               Food systems have a significant global footprint.<sup
@@ -113,18 +93,18 @@
                 </div>
               {/each}
             </div>
-          </div>
+          </Slide>
         {:else if slideIndex === 2}
-          <div class="slide" out:fade in:fly={flyIn}>
+          <Slide>
             <h3 class="slide-title slide-title-2">This is our global farm</h3>
             <p>
               Each square on this 10&hairsp;×&hairsp;10 plot represents 1% of global land used for
               agriculture. 77% is used for livestock farming, and 23% for crops for human
               consumption, such as fruit, vegetables, and grains.
             </p>
-          </div>
+          </Slide>
         {:else if slideIndex === 3}
-          <div class="slide" out:fade in:fly={flyIn}>
+          <Slide>
             <h3 class="slide-title slide-title-3">You decide how to feed the future</h3>
             <p>
               You have {$gameState.year.end - $gameState.year.current} years to close the food gap by
@@ -137,24 +117,10 @@
             <p>
               <b class="text-tertiary-1"> Let's play! </b>
             </p>
-          </div>
+          </Slide>
         {/if}
-      </div>
+      </Slides>
     </div>
-    {#if slideIndex > 0 && slideIndex < slides.length - 1}
-      <div transition:fade class="pager-wrap">
-        <div class="label text-secondary-1">Click anywhere to continue</div>
-        <div class="pagers">
-          {#each slides as s, i}
-            <button
-              class="pager"
-              class:active={slideIndex === i}
-              on:click|stopPropagation={() => (slideIndex = i)}
-            />
-          {/each}
-        </div>
-      </div>
-    {/if}
   </Modal>
 {/if}
 
@@ -163,65 +129,11 @@
   display: flex
   height: 100%
 
-.slide-wrap
-  position: relative
-  flex-grow: 1
-
-.slide
-  position: absolute
-  display: flex
-  flex-direction: column
-  align-items: center
-  justify-content: center
-  text-align: center
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  font-size: 0.875rem
-  font-size: 1.125rem
-  line-height: 1.3
-
 .slide-title
   padding-top: 8rem
 
   &.slide-title-1
     padding-top: 0
-
-.pager-wrap
-  position: relative
-  display: flex
-  flex-direction: column
-  justify-content: center
-  align-items: center
-  position: fixed
-  bottom: 2rem
-  width: 100%
-  left: 0
-  gap: 1rem
-
-.pagers
-  display: flex
-  align-items: center
-  position: relative
-  gap: 0.5rem
-
-  .label
-    left: calc(100% + 1rem)
-    position: absolute
-    width: 4ch
-
-.pager
-  width: 1em
-  height: 1em
-  cursor: pointer
-  border-radius: 100%
-  border: none
-  transition: background 0.2s ease-in-out
-  background: var(--color-primary-1)
-
-  &.active
-    background: var(--color-primary-3)
 
 .welcome-farm-wrapper
   margin: 0 auto
@@ -262,9 +174,10 @@
   opacity: 1
   pointer-events: none
 
-:global(#welcome-screen)
+:global(#welcome-screen, #end-screen)
   user-select: none
-:global(#welcome-screen .scroller-contents.scroller-y)
+:global(#welcome-screen .scroller-contents.scroller-y),
+:global(#end-screen .scroller-contents.scroller-y)
   overflow: hidden
 
 </style>

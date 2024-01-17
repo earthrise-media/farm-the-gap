@@ -1,5 +1,5 @@
 declare global {
-  type InteractionEvent = MouseEvent | PointerEvent | TouchEvent
+  type InteractionEvent = MouseEvent | PointerEvent | TouchEvent | KeyboardEvent
 
   type FoodId =
     | "f01"

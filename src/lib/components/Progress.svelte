@@ -8,6 +8,7 @@
   export let showValue = true
   export let showLabels = true
   export let isPercent = false
+  export let isError = false
   export let backgroundCurrentColor = false
   export let min = 0
   export let max = isPercent ? 1 : 100
@@ -26,7 +27,7 @@
     <slot name="label" />
   </div>
 {/if}
-<div class="progress-bar">
+<div class="progress-bar" class:is-error={isError}>
   {#if showLabels}
     <div class="progress-bar-labels">
       <div class="progress-bar-label">{(isPercent ? 100 : 1) * min}</div>
@@ -56,6 +57,10 @@
   overflow: hidden
   background: var(--color-secondary-3)
   border: 1px solid var(--color-secondary-3)
+
+  .is-error &
+    background: var(--color-error-3)
+    border-color: var(--color-error-3)
 
 .progress-bar-labels
   display: flex

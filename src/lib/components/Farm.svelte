@@ -187,16 +187,4 @@
   .land-cell:not(.unswappable):hover .food-item-avatar
     transform: rotateZ(-14deg) rotateY(-40deg) rotateX(60deg) scale(1.125, 1.75) translate(17%, -28%)
 
-@keyframes levitate
-  0%
-    transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateZ(0)
-  100%
-    transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg) translateZ(0.5rem)
-
-@keyframes levitate-shadow
-  0%
-    box-shadow: -2rem 2rem 1rem rgba(black, 0.25)
-  100%
-    box-shadow: -3rem 3rem 2rem rgba(black, 0.25)
-
 </style>

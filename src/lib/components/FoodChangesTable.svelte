@@ -7,12 +7,12 @@
 
   $: data = [
     {
-      label: "Increased ↗",
-      list: $farm.foodChanges.filter((o) => o.delta > 0).sort(descending)
+      label: "Foods out ↘",
+      list: $farm.foodChanges.filter((o) => o.delta < 0).sort(ascending)
     },
     {
-      label: "Reduced ↘",
-      list: $farm.foodChanges.filter((o) => o.delta < 0).sort(ascending)
+      label: "Foods in ↗",
+      list: $farm.foodChanges.filter((o) => o.delta > 0).sort(descending)
     }
   ]
 </script>
@@ -41,10 +41,12 @@
 <style lang="sass">
   .food-changes-table
     display: flex
+    justify-content: space-between
     gap: 1rem
+    width: 100%
 
   .group
-    min-width: 100px
+    min-width: 140px
     display: flex
     flex-direction: column
 

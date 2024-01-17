@@ -53,18 +53,17 @@
   </div>
 
   <div class="panel panel-data">
-    <div class="panel-1-3">
-      <BlockGameState />
-    </div>
     <div class="panel-2-3">
       <FoodStatsTable />
       <!-- <FoodChangesTable /> -->
-      <!-- <BlockImpact type="emissions" />
-        <BlockImpact type="water" />
-        <BlockImpact type="eutrophy" /> -->
+      <FoodItemsGrid />
+    </div>
+    <div class="panel-1-3">
+      <BlockGameState />
     </div>
     <!-- <BlockNutrition type="protein" /> -->
   </div>
+
   <FoodInformationCard />
   <Tooltip />
 
@@ -85,7 +84,7 @@ main
   padding: 0.75rem
   grid-template-rows: auto 1fr
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
-  grid-template-areas: "header header" "game data"
+  grid-template-areas: "header header" "data game"
   background: var(--color-primary-1)
 
   // &.food-item-selected
@@ -115,7 +114,7 @@ header
   grid-area: data
   gap: 0.25rem
   display: grid
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr)
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr)
 
   .panel-1-3
     background: var(--color-primary-2)

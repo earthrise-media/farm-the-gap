@@ -9,6 +9,7 @@
   export let warn: boolean = false
   export let length: number = 0
   export let labels: boolean = false
+  export let pulseEndPoint: boolean = false
   export let labelFormat: (n: number) => string = (n) => n.toFixed(0)
 
   const fy = (y: number) => 100 * (1 - (y - min) / (max - min))
@@ -68,6 +69,19 @@
       {/if}
     </svg>
   {/if}
+  {#if pulseEndPoint}
+    <svg class="pulses">
+      {#each [3, 1.75] as r}
+        <circle
+          {r}
+          class="pulse"
+          class:warn
+          cx="{((data.length - 1) * 100) / xTicks}%"
+          cy="{fy(data[data.length - 1])}%"
+        />
+      {/each}
+    </svg>
+  {/if}
 </svg>
 
 <style lang="sass">
@@ -104,4 +118,16 @@ path
   font-weight: bold
   font-size: 7px
   dominant-baseline: central
+
+.pulse
+  fill: currentColor
+  transform-box: fill-box
+  transform-origin: center
+
+  &.warn:first-child
+    fill: var(--color-error-2)
+    
+  &:first-child
+    animation: pulse 1.5s ease-out infinite
+
 </style>
