@@ -5,7 +5,7 @@
   import Scroller from "$lib/components/Scroller.svelte"
 
   export let id = ""
-  export let close = () => {}
+  export let close = (e: InteractionEvent) => {}
   export let classList = ""
   export let isError = false
   export let fullWidth = false
@@ -16,7 +16,7 @@
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
-      close()
+      close(e)
     }
   }
 

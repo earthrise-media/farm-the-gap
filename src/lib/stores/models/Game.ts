@@ -18,6 +18,7 @@ export class UserState {
   isGameComplete: boolean = false
   toastIdsShown: (string | number)[] = []
   gameMetricHovering: keyof Food | null = null
+  shareText: string = ""
 }
 
 export class YieldCoefficients {

@@ -1,11 +1,6 @@
 <script lang="ts">
-  import { base } from "$app/paths"
-  import { fade, fly } from "svelte/transition"
-  import { backOut as easing, linear } from "svelte/easing"
-
-  import { foodItems } from "$lib/data/foods"
-  import { largeNumber, prettyPercent, prettyList } from "$lib/utils/written"
-  import { gameSettings, successMetrics, sparklineData, gameState, farm } from "$lib/stores/state"
+  import { largeNumber, prettyPercent } from "$lib/utils/written"
+  import { gameSettings, successMetrics, userState } from "$lib/stores/state"
 
   import Slide from "$lib/components/Slide.svelte"
   import Button from "$lib/components/Button.svelte"
@@ -14,6 +9,7 @@
   import FoodChangesTable from "$lib/components/FoodChangesTable.svelte"
   import Slides from "./Slides.svelte"
   import Farm from "./Farm.svelte"
+  import EndSlideYourFarm from "./EndSlideYourFarm.svelte"
 
   type FailureMetric = typeof $successMetrics.emissionsChange
 
@@ -21,17 +17,19 @@
   export let failedMetric: FailureMetric | undefined
   export let exhaustedTurns: boolean
 
-  let slideIndex = 0
+  let slideIndex = 1
   let slides = ["Summary", "Farm", "Tips"]
-  let foods: Food[] = JSON.parse(JSON.stringify(foodItems))
-
-  if (failedMetric) {
-    let key = failedMetric.foodMetricKey
-    foods.sort((a, b) => b[key] / b.calorieRatio - a[key] / a.calorieRatio)
-  }
+  let foodsAdded: Count[] = []
+  let foodsRemoved: Count[] = []
 </script>
 
-<Slides {slides} bind:slideIndex pagersText="Click anywhere to learn more about your game">
+<Slides
+  {slides}
+  bind:slideIndex
+  pagersText={slideIndex === 0
+    ? "Or click anywhere to learn more about your game"
+    : "Keep clicking for more about your game"}
+>
   {#if slideIndex === 0}
     <Slide>
       <div class="slide-0">
@@ -88,13 +86,18 @@
                 </span>
               </span>
             </div>
-            <p>You failed to close the food gap.<br />But you made great progress.</p>
+            <p>You failed to close the food gap but you made great progress.</p>
             <p>
-              Over {$gameState.year.current - $gameState.year.start} years you increased global food
-              production by {prettyPercent(Math.abs($successMetrics.calorieProductionChange))},
-              feeding an additional
-              {largeNumber($successMetrics.currentPopulationFed - $gameSettings.populationStart)} people
-              without clearing any more land for farming. That's something to be proud of!
+              Without clearing any new land, you <b class="text-tertiary-1">increased</b>
+              global calorie supply by {prettyPercent(
+                Math.abs($successMetrics.calorieProductionChange)
+              )} and global protein supply by {prettyPercent(
+                $successMetrics.proteinProductionChange
+              )}.
+            </p>
+            <p>
+              Your changes could feed an additional
+              {largeNumber($successMetrics.currentPopulationFed - $gameSettings.populationStart)} people!
             </p>
           {:else}
             <p>
@@ -104,20 +107,24 @@
         </section>
 
         <div class="cta-buttons">
-          <Button onClick={reset}>Try again</Button>
+          <Button
+            onClick={() =>
+              ($userState.shareText = `Without clearing any new land, I increased global calorie supply by ${prettyPercent(
+                Math.abs($successMetrics.calorieProductionChange)
+              )} and global protein supply by ${prettyPercent(
+                $successMetrics.proteinProductionChange
+              )}, feeding an additional
+              ${largeNumber(
+                $successMetrics.currentPopulationFed - $gameSettings.populationStart
+              )} people!`)}>Share this</Button
+          >
+          <Button color="secondary" onClick={reset}>Try again</Button>
         </div>
       </div>
     </Slide>
   {:else if slideIndex === 1}
     <Slide>
-      <div class="slide-1">
-        <h2 class="slide-title title text-error-3">Your farm</h2>
-        <div class="farm-container">
-          <Farm levitate />
-        </div>
-      </div>
-      <FoodChangesTable />
-      <Button onClick={reset}>Try again</Button>
+      <EndSlideYourFarm isFailed {foodsAdded} {foodsRemoved} {reset} />
     </Slide>
   {:else if slideIndex === 2}
     <Slide>
@@ -135,82 +142,8 @@
   {/if}
 </Slides>
 
-<!-- <section>
-      <div class="col">
-        <div class="step-counter">1</div>
-        <p>
-          {#if exhaustedTurns}
-            You ran out of turns before you could close the food gap.
-          {/if}
-          Remember your objective is to maximise calorie production, {#if exhaustedTurns}
-            so trade the least efficient foods out for the most efficient ones.
-          {:else}but you must maintain protein levels and keep environmental impacts in check.{/if}
-        </p>
-      </div>
-      <div class="col">
-        <div class="step-counter">2</div>
-        <div class="label">
-          {#if exhaustedTurns}
-            <div>Use the data table to sort foods by calorie efficiency.</div>
-          {:else if failedMetric}
-            <div>
-              Use the data table to sort foods by <b>{failedMetric.label}</b> and other metrics.
-            </div>
-          {/if}
-          <span>&darr;</span>
-        </div>
-        <img class="food-table-preview" src="{base}/img/table.png" alt="Food stats table preview" />
-      </div>
-      {#if failedMetric}
-        <div class="col">
-          <div class="step-counter">3</div>
-          <div class="label">
-            <div>Check out these foods</div>
-            <span>&darr;</span>
-          </div>
-          <div class="recommendation-efficiency-group">
-            <p>
-              These foods have the highest
-              <b>{failedMetric.label} per calorie:</b>
-            </p>
-            <div class="flex food-item-pill-group">
-              {@html foods
-                .slice(0, 3)
-                .map(
-                  (f) =>
-                    `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
-                )
-                .join(" ")}
-            </div>
-          </div>
-          <div class="recommendation-efficiency-group">
-            <p>These foods have the lowest:</p>
-            <div class="flex food-item-pill-group">
-              {@html foods
-                .slice(-3)
-                .map(
-                  (f) =>
-                    `<span class="food-item-pill"><span class="food-item-avatar bg-${f.colorId}"></span>${f.name}</span>`
-                )
-                .reverse()
-                .join(" ")}
-            </div>
-          </div>
-        </div>
-      {/if}
-      <div class="col">
-        <div class="step-counter">{failedMetric ? 4 : 3}</div>
-        <div class="label">
-          <div>Try to close the food gap one&nbsp;more&nbsp;time!</div>
-          <span>&darr;</span>
-        </div>
-        <div class="button-retry-wrap">
-          <Button color="secondary" onClick={reset}>Try again &rarr;</Button>
-        </div>
-      </div>
-    </section> -->
-
 <style lang="sass">
+
 .slide-0
   .slide-title-block
     margin-bottom: 0
@@ -223,17 +156,13 @@
       margin-top: 1rem
       height: 4rem
 
-.slide-1
-  width: 100%
-  .farm-container
-    width: 67%
-    margin: 0 auto
-    margin-top: -7.5%
-    margin-bottom: -15%
-
-:global(#end-screen .pager)
+:global(#end-screen .cta-buttons)
+  display: inline-flex
+  gap: 1rem
+  margin-top: 0.5rem
+:global(#end-screen .is-failed .pager)
   background: var(--color-error-2)
-:global(#end-screen .pager.active)
+:global(#end-screen .is-failed .pager.active)
   background: var(--color-error-3)
 
 </style>

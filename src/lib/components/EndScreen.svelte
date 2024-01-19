@@ -53,8 +53,15 @@
   {#if $successMetrics.hasFailed && failedMetric && $gameState.undosRemaining > 0}
     <ModalUndo {failedMetric} />
   {:else}
-    <Modal id="end-screen" isError={!$successMetrics.hasSucceeded} fullscreen>
-      <div class="end-wrapper slide-{slideIndex}">
+    <Modal
+      id="end-screen"
+      isError={$successMetrics.hasFailed && !$successMetrics.hasSucceeded}
+      fullscreen
+    >
+      <div
+        class="end-wrapper slide-{slideIndex}"
+        class:is-failed={$successMetrics.hasFailed && (exhaustedTurns || failedMetric)}
+      >
         {#if $successMetrics.hasSucceeded}
           <EndScreenSuccess {reset} />
         {:else if $successMetrics.hasFailed && (exhaustedTurns || failedMetric)}

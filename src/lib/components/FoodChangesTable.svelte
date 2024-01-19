@@ -2,25 +2,39 @@
   import { farm } from "$lib/stores/state"
   import Number from "./Number.svelte"
 
-  const ascending = (a, b) => a.delta - b.delta
-  const descending = (a, b) => b.delta - a.delta
+  export let foodsAdded: Count[] = []
+  export let foodsRemoved: Count[] = []
 
+  const ascending = (a: Count, b: Count) => a.delta - b.delta
+  const descending = (a: Count, b: Count) => b.delta - a.delta
+
+  // TODO: Add pagination
+  // export let pagination: boolean = false
+  // let maxItemsPerPage = 4
+
+  $: foodsAdded = $farm.foodChanges.filter((o) => o.delta > 0).sort(descending)
+  $: foodsRemoved = $farm.foodChanges.filter((o) => o.delta < 0).sort(ascending)
   $: data = [
     {
-      label: "Foods out ↘",
-      list: $farm.foodChanges.filter((o) => o.delta < 0).sort(ascending)
+      label: "Foods removed",
+      icon: "↘",
+      list: foodsRemoved
     },
     {
-      label: "Foods in ↗",
-      list: $farm.foodChanges.filter((o) => o.delta > 0).sort(descending)
+      label: "Foods added",
+      icon: "↗",
+      list: foodsAdded
     }
   ]
 </script>
 
 <div class="food-changes-table">
-  {#each data as { label, list }}
+  {#each data as { label, icon, list }}
     <div class="group">
-      <div class="th label bold">{label}</div>
+      <div class="th label bold">
+        <span>{label}</span>
+        <span>{icon}</span>
+      </div>
       {#each list as { delta, food }}
         <div class="item label">
           <div class="flex align-center">
@@ -58,7 +72,8 @@
     padding: 0.125rem
     
   .th
-    padding-right: 0.75rem
+    display: flex
+    justify-content: space-between
     border-bottom: 1px solid var(--color-secondary-3)
 
 </style>

@@ -6,6 +6,7 @@
   import { onMount } from "svelte"
 
   export let levitate = false // animate the farm levitating
+  export let highlightChanges = false // highlight squares different from initial grid
 
   const isSwappable = (food: Food) => food.id !== $userState.itemSelectedForSwap?.id
 
@@ -49,6 +50,7 @@
             class:highlighted={$userState.itemHighlighted?.id === food.id}
             class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
             class:swappable={$userState.itemSelectedForSwap && isSwappable(food)}
+            class:has-changed={highlightChanges && $farm.initialState.grid[y][x].id !== food.id}
             on:mouseenter={() => ($userState.itemHighlighted = food)}
             on:click={(e) => {
               const isOnly = $farm.getCropCount(food.id) === 1
@@ -160,6 +162,9 @@
     animation: flash 0.5s ease-in-out infinite alternate
   &.unswappable
     background: var(--color-tertiary-2)
+  &.has-changed
+    background: var(--color-primary-3)
+    animation: flash 0.5s ease-in-out infinite alternate
 
 .food-item-avatar
   position: relative

@@ -126,6 +126,8 @@ path
 
   &.warn:first-child
     fill: var(--color-error-2)
+  &:not(.warn):first-child
+    fill: var(--color-tertiary-1)
     
   &:first-child
     animation: pulse 1.5s ease-out infinite

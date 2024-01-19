@@ -9,7 +9,7 @@
 
   const onClick = (e: InteractionEvent) => {
     const target = e.target as HTMLElement
-    if (target?.tagName === "A") return
+    if (target?.tagName === "A" || target?.tagName === "BUTTON") return
     if (slideIndex < 0) return
     if (slideIndex === slides.length - 1) close()
     else slideIndex += 1

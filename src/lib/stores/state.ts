@@ -23,6 +23,8 @@ export const successMetrics = derived(
     const hectaresPerPerson = +(($farm.rows * $farm.cols) / currentPopulationFed).toFixed(2)
 
     // Protein
+    const proteinProductionChange =
+      ($farm.protein.total - $farm.initialState.protein.total) / $farm.initialState.protein.total
     const proteinPerPersonPerDayLimit = nutritionalRequirements.protein
     const proteinPerPersonPerDayValue = +(
       ($farm.protein.total *
@@ -161,6 +163,7 @@ export const successMetrics = derived(
       hectaresPerPerson,
       currentPopulationFed,
       calorieProductionChange,
+      proteinProductionChange,
       proteinPerPersonPerDay,
       emissionsChange,
       waterUseChange,

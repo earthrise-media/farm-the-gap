@@ -80,13 +80,6 @@ export class Farm {
   }
 
   get foodChanges() {
-    interface Count {
-      food: Food
-      initial: number
-      current: number
-      delta: number
-    }
-
     const counts: Count[] = foods.map((food) => {
       const initial = this.getCropCount(food.id, true)
       const current = this.getCropCount(food.id)

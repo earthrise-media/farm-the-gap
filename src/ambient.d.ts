@@ -155,6 +155,13 @@ declare global {
     calories: FarmMetric
   }
 
+  interface Count {
+    food: Food
+    initial: number
+    current: number
+    delta: number
+  }
+
   class Farm {
     constructor(settings: GameSettings | null)
 
@@ -180,6 +187,7 @@ declare global {
     readonly eutrophy: FarmMetric
     readonly protein: FarmMetric
     readonly calories: FarmMetric
+    readonly foodChanges: Count[]
   }
 }
 
