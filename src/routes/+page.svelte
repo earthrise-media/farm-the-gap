@@ -55,13 +55,11 @@
   <div class="panel panel-data">
     <div class="panel-2-3">
       <FoodStatsTable />
-      <!-- <FoodChangesTable /> -->
       <FoodItemsGrid />
     </div>
     <div class="panel-1-3">
       <BlockGameState />
     </div>
-    <!-- <BlockNutrition type="protein" /> -->
   </div>
 
   <FoodInformationCard />
@@ -86,9 +84,6 @@ main
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
   grid-template-areas: "header header" "data game"
   background: var(--color-primary-1)
-
-  // &.food-item-selected
-  //   cursor: none
 
 .panel
   position: relative
