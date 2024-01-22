@@ -79,7 +79,7 @@ export class Inventory {
   items: InventoryItem[]
 
   // n = default starting count of each item in inventory
-  constructor(n: number = 3) {
+  constructor(n: number = 4) {
     this.items = foodItems.map(({ id, name }) => ({ id, name, available: n })) as InventoryItem[]
   }
 
