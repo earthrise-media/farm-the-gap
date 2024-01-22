@@ -17,7 +17,7 @@
   export let failedMetric: FailureMetric | undefined
   export let exhaustedTurns: boolean
 
-  let slideIndex = 1
+  let slideIndex = 0
   let slides = ["Summary", "Farm", "Tips"]
   let foodsAdded: Count[] = []
   let foodsRemoved: Count[] = []
