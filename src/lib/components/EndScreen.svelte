@@ -57,6 +57,7 @@
       id="end-screen"
       isError={$successMetrics.hasFailed && !$successMetrics.hasSucceeded}
       fullscreen
+      fullWidth
     >
       <div
         class="end-wrapper slide-{slideIndex}"
