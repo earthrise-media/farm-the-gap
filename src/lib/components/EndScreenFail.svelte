@@ -24,6 +24,7 @@
 </script>
 
 <Slides
+  close={() => (slideIndex = 0)}
   {slides}
   bind:slideIndex
   pagersText={slideIndex === 0
