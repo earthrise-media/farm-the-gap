@@ -77,10 +77,15 @@ export class GameSnapshot {
 
 export class Inventory {
   items: InventoryItem[]
+  startCount: number = 4
 
   // n = default starting count of each item in inventory
-  constructor(n: number = 4) {
-    this.items = foodItems.map(({ id, name }) => ({ id, name, available: n })) as InventoryItem[]
+  constructor() {
+    this.items = foodItems.map(({ id, name }) => ({
+      id,
+      name,
+      available: this.startCount
+    })) as InventoryItem[]
   }
 
   get(id: FoodId): InventoryItem {
@@ -90,7 +95,7 @@ export class Inventory {
   }
 
   reset() {
-    this.items.forEach((item) => (item.available = 3))
+    this.items.forEach((item) => (item.available = this.startCount))
   }
 }
 
