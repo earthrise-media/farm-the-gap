@@ -64,10 +64,13 @@
         />
       </div>
       <div class="label text-center">
-        You are sustainably feeding an additional <span
+        You{$successMetrics.calorieProductionChange >= 0
+          ? " are sustainably feeding an additional"
+          : "r reduction in food production has cost"}
+        <span
           class="bold {$successMetrics.calorieProductionChange >= 0
             ? 'text-tertiary-1'
-            : 'text-error-3'}"
+            : 'bg-error-1'}"
           >{largeNumber($successMetrics.currentPopulationFed - $gameSettings.populationStart)}</span
         >
         people a nutritional diet in <b>{$gameState.year.current}</b>.
