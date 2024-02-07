@@ -34,6 +34,6 @@
 <style lang="sass">
 .label
   margin-right: 0.5em
-  margin-left: -0.25em
+  margin-left: -0.375em
   padding: 0.75em
 </style>
