@@ -41,7 +41,8 @@ export const milestones: Toast[] = [
     id: "first-warning-water",
     img: "guide.png",
     type: "milestone",
-    target: ".panel-1-3",
+    target: ".panel-game-state",
+    mobilePosition: "bottom right",
     title: "You just recieved your first environmental warning!",
     message:
       "Now use the data table to lower your freshwater use. Try replacing a water-intensive food with a low-water food that provides more calories per hectare.",
@@ -55,7 +56,8 @@ export const milestones: Toast[] = [
     id: "first-warning-ghg",
     img: "guide.png",
     type: "milestone",
-    target: ".panel-1-3",
+    target: ".panel-game-state",
+    mobilePosition: "bottom right",
     title: "You just recieved your first environmental warning!",
     message:
       "Now use the data table to lower your greenhouse gas emissions. Try replacing a high-emissions food with a lower-emissions one that provides more calories per hectare.",

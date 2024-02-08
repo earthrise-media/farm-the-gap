@@ -1,9 +1,13 @@
 <script lang="ts">
   export let classList = ""
   export let direction = "y"
+  export let gradient = false
 </script>
 
 <div class="scroller">
+  {#if gradient}
+    <div class="gradient" />
+  {/if}
   <div class="scroller-contents scroller-{direction} {classList} {direction === 'y' ? 'pr-4' : ''}">
     <slot />
   </div>
@@ -47,4 +51,16 @@
 
   &::-webkit-scrollbar-thumb
     background: var(--color-secondary-3)
+
+
+.gradient
+  position: absolute
+  left: 0
+  right: 0
+  bottom: 0
+  top: calc(100% - 1.5rem)
+  pointer-events: none
+  background: linear-gradient(180deg, var(--color-primary-2-alpha-0) 0%, var(--color-primary-2) 100%)
+  z-index: 1
+  opacity: 1
 </style>

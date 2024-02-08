@@ -63,7 +63,7 @@ a, button
   &:disabled
     cursor: not-allowed
     opacity: 0.5
-    filter: saturate(0)
+    filter: saturate(0.5)
 
 .color-primary
   color: var(--color-primary-1)

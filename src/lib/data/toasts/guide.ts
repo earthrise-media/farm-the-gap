@@ -4,6 +4,7 @@ import { prettyPercent } from "$lib/utils/written"
 
 import type { Toast } from "./types"
 import { foodItems } from "../foods"
+import { qs } from "martha"
 
 const $gameSettings = get(gameSettings)
 const $gameState = get(gameState)
@@ -43,7 +44,8 @@ export const guide: Toast[] = [
     message:
       "Monitor your environmental impact and nutritional stats here. The population changes each year and it will be game over if you fail on any metric. Be careful!",
     button: "Next",
-    target: ".panel-1-3",
+    target: ".panel-game-state",
+    mobilePosition: "bottom right",
     next: 3
   },
   {
@@ -55,6 +57,7 @@ export const guide: Toast[] = [
       "<p>This game uses real-world data.</p><p>Learn about the nutrition and resource-use of each food type in this table. The data per hectare may surprise you!</p><p>Sort by column to identify the most and least efficient foods. Your success depends on mastering this information.</p>",
     button: "Next",
     next: 4,
+    mobilePosition: "bottom right",
     target: ".food-items-grid"
   },
   {
@@ -67,6 +70,9 @@ export const guide: Toast[] = [
     next: 5,
     target: "#food-menu-wrapper [data-food-name='Corn']",
     task: ({ userState }) => userState.itemSelectedForSwap?.name === "Corn",
+    onEnter: () => {
+      qs("#food-menu-wrapper [data-food-name='Corn']").scrollIntoView()
+    },
     onDismiss: () => {}
   },
   {
@@ -93,7 +99,7 @@ export const guide: Toast[] = [
     type: "guide",
     title: "You made your first move!",
     message:
-      "Well done, you significantly increased total food production with that move. You are already feeding an additional 600M people! Now it's over to you to close the rest of the food gap. Good luck!",
+      "Well done, you significantly increased total food production with that move. You are already feeding an additional 550M people! Now it's over to you to close the rest of the food gap. Good luck!",
     button: "Close",
     task: ({ gameState }) => gameState.year.current > gameState.year.start + 1,
     onEnter: () => {

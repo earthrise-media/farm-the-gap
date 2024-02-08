@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { largeNumber } from "$lib/utils/written"
+
   import {
     sparklineData,
     gameSettings,
@@ -9,47 +11,54 @@
   } from "$lib/stores/state"
 
   import Number from "$lib/components/Number.svelte"
+  import Scroller from "$lib/components/Scroller.svelte"
   import LineChart from "$lib/components/LineChart.svelte"
-  import { largeNumber } from "$lib/utils/written"
+
+  let vw: number
+  let vh: number
 </script>
 
-<div class="block-game-state lock">
-  <div class="group group-metrics">
-    <div class="group-title label-caps">Game metrics</div>
-    <div class="items">
-      {#each $sparklineData as { value, history, label, suffix, objective, warn, foodMetricKey, chartSettings }}
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <div
-          class="item"
-          class:warn
-          on:mouseenter={() => ($userState.gameMetricHovering = foodMetricKey)}
-          on:mouseleave={() => ($userState.gameMetricHovering = null)}
-        >
-          <div class="column-number flex-col">
-            <div class="label">
-              {label}
+<svelte:window bind:innerWidth={vw} bind:innerHeight={vh} />
+
+<div class="block-game-state">
+  <Scroller gradient={vw < 900 && vh < 600}>
+    <div class="group group-metrics">
+      <div class="group-title label-caps">Game metrics</div>
+      <div class="items">
+        {#each $sparklineData as { value, history, label, suffix, objective, warn, foodMetricKey, chartSettings }}
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <div
+            class="item"
+            class:warn
+            on:mouseenter={() => ($userState.gameMetricHovering = foodMetricKey)}
+            on:mouseleave={() => ($userState.gameMetricHovering = null)}
+          >
+            <div class="column-number flex-col">
+              <div class="label">
+                {label}
+              </div>
+              <div class="big-number flex align-center">
+                {#if suffix === "%"}
+                  <span class="label sign">{value >= 0 ? "+" : "-"}</span>
+                  <Number value={100 * Math.abs(Math.floor(100 * value) / 100)} />
+                  <span class="label suffix text-secondary-2">{suffix}</span>
+                {:else}
+                  <Number {value} />
+                  <span class="label suffix text-secondary-2">{suffix}</span>
+                {/if}
+              </div>
             </div>
-            <div class="big-number flex align-center">
-              {#if suffix === "%"}
-                <span class="label sign">{value >= 0 ? "+" : "-"}</span>
-                <Number value={100 * Math.abs(Math.floor(100 * value) / 100)} />
-                <span class="label suffix text-secondary-2">{suffix}</span>
-              {:else}
-                <Number {value} />
-                <span class="label suffix text-secondary-2">{suffix}</span>
-              {/if}
+            <div class="column-chart flex-col">
+              <div class="line-chart label flex-center">
+                <LineChart data={history} {warn} {...chartSettings} />
+              </div>
+              <div class="label objective text-secondary-3">{objective}</div>
             </div>
           </div>
-          <div class="column-chart flex-col">
-            <div class="line-chart label flex-center">
-              <LineChart data={history} {warn} {...chartSettings} />
-            </div>
-            <div class="label objective text-secondary-3">{objective}</div>
-          </div>
-        </div>
-      {/each}
+        {/each}
+      </div>
     </div>
-  </div>
+  </Scroller>
   <div class="group group-population">
     <div class="group-title label-caps">Population fed</div>
     <div class="items">
@@ -80,6 +89,8 @@
 </div>
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 .block-game-state
   gap: 0
   height: 100%
@@ -166,5 +177,14 @@
 @media (hover: hover)
   .item:hover
     background: var(--color-primary-3)
+
+@media (max-height: 600px)
+  .group-population
+    border-top: 1px solid var(--color-secondary-3)
+    padding-top: 0.5rem
+
+@media (max-width: $screen-sm)
+  .items
+    gap: 0.25rem
 
 </style>

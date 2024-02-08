@@ -44,6 +44,7 @@ export const tips: Toast[] = [
     next: "tip-1",
     img: "guide.png",
     target: ".group-population",
+    mobilePosition: "bottom right",
     title: "Tip: Monitor population growth",
     message:
       "The future needs a lot of food! Check how many additional people you could feed with your new farm allocations here.",

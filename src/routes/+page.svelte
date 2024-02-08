@@ -6,6 +6,7 @@
   import Farm from "$lib/components/Farm.svelte"
   import Button from "$lib/components/Button.svelte"
   import FoodMenu from "$lib/components/FoodMenu.svelte"
+  import MobileMenu from "$lib/components/MobileMenu.svelte"
   import BlockImpact from "$lib/components/BlockImpact.svelte"
   import FoodStatsTable from "$lib/components/FoodStatsTable.svelte"
   import FoodItemsGrid from "$lib/components/FoodItemsGrid.svelte"
@@ -13,7 +14,6 @@
   import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
   import WelcomeScreen from "$lib/components/WelcomeScreen.svelte"
   import EndScreen from "$lib/components/EndScreen.svelte"
-  import AboutScreen from "$lib/components/AboutScreen.svelte"
   import Tooltip from "$lib/components/Tooltip.svelte"
   import Toast from "$lib/components/Toast.svelte"
   import Modal from "$lib/components/Modal.svelte"
@@ -43,7 +43,7 @@
     </div>
   </header>
   <div class="panel-game-area panel">
-    <div class="panel-controls panel">
+    <div class="panel-menu panel">
       <FoodMenu />
     </div>
     <div class="panel-farm panel">
@@ -53,11 +53,12 @@
   </div>
 
   <div class="panel panel-data">
-    <div class="panel-2-3">
+    <div class="panel-tables">
       <FoodStatsTable />
       <FoodItemsGrid />
+      <MobileMenu />
     </div>
-    <div class="panel-1-3">
+    <div class="panel-game-state">
       <BlockGameState />
     </div>
   </div>
@@ -67,13 +68,14 @@
 
   <TooltipFoodItem />
 
-  <WelcomeScreen />
+  <!-- <WelcomeScreen /> -->
   <EndScreen />
-  <AboutScreen />
   <Toast />
 </main>
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 main
   height: 100vh
   height: 100svh
@@ -111,15 +113,45 @@ header
   display: grid
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr)
 
-  .panel-1-3
+  .panel-game-state
     background: var(--color-primary-2)
     border-radius: var(--border-radius)
     padding: var(--border-radius)
+    max-height: 100vh
+    max-height: 100svh
+    overflow: hidden
 
 .buttons
   gap: 0.25rem
   display: flex
   align-items: center
   justify-content: space-between
+
+
+@media (max-width: $screen-sm)
+  header
+    display: none
+    .buttons
+      display: none
+    img
+      width: 60px
+
+  main
+    padding-left: 0
+    gap: 0 0.25rem
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.125fr)
+
+  .panel-game-area
+    gap: 0.25rem
+    grid-template-rows: 1fr
+    grid-template-columns: auto 1fr
+    padding-left: 0.75rem
+
+  .panel-data
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr)
+
+  // .panel-tables
+    // opacity: 0
+    // display: none
 
 </style>

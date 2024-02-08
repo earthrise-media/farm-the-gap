@@ -75,6 +75,7 @@
 
 <style lang="sass">
 @import "/src/styles/vars/color.scss"
+@import "/src/styles/vars/screens.sass"
 
 #farm-wrapper
   width: 100%
@@ -191,5 +192,10 @@
     background: var(--color-secondary-3)
   .land-cell:not(.unswappable):hover .food-item-avatar
     transform: rotateZ(-14deg) rotateY(-40deg) rotateX(60deg) scale(1.125, 1.75) translate(17%, -28%)
+
+@media (max-width: $screen-sm)
+  .land-cell
+    font-size: 0.75rem
+  
 
 </style>

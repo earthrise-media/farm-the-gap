@@ -75,7 +75,7 @@
   width: 1em
   height: 1em
   cursor: pointer
-  border-radius: 100%
+  border-radius: 1em
   border: none
   transition: background 0.2s ease-in-out
   background: var(--color-primary-1)

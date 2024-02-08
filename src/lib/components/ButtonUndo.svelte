@@ -3,6 +3,8 @@
   import Button from "./Button.svelte"
 
   export let hideRemainingCount = false
+  export let bare = false
+  export let color: "primary" | "secondary" = "primary"
 
   const onClick = () => {
     const lastMove = $gameState.undo()
@@ -20,15 +22,19 @@
 </script>
 
 <Button
+  {bare}
+  {color}
   classList="button-undo inline-flex align-center justify-center"
   {onClick}
   disabled={!$gameState.undosRemaining}
 >
-  {#if $gameState.undosRemaining && !hideRemainingCount}<span
-      class="label bold food-item-avatar text-primary-1 bg-secondary-2"
-      >{$gameState.undosRemaining}</span
-    >
-  {/if}<slot>Undo</slot>
+  <slot>
+    {#if $gameState.undosRemaining && !hideRemainingCount}<span
+        class="label bold food-item-avatar text-primary-1 bg-secondary-2"
+        >{$gameState.undosRemaining}</span
+      >
+    {/if}Undo
+  </slot>
 </Button>
 
 <style lang="sass">

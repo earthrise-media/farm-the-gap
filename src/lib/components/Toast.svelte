@@ -76,12 +76,17 @@
       toast?.onEnter?.(callbackProps)
       if (toast.target) {
         const element = qs(toast.target)
-        const style = getComputedStyle(element)
-        const r = parseInt(style.getPropertyValue("border-radius"))
-        const p = parseInt(style.getPropertyValue("padding")) > 6 ? 0 : 6
 
-        const { x, y, width: w, height: h } = element.getBoundingClientRect()
-        $coords = { x: x - p, y: y - p, w: w + 2 * p, h: h + 2 * p, r }
+        if (element) {
+          const style = getComputedStyle(element)
+          const r = parseInt(style.getPropertyValue("border-radius"))
+          const p = parseInt(style.getPropertyValue("padding")) > 6 ? 0 : 6
+
+          const { x, y, width: w, height: h } = element.getBoundingClientRect()
+          $coords = { x: x - p, y: y - p, w: w + 2 * p, h: h + 2 * p, r }
+        } else {
+          console.error(`Element not found: ${toast.target}`)
+        }
       }
     }
   }
@@ -108,7 +113,7 @@
     {/if}
     {#key toast.id}
       <div
-        class="toast"
+        class="toast {toast.mobilePosition}"
         out:fly|global={{ y: 32, easing }}
         in:fly|global={{ y: 32, easing, delay: 200 }}
       >
@@ -148,90 +153,100 @@
 {/if}
 
 <style lang="sass">
-  .toast-wrapper
-    position: fixed
-    top: 0
-    left: 0
-    right: 0
-    bottom: 0
-    display: flex
-    justify-content: center
-    font-size: 0.75rem
-    line-height: 1.2
-    padding: 1rem
-    z-index: 100
-    pointer-events: none
+@import "src/styles/vars/screens"
 
-  // this is a mask where the center grid item is transparent
-  .toast-mask
-    position: fixed
-    display: grid
-    top: 0
-    left: 0
-    right: 0
-    bottom: 0
-    z-index: 0
-    grid-template-rows: repeat(3,1fr)
-    grid-template-columns: repeat(3,1fr)
+.toast-wrapper
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  display: flex
+  justify-content: center
+  font-size: 0.75rem
+  line-height: 1.2
+  padding: 1rem
+  z-index: 100
+  pointer-events: none
 
-    > div
-      pointer-events: all
-      background: rgba(0,0,0,0.5)
+// this is a mask where the center grid item is transparent
+.toast-mask
+  position: fixed
+  display: grid
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  z-index: 0
+  grid-template-rows: repeat(3,1fr)
+  grid-template-columns: repeat(3,1fr)
 
-      &.window
-        position: relative
-        background: transparent
-        pointer-events: none
-        border: 2px solid var(--color-tertiary-1)
-        animation: 0.4s ease-in-out infinite alternate pulse-tertiary
-
-  .toast
+  > div
     pointer-events: all
-    position: absolute
-    left: 0
-    bottom: 0
-    max-width: calc(33vw - 1rem)
-    margin: 0.75rem
-    display: flex
-    gap: 0 0.5rem
-    padding: 0.75rem 0.5rem
-    border: 1px solid var(--color-tertiary-1)
-    z-index: 100
-    border-radius: var(--border-radius)
-    background: var(--color-primary-3)
-    display: grid
-    grid-template-columns: auto 1fr
+    background: rgba(0,0,0,0.5)
 
-  .toast-img,
-  .toast-icon
-    width: 35px
-    display: flex
-    align-items: end
-    justify-content: center
+    &.window
+      position: relative
+      background: transparent
+      pointer-events: none
+      border: 2px solid var(--color-tertiary-1)
+      animation: 0.4s ease-in-out infinite alternate pulse-tertiary
 
-    img
-      width: 30px
+.toast
+  pointer-events: all
+  position: absolute
+  left: 0
+  bottom: 0
+  max-width: calc(33vw - 1rem)
+  margin: 0.75rem
+  display: flex
+  gap: 0 0.5rem
+  padding: 0.75rem 0.5rem
+  border: 1px solid var(--color-tertiary-1)
+  z-index: 100
+  border-radius: var(--border-radius)
+  background: var(--color-primary-3)
+  display: grid
+  grid-template-columns: auto 1fr
 
-  .guide-img-button
-    left: 0
-    bottom: 0
-    width: 35px
-    z-index: 10
-    border: none
-    margin: 0.75rem
-    pointer-events: all
-    background: transparent
-    position: absolute
+  &.top
+    top: 0
+    bottom: auto
 
-  .toast-body
-    display: flex
-    flex-direction: column
-    gap: 0.25rem
+  &.right
+    right: 0
+    left: auto
 
-  .toast-button
-    margin-top: 0.375rem
-    text-align: right
-    grid-column: 1/-1
+.toast-img,
+.toast-icon
+  width: 35px
+  display: flex
+  align-items: end
+  justify-content: center
+
+  img
+    width: 30px
+
+.guide-img-button
+  left: 0
+  bottom: 0
+  width: 35px
+  z-index: 10
+  border: none
+  margin: 0.75rem
+  pointer-events: all
+  background: transparent
+  position: absolute
+
+.toast-body
+  display: flex
+  flex-direction: column
+  gap: 0.25rem
+
+.toast-button
+  margin-top: 0.375rem
+  text-align: right
+  grid-column: 1/-1
 
 :global(.toast-message p:last-child)
   margin-bottom: 0
@@ -241,5 +256,17 @@
     border-color: var(--color-primary-3)
   100%
     border-color: var(--color-tertiary-1)
+
+@media (max-width: $screen-sm)
+  .toast-wrapper
+    font-size: 0.875rem
+
+  .toast-button
+    font-size: 1rem
+
+  .guide-img-button
+    padding: 0
+    width: 2.5rem
+    margin: 0.75rem
 
 </style>

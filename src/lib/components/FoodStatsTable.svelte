@@ -148,6 +148,7 @@
   class="food-items-grid block sorted-by-{sortedColumnIndex} metric-hovering-{data.findIndex(
     (o) => o.key === $userState.gameMetricHovering
   ) + 1}"
+  class:mobile-hidden={!$userState.isMobileTablesOpen}
 >
   <h3 class="block-title flex align-center">
     🥫 Food output data
@@ -234,6 +235,8 @@
 </div>
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 .block-title
   sup
     margin-left: 0.5em
@@ -332,4 +335,24 @@
 @media (max-width: 1120px)
   .food-card
     grid-template-columns: repeat(4, 1fr) 0.75fr
+
+@media (max-width: $screen-sm)
+  .food-items-grid
+    position: fixed
+    z-index: 10
+    left: 4rem
+    top: 0.5rem
+    right: 0.5rem
+    bottom: 0.5rem
+    padding: 2rem
+    border: 4px solid var(--color-primary-2)
+    transition: opacity 0.4s
+    pointer-events: all
+    opacity: 1
+
+    &.mobile-hidden
+      opacity: 0
+      user-select: none
+      pointer-events: none
+
 </style>

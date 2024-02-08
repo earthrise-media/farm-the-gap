@@ -57,6 +57,8 @@
 </div>
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 .food-items-grid
   display: flex
   flex-direction: column
@@ -130,5 +132,9 @@
 
 .bar-label
   gap: 0.125rem
+
+@media (max-width: $screen-sm)
+  .food-items-grid
+    display: none
 
 </style>

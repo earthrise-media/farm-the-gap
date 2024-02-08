@@ -1,8 +1,12 @@
 <script lang="ts">
   import { foodItemsGrouped } from "$lib/data/foods"
+  import { gameState, userState } from "$lib/stores/state"
 
   import Button from "$lib/components/Button.svelte"
-  import { gameState, userState } from "$lib/stores/state"
+  import Scroller from "./Scroller.svelte"
+
+  let vh: number
+  let vw: number
 
   const showFoodDetail = (e: MouseEvent | KeyboardEvent, food: Food) => {
     e.stopPropagation()
@@ -15,43 +19,50 @@
   }
 </script>
 
-<svelte:window on:click={() => ($userState.itemSelectedForSwap = null)} />
+<svelte:window
+  bind:innerWidth={vw}
+  bind:innerHeight={vh}
+  on:click={() => ($userState.itemSelectedForSwap = null)}
+/>
 
-<div id="food-menu-wrapper">
-  {#each Object.keys(foodItemsGrouped) as key}
-    <div class="button-group group-{key}">
-      <div class="label">{key} Proteins</div>
-      {#each foodItemsGrouped[key] as food, i}
-        <Button
-          attributes={{ "data-food-id": food.id, "data-food-name": food.name }}
-          disabled={$gameState.inventory.get(food.id).available <= 0}
-          active={food === $userState.itemSelectedForSwap}
-          color={food === $userState.itemSelectedForSwap ? "tertiary" : "primary"}
-          onMouseEnter={() => ($userState.itemHighlighted = food)}
-          onMouseLeave={() => ($userState.itemHighlighted = null)}
-          onClick={(e) => selectFoodItem(e, food)}
-          tooltip={$gameState.inventory.get(food.id).available <= 0
-            ? food.name + " supply exhaused."
-            : null}
-        >
-          <div class="food-item-button">
-            <div class="flex align-center label">
-              <div class="food-item-avatar text-secondary-3 bg-{food.colorId}">
-                <span>
-                  {$gameState.inventory.get(food.id).available}
-                </span>
+<Scroller gradient={vw < 900 && vh < 600}>
+  <div id="food-menu-wrapper">
+    {#each Object.keys(foodItemsGrouped) as key}
+      <div class="button-group group-{key}">
+        <div class="label">{key} Proteins</div>
+        {#each foodItemsGrouped[key] as food, i}
+          <Button
+            attributes={{ "data-food-id": food.id, "data-food-name": food.name }}
+            disabled={$gameState.inventory.get(food.id).available <= 0}
+            active={food === $userState.itemSelectedForSwap}
+            color={food === $userState.itemSelectedForSwap ? "tertiary" : "primary"}
+            onMouseEnter={() => ($userState.itemHighlighted = food)}
+            onMouseLeave={() => ($userState.itemHighlighted = null)}
+            onClick={(e) => selectFoodItem(e, food)}
+            tooltip={$gameState.inventory.get(food.id).available <= 0
+              ? food.name + " supply exhaused."
+              : null}
+          >
+            <div class="food-item-button">
+              <div class="flex align-center label">
+                <div class="food-item-avatar text-secondary-3 bg-{food.colorId}">
+                  <span>
+                    {$gameState.inventory.get(food.id).available}
+                  </span>
+                </div>
+                <span class="food-name">{food.name}</span>
               </div>
-              <span>{food.name}</span>
             </div>
-            <!-- <Button classList="bare" onClick={(e) => showFoodDetail(e, food)}>ⓘ</Button> -->
-          </div>
-        </Button>
-      {/each}
-    </div>
-  {/each}
-</div>
+          </Button>
+        {/each}
+      </div>
+    {/each}
+  </div>
+</Scroller>
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 #food-menu-wrapper
   display: grid
   grid-template-columns: 2fr 2fr
@@ -59,7 +70,6 @@
   grid-gap: 1.5rem
   margin-top: 1rem
   align-items: start
-  border: 1px solid transparent
 
 .group-animal,
 .group-plant
@@ -89,7 +99,6 @@
   align-items: center
   justify-content: space-between
   font-weight: bold
-  font-size: 12px
   pointer-events: none
 
 .food-item-avatar
@@ -99,6 +108,35 @@
 :global(#food-menu-wrapper button)
   padding: 0.125em 0.125em
 
-:global(#food-menu-wrapper .food-item-button button)
-  padding: 0
+@media (max-width: $screen-sm)
+  #food-menu-wrapper
+    gap: 0.75rem
+    margin-bottom: 1.5rem
+    grid-template-columns: 1fr
+    grid-template-areas: "animal" "plant"
+
+  .group-animal,
+  .group-plant
+    grid-template-columns: 1fr
+    grid-template-rows: 1fr
+    grid-auto-flow: row
+
+  .button-group
+    gap: 0.5rem
+
+  .food-name
+    color: white
+    max-width: 5ch
+    overflow: hidden
+    margin-left: 0.25rem
+    text-overflow: ellipsis
+
+  .food-item-avatar
+    margin: 0
+    font-size: 1.25rem
+
+  :global(#food-menu-wrapper button)
+    padding: 0
+    background: transparent
+
 </style>

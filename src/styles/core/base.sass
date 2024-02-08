@@ -15,6 +15,8 @@
   --color-error-2: #{$color-error-2}
   --color-error-3: #{$color-error-3}
 
+  --color-primary-2-alpha-0: #{$color-primary-2-alpha-0}
+
   @for $i from 1 through length($colors-animal)
     --color-animal-#{$i}: #{nth($colors-animal, $i)}
 
@@ -33,3 +35,6 @@ html,body
 
   @media (min-height: 700px) and (min-width: 1080px)
     font-size: 20px
+
+  @media (max-width: $screen-sm)
+    font-size: 14px

@@ -1,6 +1,12 @@
 <script lang="ts">
   import { largeNumber, prettyPercent } from "$lib/utils/written"
-  import { gameSettings, successMetrics, userState } from "$lib/stores/state"
+  import {
+    gameHistory,
+    gameSettings,
+    gameState,
+    successMetrics,
+    userState
+  } from "$lib/stores/state"
 
   import Slide from "$lib/components/Slide.svelte"
   import Button from "$lib/components/Button.svelte"
@@ -62,6 +68,24 @@
                     ? prettyPercent
                     : (n) => `${n}${failedMetric?.suffix}`}
                   {...failedMetric.chartSettings}
+                />
+              </div>
+            </div>
+          {:else if exhaustedTurns}
+            <div class="summary-chart">
+              <h6 class="label-caps">Food production (calories)</h6>
+              <div class="line-chart label flex-center">
+                <LineChart
+                  labels
+                  warn
+                  yDatum={0}
+                  yMin={-0.1}
+                  pulseEndPoint
+                  labelFormat={prettyPercent}
+                  length={$gameState.year.end - $gameState.year.start}
+                  data={$gameHistory.map((o) => o.calorieProductionChange)}
+                  yLimit={$gameSettings.gap}
+                  yMax={$gameSettings.gap}
                 />
               </div>
             </div>
@@ -147,15 +171,22 @@
 
 .slide-0
   .slide-title-block
-    margin-bottom: 0
-  .progress-bar
-    margin-bottom: 1.5rem
-    gap: 0.5rem
+    min-height: 5rem
+    align-items: flex-end
+    justify-content: center
+  .slide-title
+    margin: 0
+    text-wrap: balance
   .summary-chart
     width: 16ch
-    .line-chart
-      margin-top: 1rem
-      height: 4rem
+    margin-left: auto
+    margin-top: -0.25rem
+  .line-chart
+    margin-top: 0.75rem
+    height: 4rem
+  .progress-bar
+    margin: 1.5rem auto
+    gap: 0.5rem
 
 :global(#end-screen .cta-buttons)
   display: inline-flex
