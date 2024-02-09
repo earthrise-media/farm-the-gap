@@ -34,6 +34,7 @@
   },
   "type": "module",
   "dependencies": {
-    "martha": "^5.1.0"
+    "martha": "^5.1.0",
+    "svelte-gestures": "^1.5.2"
   }
 }

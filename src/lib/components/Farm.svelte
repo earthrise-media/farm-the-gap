@@ -1,12 +1,18 @@
 <script lang="ts">
-  import { fade, scale } from "svelte/transition"
+  import { scale } from "svelte/transition"
   import { backOut as easing } from "svelte/easing"
+
+  import { pan, pinch } from "svelte-gestures"
 
   import { farm, userState, gameState, gameHistory } from "$lib/stores/state"
   import { onMount } from "svelte"
 
   export let levitate = false // animate the farm levitating
   export let highlightChanges = false // highlight squares different from initial grid
+
+  let isNewPan = true
+  let farmWrapperElement: HTMLDivElement
+  let transform = { x: 0, y: 0, z: 1, cx: 0, cy: 0, x0: 0, y0: 0 }
 
   const isSwappable = (food: Food) => food.id !== $userState.itemSelectedForSwap?.id
 
@@ -26,50 +32,90 @@
     $gameHistory = $gameHistory
   }
 
-  onMount(() => ($gameState = $gameState))
+  const onResize = () => {
+    transform.x = 0
+    transform.y = 0
+    transform.z = 1
+  }
+
+  onMount(() => {
+    $gameState = $gameState
+    onResize()
+  })
 </script>
 
-<div id="farm-wrapper" class:levitate>
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div id="land-grid" on:mouseleave={() => ($userState.itemHighlighted = null)}>
-    {#each $farm.grid as row, y}
-      {#each row as food, x}
-        {#key food.id}
-          <button
-            in:scale={{ duration: 300, easing, start: 0.6, opacity: 0.5 }}
-            class="land-cell"
-            data-tooltip={$userState.itemSelectedForSwap && $farm.getCropCount(food.id) === 1
-              ? `Cannot swap. You must keep at least one ${food.name.replace(
-                  /s$/,
-                  ""
-                )} square on the board at all times.`
-              : $userState.itemSelectedForSwap && isSwappable(food)
-              ? `Replace ${food.name} with ${$userState.itemSelectedForSwap.name}`
-              : food.name}
-            class:is-only={$farm.getCropCount(food.id) === 1}
-            class:highlighted={$userState.itemHighlighted?.id === food.id}
-            class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
-            class:swappable={$userState.itemSelectedForSwap && isSwappable(food)}
-            class:has-changed={highlightChanges && $farm.initialState.grid[y][x].id !== food.id}
-            on:mouseenter={() => ($userState.itemHighlighted = food)}
-            on:click={(e) => {
-              const isOnly = $farm.getCropCount(food.id) === 1
+<svelte:window on:resize={onResize} />
 
-              if (isOnly) return
+<div
+  id="farm-wrapper"
+  bind:this={farmWrapperElement}
+  use:pan={{ delay: 0 }}
+  use:pinch={{ delay: 0 }}
+  on:pan={(e) => {
+    if (isNewPan) {
+      transform.x0 = e.detail.x
+      transform.y0 = e.detail.y
+      transform.cx = transform.x
+      transform.cy = transform.y
+      isNewPan = false
+    }
+    const { cx, cy, x0, y0 } = transform
+    transform.x = cx + (e.detail.x - x0)
+    transform.y = cy + (e.detail.y - y0)
+  }}
+  on:panup={(e) => {
+    isNewPan = true
+  }}
+  on:pinch={(e) => {
+    transform.z = e.detail.scale
+  }}
+  class:levitate
+>
+  <div
+    id="gesture-element"
+    style="transform: translate3d({transform.x}px, {transform.y}px, 0) scale({transform.z})"
+  >
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div id="land-grid" on:mouseleave={() => ($userState.itemHighlighted = null)}>
+      {#each $farm.grid as row, y}
+        {#each row as food, x}
+          {#key food.id}
+            <button
+              in:scale={{ duration: 300, easing, start: 0.6, opacity: 0.5 }}
+              class="land-cell"
+              data-tooltip={$userState.itemSelectedForSwap && $farm.getCropCount(food.id) === 1
+                ? `Cannot swap. You must keep at least one ${food.name.replace(
+                    /s$/,
+                    ""
+                  )} square on the board at all times.`
+                : $userState.itemSelectedForSwap && isSwappable(food)
+                ? `Replace ${food.name} with ${$userState.itemSelectedForSwap.name}`
+                : food.name}
+              class:is-only={$farm.getCropCount(food.id) === 1}
+              class:highlighted={$userState.itemHighlighted?.id === food.id}
+              class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
+              class:swappable={$userState.itemSelectedForSwap && isSwappable(food)}
+              class:has-changed={highlightChanges && $farm.initialState.grid[y][x].id !== food.id}
+              on:mouseenter={() => ($userState.itemHighlighted = food)}
+              on:click={(e) => {
+                const isOnly = $farm.getCropCount(food.id) === 1
 
-              return (
-                $userState.itemSelectedForSwap &&
-                !isOnly &&
-                isSwappable(food) &&
-                swapFoodItem(e, x, y)
-              )
-            }}
-          >
-            <div class="food-item-avatar bg-{food.colorId}" />
-          </button>
-        {/key}
+                if (isOnly) return
+
+                return (
+                  $userState.itemSelectedForSwap &&
+                  !isOnly &&
+                  isSwappable(food) &&
+                  swapFoodItem(e, x, y)
+                )
+              }}
+            >
+              <div class="food-item-avatar bg-{food.colorId}" />
+            </button>
+          {/key}
+        {/each}
       {/each}
-    {/each}
+    </div>
   </div>
 </div>
 
@@ -95,6 +141,9 @@
     transform-style: preserve-3d
     -webkit-transform-origin: center
     -webkit-transform-style: preserve-3d
+
+#gesture-element
+  width: 100%
 
 #land-grid
   margin: auto
@@ -194,6 +243,7 @@
     transform: rotateZ(-14deg) rotateY(-40deg) rotateX(60deg) scale(1.125, 1.75) translate(17%, -28%)
 
 @media (max-width: $screen-sm)
+
   .land-cell
     font-size: 0.75rem
   
