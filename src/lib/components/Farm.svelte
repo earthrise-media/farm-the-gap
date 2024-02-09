@@ -11,9 +11,10 @@
   export let highlightChanges = false // highlight squares different from initial grid
 
   let isNewPan = true
+  let isNewPinch = true
   let disableGestures = false
   let farmWrapperElement: HTMLDivElement
-  let transform = { x: 0, y: 0, z: 1, cx: 0, cy: 0, x0: 0, y0: 0 }
+  let transform = { x: 0, y: 0, z: 1, cx: 0, cy: 0, cz: 1, x0: 0, y0: 0 }
 
   const isSwappable = (food: Food) => food.id !== $userState.itemSelectedForSwap?.id
 
@@ -74,7 +75,14 @@
   }}
   on:pinch={(e) => {
     if (disableGestures) return
-    transform.z = e.detail.scale
+    if (isNewPinch) {
+      transform.cz = transform.z
+      isNewPinch = false
+    }
+    transform.z = e.detail.scale * transform.cz
+  }}
+  on:pinchup={(e) => {
+    isNewPinch = true
   }}
   class:levitate
 >
