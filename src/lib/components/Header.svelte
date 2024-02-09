@@ -19,9 +19,7 @@
 <header class="flex align-center justify-between">
   <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
   <div class="buttons">
-    <ButtonUndo>
-      <div class="flex-center">Undo&nbsp;<Icon type="undo" /></div>
-    </ButtonUndo>
+    <ButtonUndo showIcon />
     <Button bare color="secondary" onClick={() => ($userState.isMenuOpen = !$userState.isMenuOpen)}>
       <Icon classList="text-2xl" type={$userState.isMenuOpen ? "close" : "menu"} />
     </Button>

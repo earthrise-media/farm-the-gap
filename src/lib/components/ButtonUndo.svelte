@@ -1,9 +1,12 @@
 <script lang="ts">
   import { farm, gameHistory, gameState } from "$lib/stores/state"
-  import Button from "./Button.svelte"
 
-  export let hideRemainingCount = false
+  import Icon from "$lib/components/Icon.svelte"
+  import Button from "$lib/components/Button.svelte"
+
   export let bare = false
+  export let showIcon = false
+  export let hideRemainingCount = false
   export let color: "primary" | "secondary" = "primary"
 
   const onClick = () => {
@@ -33,7 +36,7 @@
         class="label bold food-item-avatar text-primary-1 bg-secondary-2"
         >{$gameState.undosRemaining}</span
       >
-    {/if}Undo
+    {/if}Undo{#if showIcon}&nbsp;<Icon type="undo" />{/if}
   </slot>
 </Button>
 
