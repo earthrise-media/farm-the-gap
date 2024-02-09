@@ -11,6 +11,7 @@
   export let highlightChanges = false // highlight squares different from initial grid
 
   let isNewPan = true
+  let disableGestures = false
   let farmWrapperElement: HTMLDivElement
   let transform = { x: 0, y: 0, z: 1, cx: 0, cy: 0, x0: 0, y0: 0 }
 
@@ -51,7 +52,12 @@
   bind:this={farmWrapperElement}
   use:pan={{ delay: 0 }}
   use:pinch={{ delay: 0 }}
+  on:pandown={(e) => {
+    if (e.detail.event.pointerType === "mouse") disableGestures = true
+    else disableGestures = false
+  }}
   on:pan={(e) => {
+    if (disableGestures) return
     if (isNewPan) {
       transform.x0 = e.detail.x
       transform.y0 = e.detail.y
@@ -67,6 +73,7 @@
     isNewPan = true
   }}
   on:pinch={(e) => {
+    if (disableGestures) return
     transform.z = e.detail.scale
   }}
   class:levitate
