@@ -13,6 +13,7 @@
   export let durationIn = 200
   export let durationOut = 100
   export let hideCloseButton = false
+  export let showHeader = false
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -36,6 +37,7 @@
   class:fullscreen
   class:error={isError}
   class:w-full={fullWidth}
+  class:show-header={showHeader}
   on:click={close}
   on:keydown={handleKeydown}
   in:fade|global={{ duration: durationIn }}
@@ -67,6 +69,8 @@
 </div>
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 $padding: 1.25rem
 $radius: 1rem
 
@@ -87,6 +91,11 @@ $radius: 1rem
 
     &.error
       background: var(--color-error-0)
+
+  &.show-header
+    margin: 3.75rem 0.5rem 0.5rem
+    background: var(--color-primary-2)
+    border-radius: var(--border-radius)
 
 .modal
   display: flex
@@ -136,4 +145,10 @@ $radius: 1rem
 .modal-title
   font-weight: bold
   margin-bottom: 0.75rem
+
+@media (max-width: $screen-sm)
+  .modal-screen
+    &.show-header
+      margin: 0.5rem 0.5rem 0.5rem 4.25rem
+
 </style>

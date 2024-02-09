@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { base } from "$app/paths"
-  import { farm, gameState, gameHistory, userState } from "$lib/stores/state"
+  import { userState } from "$lib/stores/state"
 
   import Dock from "$lib/components/Dock.svelte"
   import Farm from "$lib/components/Farm.svelte"
@@ -18,30 +17,12 @@
   import Toast from "$lib/components/Toast.svelte"
   import Modal from "$lib/components/Modal.svelte"
   import FoodChangesTable from "$lib/components/FoodChangesTable.svelte"
-  import ButtonUndo from "$lib/components/ButtonUndo.svelte"
   import TooltipFoodItem from "$lib/components/TooltipFoodItem.svelte"
+  import Header from "$lib/components/Header.svelte"
 </script>
 
 <main class:food-item-selected={$userState.itemSelectedForSwap}>
-  <header class="flex align-center justify-between">
-    <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
-    <div class="buttons">
-      <ButtonUndo />
-      <Button
-        onClick={() => {
-          $farm.reset()
-          $gameState.reset()
-          $gameHistory = []
-          $farm = $farm
-          $gameState = $gameState
-          $gameHistory = $gameHistory
-        }}
-      >
-        Reset
-      </Button>
-      <!-- <Button onClick={() => ($userState.showAboutPage = true)}>About</Button> -->
-    </div>
-  </header>
+  <Header />
   <div class="panel-game-area panel">
     <div class="panel-menu panel">
       <FoodMenu />
@@ -91,9 +72,6 @@ main
   position: relative
   overflow: hidden
 
-header
-  grid-area: header
-
 .panel-game-area
   display: grid
   grid-area: game
@@ -120,21 +98,9 @@ header
     max-height: 100vh
     max-height: 100svh
     overflow: hidden
-
-.buttons
-  gap: 0.25rem
-  display: flex
-  align-items: center
-  justify-content: space-between
-
+    padding: 1rem 0.25rem
 
 @media (max-width: $screen-sm)
-  header
-    display: none
-    .buttons
-      display: none
-    img
-      width: 60px
 
   main
     padding-left: 0
@@ -149,9 +115,5 @@ header
 
   .panel-data
     grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr)
-
-  // .panel-tables
-    // opacity: 0
-    // display: none
 
 </style>

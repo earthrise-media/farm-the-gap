@@ -105,6 +105,7 @@
   display: flex
   flex-direction: column
   gap: 0.125rem
+  padding: 0 0.5rem
 
   &:first-child
     margin-top: 0

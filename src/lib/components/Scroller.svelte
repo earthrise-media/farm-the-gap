@@ -1,7 +1,7 @@
 <script lang="ts">
   export let classList = ""
-  export let direction = "y"
-  export let gradient = false
+  export let direction: "x" | "y" = "y"
+  export let gradient: boolean = false
 </script>
 
 <div class="scroller">

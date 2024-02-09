@@ -27,7 +27,7 @@
   ]
 </script>
 
-<div id="mobile-menu">
+<div id="mobile-menu" class="text-2xl">
   {#each items as { icon, fn }}
     <svelte:component
       this={icon === "undo" ? ButtonUndo : Button}
@@ -36,7 +36,7 @@
       onClick={fn}
     >
       <div class="icon icon-{icon} flex-center bg-primary-2">
-        <Icon type={icon} />
+        <Icon type={icon === "menu" ? ($userState.isMenuOpen ? "close" : "menu") : icon} />
         {#if icon === "undo"}
           <span class="label bg-primary-0 food-item-avatar">{$gameState.undosRemaining}</span>
         {/if}
@@ -57,7 +57,6 @@
     z-index: 1000
     gap: 0.75rem
     display: flex
-    font-size: 2.25rem
     align-items: center
     flex-direction: column
 
