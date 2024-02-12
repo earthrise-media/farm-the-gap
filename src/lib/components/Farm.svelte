@@ -220,7 +220,7 @@
   text-align: center
   align-items: center
   justify-content: center
-  font-size: 2.25rem
+  font-size: 1rem
   color: var(--color-secondary-3)
   overflow: hidden
   aspect-ratio: 1
@@ -249,6 +249,7 @@
   position: relative
   width: auto
   height: auto
+  font-size: 2.25rem
   transition: all 0.3s ease-out
   transform: rotateZ(45deg) rotateY(-60deg) translate(0,0%)
   text-shadow: 0 0 0.1rem rgba(black, 0.75)
@@ -268,8 +269,6 @@
 
 @media (max-width: $screen-sm)
 
-  .land-cell
-    font-size: 0.75rem
-  
+  // .food-item-image
 
 </style>
