@@ -2,6 +2,7 @@
   {
     "id": "f01",
     "name": "Beef",
+    "emoji": "🥩",
     "type": "Ruminant meat",
     "proteinType": "animal",
     "landAllocation": 53,
@@ -21,6 +22,7 @@
   {
     "id": "f02",
     "name": "Lamb",
+    "emoji": "🐑",
     "type": "Ruminant meat",
     "proteinType": "animal",
     "landAllocation": 10,
@@ -40,6 +42,7 @@
   {
     "id": "f03",
     "name": "Dairy",
+    "emoji": "🥛",
     "type": "Animal product",
     "proteinType": "animal",
     "landAllocation": 6,
@@ -59,6 +62,7 @@
   {
     "id": "f04",
     "name": "Eggs",
+    "emoji": "🥚",
     "type": "Animal product",
     "proteinType": "animal",
     "landAllocation": 2,
@@ -78,6 +82,7 @@
   {
     "id": "f06",
     "name": "Pork",
+    "emoji": "🐷",
     "type": "Non-ruminant meat",
     "proteinType": "animal",
     "landAllocation": 4,
@@ -97,6 +102,7 @@
   {
     "id": "f07",
     "name": "Poultry",
+    "emoji": "🐔",
     "type": "Non-ruminant meat",
     "proteinType": "animal",
     "landAllocation": 3,
@@ -116,6 +122,7 @@
   {
     "id": "f08",
     "name": "Vegetables",
+    "emoji": "🥦",
     "type": "Vegetable",
     "proteinType": "plant",
     "landAllocation": 2,
@@ -135,6 +142,7 @@
   {
     "id": "f09",
     "name": "Fruit",
+    "emoji": "🍊",
     "type": "Fruit",
     "proteinType": "plant",
     "landAllocation": 2,
@@ -154,6 +162,7 @@
   {
     "id": "f10",
     "name": "Legumes",
+    "emoji": "🫘",
     "type": "Legume",
     "proteinType": "plant",
     "landAllocation": 3,
@@ -173,6 +182,7 @@
   {
     "id": "f11",
     "name": "Mushrooms",
+    "emoji": "🍄",
     "type": "Vegetable",
     "proteinType": "plant",
     "landAllocation": 1,
@@ -192,6 +202,7 @@
   {
     "id": "f12",
     "name": "Nuts",
+    "emoji": "🥜",
     "type": "Nuts",
     "proteinType": "plant",
     "landAllocation": 3,
@@ -211,6 +222,7 @@
   {
     "id": "f13",
     "name": "Rice",
+    "emoji": "🍚",
     "type": "Cereal",
     "proteinType": "plant",
     "landAllocation": 5,
@@ -230,6 +242,7 @@
   {
     "id": "f14",
     "name": "Wheat",
+    "emoji": "🌾",
     "type": "Cereal",
     "proteinType": "plant",
     "landAllocation": 5,
@@ -249,6 +262,7 @@
   {
     "id": "f15",
     "name": "Corn",
+    "emoji": "🌽",
     "type": "Cereal",
     "proteinType": "plant",
     "landAllocation": 2,

@@ -43,15 +43,14 @@
               ? food.name + " supply exhaused."
               : null}
           >
-            <div class="food-item-button">
-              <div class="flex align-center label">
-                <div class="food-item-avatar text-secondary-3 bg-{food.colorId}">
-                  <span>
-                    {$gameState.inventory.get(food.id).available}
-                  </span>
-                </div>
-                <span class="food-name">{food.name}</span>
+            <div class="food-item-button label">
+              <div class="food-item-avatar text-secondary-3 bg-{food.colorId}">
+                <span class="food-count">
+                  {$gameState.inventory.get(food.id).available}
+                </span>
               </div>
+              <span class="food-name">{food.name}</span>
+              <span class="food-emoji">{food.emoji}</span>
             </div>
           </Button>
         {/each}
@@ -105,8 +104,14 @@
   margin-right: 0.375em
   padding: 0.625em
 
+.food-count
+
+.food-emoji
+  font-size: 1.25em
+  margin-left: auto
+
 :global(#food-menu-wrapper button)
-  padding: 0.125em 0.125em
+  padding: 0.125em 0.375em 0.125em 0.125em
 
 @media (max-width: $screen-sm)
   #food-menu-wrapper

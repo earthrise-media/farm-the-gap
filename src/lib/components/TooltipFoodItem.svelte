@@ -46,7 +46,9 @@
 
 <div id="tooltip-food-item" style="left: {$coords.x}px; top: {$coords.y}px">
   {#if active}
-    <div id="tooltip-food-item-body" class="bg-{active.colorId}" transition:fade />
+    <div id="tooltip-food-item-body" transition:fade>
+      {active.emoji}
+    </div>
   {/if}
 </div>
 
@@ -61,13 +63,10 @@
   position: absolute
   top: 0
   left: 0
-  font-size: 12px
   font-weight: 500
-  height: 0.75rem
-  width: 0.5rem
   text-align: center
-  border-radius: 100%
-  box-shadow: 0 4px 0.5rem #0008
+  font-size: 1.25rem
+  text-shadow: 0 0 0.5rem #0008
   transform: translate(-50%, calc(-50% - 0.25rem))
   transition: transform 0.3s
 

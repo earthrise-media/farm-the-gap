@@ -21,6 +21,7 @@ declare global {
     id: FoodId
     name: string
     type: string
+    emoji: string
     proteinType: string
     landAllocation: number
     yieldPerHa: number

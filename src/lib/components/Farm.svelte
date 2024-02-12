@@ -81,6 +81,10 @@
     }
     transform.z = e.detail.scale * transform.cz
   }}
+  on:wheel={(e) => {
+    const delta = e.deltaY / 100
+    transform.z = Math.max(0.5, transform.z - delta)
+  }}
   on:pinchup={(e) => {
     isNewPinch = true
   }}
@@ -104,8 +108,8 @@
                     ""
                   )} square on the board at all times.`
                 : $userState.itemSelectedForSwap && isSwappable(food)
-                ? `Replace ${food.name} with ${$userState.itemSelectedForSwap.name}`
-                : food.name}
+                  ? `Replace ${food.name} with ${$userState.itemSelectedForSwap.name}`
+                  : food.name}
               class:is-only={$farm.getCropCount(food.id) === 1}
               class:highlighted={$userState.itemHighlighted?.id === food.id}
               class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
@@ -125,7 +129,9 @@
                 )
               }}
             >
-              <div class="food-item-avatar bg-{food.colorId}" />
+              <!-- <div class="food-item-avatar bg-{food.colorId}" /> -->
+              <div class="food-item-fill bg-{food.colorId}"></div>
+              <div class="food-item-image">{food.emoji}</div>
             </button>
           {/key}
         {/each}
@@ -162,7 +168,7 @@
 
 #land-grid
   margin: auto
-  width: 66.67%
+  width: 70%
   transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg)
   display: grid
   grid-template-rows: repeat(10, 1fr)
@@ -191,14 +197,14 @@
     background: var(--color-primary-0)
 
   &::after
-    width: calc(0.75rem)
+    width: calc(0.375rem)
     height: 141.4213% // ~ sqrt(2)
-    transform: rotateZ(-45deg) rotateY(-60deg) translate(calc(-0.75rem - 0.25px), 0)
+    transform: rotateZ(-45deg) rotateY(-60deg) translate(calc(-0.375rem - 1px), 0)
     transform-origin: top
     -webkit-transform-origin: top left
 
   &::before
-    transform: translate3d(-1px, -1px, -0.875rem)
+    transform: translate3d(-1px, -1px, -0.5rem)
     width: calc(100% + 2px)
     height: calc(100% + 2px)
     border: 4px solid var(--color-primary-0)
@@ -214,7 +220,6 @@
   align-items: center
   justify-content: center
   font-size: 1rem
-  overflow: hidden
   color: var(--color-secondary-3)
   overflow: hidden
   aspect-ratio: 1
@@ -231,31 +236,50 @@
     background: var(--color-primary-3)
     animation: flash 0.5s ease-in-out infinite alternate
 
-.food-item-avatar
-  position: relative
-  overflow: hidden
-  width: 0.75em
-  height: 0.75em
-  max-width: 220%
-  max-height: 60%
-  transition: all 0.3s ease-out
-  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.25)
-  transform: rotateZ(-14deg) rotateY(-40deg) rotateX(60deg) scale(1.125, 1.75) translate(10%, -20%)
+.food-item-fill
+  position: absolute
+  z-index: 0
+  height: 100%
+  width: 100%
+  opacity: 0
+  // border-width: 1px
+  border-style: solid
+  border-radius: 0rem
 
-  &::after
-    content: ""
-    position: absolute
-    z-index: 1
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
+.food-item-image
+  position: relative
+  width: auto
+  height: auto
+  transition: all 0.3s ease-out
+  font-size: 1.5rem
+  transform: rotateZ(45deg) rotateY(-60deg) translate(5%, -2.5%)
+  text-shadow: 0 0 0.1rem rgba(black, 0.75)
+
+  .land-cell:not(.unswappable):hover &
+    transform: rotateZ(45deg) rotateY(-60deg) translate(5%, -10%)
+
+  [data-tooltip="Dairy"] &,
+  [data-tooltip="Eggs"] &
+    font-size: 1.25rem
+
+  [data-tooltip="Beef"] &,
+  [data-tooltip="Lamb"] &,
+  [data-tooltip="Pork"] &
+    transform: rotateZ(45deg) rotateY(-60deg) translate(-12.5%, -12.5%)
+
+    .land-cell:not(.unswappable):hover &
+      transform: rotateZ(45deg) rotateY(-60deg) translate(5%, -12.5%)
+
+  [data-tooltip="Poultry"] &
+    transform: rotateZ(45deg) rotateY(-60deg) translate(5%, -25%)
+
+    .land-cell:not(.unswappable):hover &
+      transform: rotateZ(45deg) rotateY(-60deg) translate(5%, -12.5%)
+
 
 @media (hover: hover)
   .land-cell:not(.unswappable):hover
     background: var(--color-secondary-3)
-  .land-cell:not(.unswappable):hover .food-item-avatar
-    transform: rotateZ(-14deg) rotateY(-40deg) rotateX(60deg) scale(1.125, 1.75) translate(17%, -28%)
 
 @media (max-width: $screen-sm)
 

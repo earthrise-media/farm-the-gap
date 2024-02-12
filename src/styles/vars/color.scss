@@ -43,21 +43,21 @@ $oklch-palette: (
   @return map.get($oklch-palette, $hue, $shade);
 }
 
-$colors-animal: palette("A", "80"), // Beef
-  palette("A", "70"), // Lamb
-  palette("A", "60"), // Pork
-  palette("B", "50"), // Poultry
-  palette("D", "50"), // Dairy
-  palette("D", "40"); // Eggs
+$colors-animal: palette("B", "60"), // Beef
+  palette("B", "50"), // Lamb
+  palette("A", "50"), // Pork
+  palette("A", "40"), // Poultry
+  palette("C", "40"), // Dairy
+  palette("C", "30"); // Eggs
 
 $colors-plant: palette("Z", "50"),
-  palette("H", "50"),
-  palette("N", "60"),
-  palette("O", "60"),
-  palette("K", "60"),
+  palette("H", "60"),
+  palette("O", "50"),
+  palette("N", "50"),
+  palette("K", "50"),
+  palette("G", "50"),
   palette("F", "50"),
-  palette("F", "60"),
-  palette("E", "70");
+  palette("E", "50");
 
 $color-error-0: palette("A", "90");
 $color-error-1: palette("A", "70");
