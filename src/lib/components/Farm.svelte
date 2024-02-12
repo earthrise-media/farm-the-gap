@@ -102,6 +102,7 @@
             <button
               in:scale={{ duration: 300, easing, start: 0.6, opacity: 0.5 }}
               class="land-cell"
+              data-food={food.name}
               data-tooltip={$userState.itemSelectedForSwap && $farm.getCropCount(food.id) === 1
                 ? `Cannot swap. You must keep at least one ${food.name.replace(
                     /s$/,
@@ -173,7 +174,7 @@
   display: grid
   grid-template-rows: repeat(10, 1fr)
   grid-template-columns: repeat(10, 1fr)
-  gap: 1px
+  // gap: 1px
   position: relative
   z-index: 1
   background: var(--color-primary-0)
@@ -219,7 +220,7 @@
   text-align: center
   align-items: center
   justify-content: center
-  font-size: 1rem
+  font-size: 2.25rem
   color: var(--color-secondary-3)
   overflow: hidden
   aspect-ratio: 1
@@ -242,44 +243,28 @@
   height: 100%
   width: 100%
   opacity: 0
-  // border-width: 1px
-  border-style: solid
-  border-radius: 0rem
+  transition: opacity 0.2s
 
 .food-item-image
   position: relative
   width: auto
   height: auto
   transition: all 0.3s ease-out
-  font-size: 1.5rem
-  transform: rotateZ(45deg) rotateY(-60deg) translate(5%, -2.5%)
+  transform: rotateZ(45deg) rotateY(-60deg) translate(0,0%)
   text-shadow: 0 0 0.1rem rgba(black, 0.75)
 
   .land-cell:not(.unswappable):hover &
-    transform: rotateZ(45deg) rotateY(-60deg) translate(5%, -10%)
+    transform: rotateZ(45deg) rotateY(-60deg) translate(0, -5%)
 
-  [data-tooltip="Dairy"] &,
-  [data-tooltip="Eggs"] &
-    font-size: 1.25rem
-
-  [data-tooltip="Beef"] &,
-  [data-tooltip="Lamb"] &,
-  [data-tooltip="Pork"] &
-    transform: rotateZ(45deg) rotateY(-60deg) translate(-12.5%, -12.5%)
-
-    .land-cell:not(.unswappable):hover &
-      transform: rotateZ(45deg) rotateY(-60deg) translate(5%, -12.5%)
-
-  [data-tooltip="Poultry"] &
-    transform: rotateZ(45deg) rotateY(-60deg) translate(5%, -25%)
-
-    .land-cell:not(.unswappable):hover &
-      transform: rotateZ(45deg) rotateY(-60deg) translate(5%, -12.5%)
-
+  [data-food="Dairy"] &,
+  [data-food="Eggs"] &
+    font-size: 1.75rem
 
 @media (hover: hover)
   .land-cell:not(.unswappable):hover
-    background: var(--color-secondary-3)
+    // background: var(--color-secondary-3)
+    .food-item-fill
+      opacity: 1
 
 @media (max-width: $screen-sm)
 
