@@ -49,7 +49,7 @@
 
   <TooltipFoodItem />
 
-  <!-- <WelcomeScreen /> -->
+  <WelcomeScreen />
   <EndScreen />
   <Toast />
 </main>
