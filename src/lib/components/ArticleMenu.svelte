@@ -29,7 +29,7 @@
 </div>
 {#if maxItems < articles.length || showFeaturedOnly}
   <div class="see-all-link text-secondary-2 text-right">
-    <a href="/learn">See all &rarr;</a>
+    <a href="/learn" on:click={() => ($userState.isMenuOpen = false)}>See all &rarr;</a>
   </div>
 {/if}
 
