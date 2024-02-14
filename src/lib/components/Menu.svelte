@@ -3,60 +3,56 @@
 
   import { page } from "$app/stores"
 
+  import articles from "$lib/data/articles"
+
   import Modal from "$lib/components/Modal.svelte"
-  import Header from "./Header.svelte"
-  import Scroller from "./Scroller.svelte"
+  import Header from "$lib/components/Header.svelte"
+  import Scroller from "$lib/components/Scroller.svelte"
+  import ArticleMenu from "./ArticleMenu.svelte"
+  import { fade } from "svelte/transition"
+  import Farm from "./Farm.svelte"
 
   const items = [
     {
       title: "Game",
+      note: "Return to your game",
       slug: "/"
     },
     {
       title: "About",
-      slug: "/about"
+      slug: "/about",
+      note: "More about the game, our methodology and team."
+    },
+    {
+      title: "Learning center",
+      slug: "/learn",
+      note: `${articles.length} micro-articles on food and the environment.`
     }
   ]
 
-  const articles = [
-    {
-      title: "Water use",
-      slug: "/articles/water-use"
-    },
-    {
-      title: "Land use",
-      slug: "/articles/land-use"
-    },
-    {
-      title: "Food emissions",
-      slug: "/articles/emissions"
-    },
-    {
-      title: "What is the best diet for the climate?",
-      slug: "/articles/diet"
-    },
-    {
-      title: "Small changes by many or large changes by few?",
-      slug: "/articles/changes"
-    }
-  ]
+  let hoveringItemSlug = "/"
 </script>
 
 {#if $userState.isMenuOpen}
   <Modal showHeader fullscreen fullWidth durationOut={200}>
     <div id="main-menu">
       <div id="main-menu-list">
-        {#each items as { title, slug }}
+        {#each items as { title, slug, note }}
           <a
             class="main-menu-link"
+            class:hover={hoveringItemSlug === slug}
+            on:mouseenter={() => (hoveringItemSlug = slug)}
             on:click={(e) => {
               if (slug === $page.url.pathname) e.preventDefault()
               $userState.isMenuOpen = false
             }}
-            href={slug}>{title}</a
+            href={slug}
           >
+            {title}
+            <div class="note text-tertiary-1 bold">{note}</div>
+          </a>
         {/each}
-        <div class="attribution description">
+        <div class="attribution">
           This project was funded by <a href="https://theplotline.org/">The Plotline</a>, an open
           innovation platform and resource hub working towards a more sustainable and equitable food
           system. This game and website was designed and built by
@@ -64,23 +60,17 @@
         </div>
       </div>
       <div id="article-menu-wrap">
-        <h3 class="text-xl">Learning center</h3>
-        <div class="description">
-          These snack-sized articles will help you understand food systems and the environment. Take
-          a quick bite!
-        </div>
-        <div id="article-menu-list">
-          {#each articles as { title, slug }}
-            <a
-              class="article-link"
-              on:click={(e) => {
-                if (slug === $page.url.pathname) e.preventDefault()
-                $userState.isMenuOpen = false
-              }}
-              href={slug}>{title}</a
-            >
-          {/each}
-        </div>
+        {#if hoveringItemSlug === "/"}
+          <div class="rhs-container" transition:fade={{ duration: 200 }}>
+            <Farm levitate />
+          </div>
+        {:else if hoveringItemSlug === "/learn"}
+          <div class="rhs-container" transition:fade={{ duration: 200 }}>
+            <Scroller gradient>
+              <ArticleMenu maxItems={6} />
+            </Scroller>
+          </div>
+        {/if}
       </div>
     </div>
   </Modal>
@@ -107,15 +97,25 @@
   justify-content: space-between
   flex-direction: column
 
-#article-menu-list
-  gap: 0.25rem
+.rhs-container
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  padding-left: 2rem
   display: flex
-  flex-wrap: wrap
-  font-size: 1rem
-  margin-top: 1rem
+  flex-direction: column
+  align-items: center
+  justify-content: center
 
 #article-menu-wrap
-  border-left: 1px solid var(--color-secondary-3)
+  position: relative
+  height: inherit
+  overflow: visible
+  min-height: calc(100vh - 10rem)
+  min-height: calc(100svh - 10rem)
+  // border-left: 1px solid var(--color-secondary-3)
 
   h3
     font-size: 3rem
@@ -126,38 +126,35 @@
 a
   color: var(--color-secondary-3)
   text-decoration: none
-  transition: color 0.2s
+  transition: color 0.2s, transform 0.3s
 
   @media (hover: hover)
+    &.hover,
     &:hover
       color: var(--color-secondary-1)
+      transform: translateY(-0.25rem)
+
+      .note
+        opacity: 1
+        transform: translateY(0)
 
   &.main-menu-link
-    line-height: 1.25
+    line-height: 1.5
 
-  &.article-link
-    padding: 1rem
-    text-align: center
-    color: var(--color-secondary-2)
-    background: var(--color-primary-3)
-    border-radius: 0.25rem
-    transition: all 0.3s
-    flex-grow: 1
+.note
+  opacity: 0
+  transition: opacity 0.2s, transform 0.3s
+  transform: translateY(-0.5rem)
+  font-size: 1rem
+  line-height: 0.1
 
-    @media (hover: hover)
-      &:hover
-        background: var(--color-primary-1)
-        color: var(--color-secondary-1)
-
-.description
+.attribution
   line-height: 1.3
   font-size: 0.75rem
   color: var(--color-secondary-2)
-
-.attribution
-  margin-top: 1rem
-  padding-top: 1rem
-  border-top: 1px solid var(--color-secondary-3)
+  margin-top: 1.25rem
+  padding-top: 1.75rem
+  border-top: 1px solid var(--color-primary-3)
 
 @media (max-width: $screen-sm)
   #main-menu
@@ -171,10 +168,6 @@ a
   #main-menu-list,
   #article-menu-wrap h3
     font-size: 2.25rem
-
-  #main-menu-list
-    width: 40%
-    flex-basis: 40%
 
   #article-menu-wrap
     width: 60%

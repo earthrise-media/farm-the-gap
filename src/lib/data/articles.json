@@ -2,11 +2,11 @@
   {
     "title": "Planet of the plates",
     "slug": "overview",
-    "description": "An overview of the role of food in climate change and natural resource use.",
+    "description": "Why do foods have different ‘foodprints’?",
     "lede": "Your dining choices hold surprising power. Everyday meals make a global difference through the resources they demand."
   },
   {
-    "title": "From vegan to climate carnivore",
+    "title": "Vegans and climate carnivores",
     "slug": "diet-types",
     "description": "Which diets are best for the planet?",
     "lede": "The best diet for the planet isn't about perfection for a select few. It's about the consistent commitment to sustainable eating embraced by many."
@@ -15,13 +15,13 @@
     "title": "The 50% food gap",
     "slug": "food-gap",
     "description": "Why do we need to increase food production by 50% by 2060?",
-    "lede": "A looming population boom combined with shifting dietary trends towards resource-intensive foods puts massive pressure on our planet's ability to feed itself in the decades to come." 
+    "lede": "A looming population boom combined with shifting dietary trends towards resource-intensive foods puts massive pressure on our planet's ability to feed itself in the decades to come."
   },
   {
-    "title": "‘Foodprints’ around the world",
+    "title": "Country foodprints",
     "slug": "country-foodprints",
     "description": "Which high-consuming countries have the greatest potential for change?",
-    "lede": "Not all nations eat equally.  Data reveals the wide disparity in diet-related resource use – some can change more than others."
+    "lede": "Not all nations eat equally. Data reveals the wide disparity in diet-related resource use – some can change more than others."
   },
   {
     "title": "Grasslands and red meat reduction",
@@ -38,7 +38,7 @@
   {
     "title": "Don't have a cow, man",
     "slug": "one-change",
-    "description": "The single most impactful dietary shift.",
+    "description": "What is the single most impactful dietary shift?",
     "lede": "Reducing your red meat consumption has an outsized impact on your individual food footprints...and is dead simple to implement."
   },
   {

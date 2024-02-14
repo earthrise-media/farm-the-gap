@@ -2,8 +2,7 @@
   {
     "title": "Focus on what you eat, not whether your food is local",
     "description": "How does the impact of what you eat compare to where it's come from?",
-    "external": "true",
-    "url": "https://ourworldindata.org/food-choice-vs-eating-local",
-    "lede": "Analyzing the carbon footprint of imported foods compared to seasonal, local crops."
+    "lede": "Analyzing the carbon footprint of imported foods compared to seasonal, local crops.",
+    "url": "https://ourworldindata.org/food-choice-vs-eating-local"
   }
 ]

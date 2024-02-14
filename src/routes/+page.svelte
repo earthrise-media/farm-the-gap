@@ -19,6 +19,7 @@
   import FoodChangesTable from "$lib/components/FoodChangesTable.svelte"
   import TooltipFoodItem from "$lib/components/TooltipFoodItem.svelte"
   import Header from "$lib/components/Header.svelte"
+  import { foodItems } from "$lib/data/foods"
 </script>
 
 <main class:food-item-selected={$userState.itemSelectedForSwap}>
@@ -49,9 +50,9 @@
 
   <TooltipFoodItem />
 
-  <WelcomeScreen />
+  <!-- <WelcomeScreen />
   <EndScreen />
-  <Toast />
+  <Toast /> -->
 </main>
 
 <style lang="sass">

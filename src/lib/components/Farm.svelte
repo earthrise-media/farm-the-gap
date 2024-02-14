@@ -182,6 +182,7 @@
 
   .levitate &
     animation: levitate 1s ease-in-out infinite alternate
+    width: 66%
 
     &::before
       animation: levitate-shadow 1s ease-in-out infinite alternate

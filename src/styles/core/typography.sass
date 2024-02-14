@@ -1,5 +1,15 @@
-p
-  margin-bottom: 0.75em
+article
+  line-height: 1.5
+
+p, ul, ol
+  margin-bottom: 1.75em
+  &:last-child
+    margin-bottom: 0
+
+li
+  margin-bottom: 0.25em
+  &:last-child
+    margin-bottom: 0
 
 h1,h2,h3
   font-weight: bold
@@ -62,10 +72,19 @@ strong, b, .bold
   text-align: right
 
 a
+  text-decoration: none
   color: inherit
+  transition: filter 0.2s
 
   &:visited
     color: inherit
+
+  article &
+    text-decoration: underline
+
+  @media (hover: hover)
+    &:hover
+      filter: brightness(1.1)
 
 @media (max-width: $screen-sm)
   .big-number
