@@ -56,6 +56,10 @@ h1,h2,h3
 em
   font-style: italic
 
+sub
+  vertical-align: sub
+  font-size: 0.75em
+
 sup
   vertical-align: super
   font-size: 0.5em
@@ -85,6 +89,9 @@ a
 
   article &
     text-decoration: underline
+
+  sup &
+    text-decoration: none
 
   @media (hover: hover)
     &.hover-brighten:hover
