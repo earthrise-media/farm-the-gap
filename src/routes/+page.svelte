@@ -20,6 +20,7 @@
   import TooltipFoodItem from "$lib/components/TooltipFoodItem.svelte"
   import Header from "$lib/components/Header.svelte"
   import { foodItems } from "$lib/data/foods"
+  import { dev } from "$app/environment"
 </script>
 
 <main class:food-item-selected={$userState.itemSelectedForSwap}>
@@ -50,9 +51,11 @@
 
   <TooltipFoodItem />
 
-  <!-- <WelcomeScreen />
-  <EndScreen />
-  <Toast /> -->
+  {#if !dev}
+    <WelcomeScreen />
+    <EndScreen />
+    <Toast />
+  {/if}
 </main>
 
 <style lang="sass">
