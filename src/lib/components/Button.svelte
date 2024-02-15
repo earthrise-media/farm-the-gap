@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { base } from "$app/paths"
+
   export let onClick = (e: MouseEvent | KeyboardEvent) => {}
   export let onMouseEnter = (e: MouseEvent) => {}
   export let onMouseLeave = (e: MouseEvent) => {}
@@ -22,7 +24,7 @@
 
 <svelte:element
   this={link ? "a" : "button"}
-  href={link}
+  href="{base}/{link}"
   {type}
   {target}
   {disabled}

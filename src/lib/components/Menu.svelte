@@ -1,16 +1,18 @@
 <script lang="ts">
-  import { userState } from "$lib/stores/state"
-
+  import { base } from "$app/paths"
   import { page } from "$app/stores"
+  import { fade } from "svelte/transition"
+
+  import { userState } from "$lib/stores/state"
 
   import articles from "$lib/data/articles"
 
+  import Farm from "$lib/components/Farm.svelte"
   import Modal from "$lib/components/Modal.svelte"
-  import Header from "$lib/components/Header.svelte"
   import Scroller from "$lib/components/Scroller.svelte"
-  import ArticleMenu from "./ArticleMenu.svelte"
-  import { fade } from "svelte/transition"
-  import Farm from "./Farm.svelte"
+  import ArticleMenu from "$lib/components/ArticleMenu.svelte"
+
+  let hoveringItemSlug = "/"
 
   const items = [
     {
@@ -29,8 +31,6 @@
       note: `${articles.length} micro-articles on food and the environment.`
     }
   ]
-
-  let hoveringItemSlug = "/"
 </script>
 
 {#if $userState.isMenuOpen}
@@ -46,7 +46,7 @@
               if (slug === $page.url.pathname) e.preventDefault()
               $userState.isMenuOpen = false
             }}
-            href={slug}
+            href="{base}/{slug}"
           >
             {title}
             <div class="note text-tertiary-1 bold">{note}</div>
