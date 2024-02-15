@@ -1,7 +1,7 @@
 <script lang="ts">
   export let data
 
-  $: ({ title, description, lede } = data?.post ?? {})
+  $: ({ title, description, lede } = data.post)
 </script>
 
 <section class="article-hero">
