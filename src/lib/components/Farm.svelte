@@ -232,6 +232,7 @@
   color: var(--color-secondary-3)
   overflow: hidden
   aspect-ratio: 1
+  user-select: none
   transition: background 0.2s, transform 0.2s ease-out
   
   &.swappable
