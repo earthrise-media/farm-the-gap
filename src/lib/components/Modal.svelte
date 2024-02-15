@@ -14,6 +14,7 @@
   export let durationOut = 100
   export let hideCloseButton = false
   export let showHeader = false
+  export let ariaRole: "dialog" | "presentation" = "dialog"
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -30,12 +31,12 @@
 <div
   {id}
   class="modal-screen font-sans {classList}"
-  class:has-title={title}
-  role="dialog"
   tabindex="-1"
-  aria-modal="true"
+  role={ariaRole}
+  aria-modal={ariaRole === "dialog"}
   class:fullscreen
   class:error={isError}
+  class:has-title={title}
   class:w-full={fullWidth}
   class:show-header={showHeader}
   on:click={close}
@@ -46,9 +47,9 @@
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
     class="modal"
-    role="dialog"
     tabindex="-1"
-    aria-modal="true"
+    role={ariaRole}
+    aria-modal={ariaRole === "dialog"}
     on:click={(e) => !fullscreen && e.stopPropagation()}
     on:keydown={(e) => !fullscreen && e.stopPropagation()}
   >
