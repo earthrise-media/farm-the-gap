@@ -261,7 +261,7 @@
   font-size: 2.25rem
   transition: all 0.3s ease-out
   transform: rotateZ(45deg) rotateY(-60deg) translate(0,0%)
-  // text-shadow: 0 0 0.1rem rgba(black, 0.75)
+  text-shadow: 0 0 0.1rem rgba(black, 0.5)
 
   img
     width: 1em

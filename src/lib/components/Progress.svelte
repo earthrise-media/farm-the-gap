@@ -12,14 +12,16 @@
   export let backgroundCurrentColor = false
   export let min = 0
   export let max = isPercent ? 1 : 100
+  export let errorBars: [number, number] | [] = []
 
   export let delay = 0
   export let duration = 400
   export let easing = quintInOut
 
   const width = tweened(0, { duration, delay, easing })
+  const fx = (v: number) => +((100 * (v - min)) / (max - min))
 
-  $: $width = +((100 * (value - min)) / (max - min))
+  $: $width = fx(value)
 </script>
 
 {#if $$slots.label}
@@ -46,6 +48,14 @@
         </div>
       {/if}
     </div>
+    {#if errorBars?.length}
+      <div
+        class="progress-bar-error-bar"
+        style="left: {fx(errorBars[0])}%; width: {fx(errorBars[1]) - fx(errorBars[0])}%"
+      >
+        <div class="progress-bar-error-bar-bar"></div>
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -61,6 +71,21 @@
   .is-error &
     background: var(--color-error-3)
     border-color: var(--color-error-3)
+
+.progress-bar-error-bar
+  top: 1px
+  bottom: 1px
+  z-index: 1
+  position: absolute
+  border-left: 1px solid var(--color-primary-3)
+  border-right: 1px solid var(--color-primary-3)
+
+  .progress-bar-error-bar-bar
+    left: 0
+    right: 0
+    position: absolute
+    top: calc(50% - .5px)
+    border-top: 1px solid var(--color-primary-3)
 
 .progress-bar-labels
   display: flex

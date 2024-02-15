@@ -1,4 +1,6 @@
 <script lang="ts">
+  import ArticleMenu from "$lib/components/ArticleMenu.svelte"
+
   export let data
 
   $: ({ title, description, lede } = data.post)
@@ -16,6 +18,14 @@
   </section>
 </article>
 
+<section class="article-footer text-center">
+  <div class="article-footer-title text-secondary-2 text-2xl">Learning center</div>
+  <div class="article-footer-subtitle bold text-tertiary-1">
+    8 micro-articles on food and the environment.
+  </div>
+  <ArticleMenu />
+</section>
+
 <style lang="sass">
 
 article
@@ -31,5 +41,9 @@ section
   text-align: center
   margin-bottom: 2rem
   color: var(--color-error-1)
+
+.article-footer-subtitle
+  margin-top: 0.75rem
+  margin-bottom: 2rem
 
 </style>

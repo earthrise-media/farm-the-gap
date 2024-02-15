@@ -113,7 +113,6 @@
   overflow: visible
   min-height: calc(100vh - 10rem)
   min-height: calc(100svh - 10rem)
-  // border-left: 1px solid var(--color-secondary-3)
 
   h3
     font-size: 3rem

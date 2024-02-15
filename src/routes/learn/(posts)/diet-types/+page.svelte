@@ -1,60 +1,86 @@
+<script lang="ts">
+  import { dietsByEmissions } from "./data"
+
+  import Progress from "$lib/components/Progress.svelte"
+</script>
+
 <p>
-  Choosing an earth-friendly diet takes some digging beyond marketing trends and dietary myths.
-  Research consistently points to beef and other meats from grazing animals as the most
-  resource-intensive foods. Land, water, and greenhouse gas emissions soar due to these industries,
-  taking a serious toll on our environment.
+  Ruminant meats (beef, sheep and goat) are by far the most resource-intensive foods. Per gram of
+  protein, ruminant meats require 18-20 times more land and generate 3-8 times more greenhouse gas
+  emissions than pork and poultry. When compared to beans, lentils, and other plant-based proteins,
+  they perform even worse.
 </p>
 
 <p>
-  While veganism offers the lowest environmental impact, vegetarian and pescatarian diets are also
-  powerful choices, slashing your footprint compared to meat-heavy eating habits. Even the
-  flexitarian model, prioritizing plants while leaving room for occasional animal proteins, lessens
-  the burden on our resources.
+  The table below compares the greenhouse gas mitigation potential of different diets. While
+  veganism offers the largest reduction, plant-forward diets like flexitarian, pescatarian, and even
+  'climate carnivore' — where 75% of red meat is replaced with other meat — provide roughly half
+  that potential. This highlights the significant impact achievable through even modest dietary
+  shifts.
 </p>
 
 <p>
-  Beef and other ruminant meats (sheep and goat) are by far the most resource-intensive of foods,
-  requiring four to six times more land and generating that many times more greenhouse gas emissions
-  than dairy per calorie or unit of protein ultimately consumed by people. Beef and other ruminants
-  also require more than 20 times more land and generate more than 20 times more greenhouse gas
-  emissions than pulses per unit of protein consumed. (like beans and lentils) per unit of protein.
+  Another way to think about it – invite a friend to join you in a plant-forward diet and your
+  impact will be comparable to going vegan alone.
 </p>
 
+<figure id="diets-by-emissions" class="flex-col">
+  <h2 class="text-xl">Demand-side greenhouse gas mitigation potential of different diets</h2>
+  {#each dietsByEmissions as diet}
+    <div class="diet-item flex-col">
+      <div class="bold">{diet.label}</div>
+      <div class="label">{diet.summary}</div>
+      <div class="progress-bar text-base">
+        <Progress
+          value={diet.value}
+          max={8}
+          showValue={false}
+          showLabels={false}
+          errorBars={diet.error}
+        />
+      </div>
+    </div>
+  {/each}
+  <figcaption class="label">
+    Adapted from the IPCC’s <a
+      href="https://www.ipcc.ch/srccl/chapter/chapter-5/5-5-mitigation-options-challenges-and-opportunities/5-5-2-demand-side-mitigation-options/5-5-2-1-mitigation-potential-of-different-diets/figure-5-12/"
+      target="blank">Special Report on Climate Change and Land &nearr;</a
+    >. Estimates indicate technical potential only and include additional effects of carbon
+    sequestration from land-sparing. Data without error bars are from one study only.
+  </figcaption>
+</figure>
+
 <p>
-  Interestingly, going vegan yourself has a similar impact to convincing four friends to
-  significantly reduce their beef consumption. Additionally, capping protein intake for the entire
+  The <em>World Resources Institute</em> found a similar result: capping protein for the entire
   population at 60g per day would have a greater environmental impact than a quarter of that
-  population going fully vegetarian [1].
+  population going fully vegetarian.<sup
+    ><a
+      href="https://files.wri.org/d8/s3fs-public/Shifting_Diets_for_a_Sustainable_Food_Future_1.pdf"
+      >1</a
+    ></sup
+  >
 </p>
 
 <p>
-  The best diet for the planet isn't about perfection for a select few. It's about the consistent
-  commitment to sustainable eating embraced by many. Smaller portions, plant-forward meals,
-  sustainably-sourced ingredients – each informed choice creates a ripple effect. It's a powerful
-  reminder that every decision on our plates holds the potential for positive change.
+  This underscores the power of plant-forward choices adopted by many. Ultimately, the best diet for
+  the planet is fueled by the collective. Small changes you make can be multiplied by the masses.
 </p>
 
-<p>A small change by many is more powerful than a great change made by few. Less can be more!</p>
+<p>Even with food, less can be more!</p>
 
-[1] WRI Shifting Diets for a Sustainable Food Future
+<figure class="text-primary-2 label">
+  <b>A note on nutrients: </b>
+  Plant proteins can be combined to get the full range of required amino acids and micronutrients (aside
+  from B12). Focus on iron-rich options like lentils, leafy greens, or fortified foods, and ensure adequate
+  B12 intake. Seeking guidance from a registered dietitian is wise for those with specific dietary requirements
+  or concerns.
+</figure>
 
-<h3>A note on nutrients</h3>
-<p>
-  Plant-based diets easily supply important nutrients. Focus on iron-rich options like lentils,
-  leafy greens, or fortified foods, and ensure adequate B12 intake. Seeking guidance from a
-  registered dietitian is wise for those with specific dietary requirements or concerns.
-</p>
+<style lang="sass">
+  #diets-by-emissions
+    gap: 1rem
 
-<h3>Some dietary myths</h3>
-
-<ul>
-  <li>More protein is better. We actually only need 50g per day, (average person globally).</li>
-  <li>
-    Animal proteins are better than plant proteins. Plant proteins can be combined to get the full
-    range of required amino acids and micronutrients (aside from Vit. B12)
-  </li>
-  <li>
-    Plant proteins need to be combined every meal. The body stores amino acids separately and uses
-    as required, so the complete set of AA’s not required in every meal sitting
-  </li>
-</ul>
+    .progress-bar
+      font-size: 0.75rem
+      margin-top: 0.25rem
+</style>
