@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { base } from "$app/paths"
+
   import { foodItemsGrouped } from "$lib/data/foods"
   import { gameState, userState } from "$lib/stores/state"
 
   import Button from "$lib/components/Button.svelte"
-  import Scroller from "./Scroller.svelte"
+  import Scroller from "$lib/components/Scroller.svelte"
 
   let vh: number
   let vw: number
@@ -52,7 +54,7 @@
               <span class="food-name">{food.name}</span>
               <span class="food-emoji">
                 {#if food.image}
-                  <img src={food.image} alt={food.name} />
+                  <img src="{base}/{food.image}" alt={food.name} />
                 {:else}
                   {food.emoji}
                 {/if}

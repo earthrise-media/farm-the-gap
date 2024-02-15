@@ -1,11 +1,12 @@
 <script lang="ts">
+  import { onMount } from "svelte"
+  import { base } from "$app/paths"
   import { scale } from "svelte/transition"
   import { backOut as easing } from "svelte/easing"
 
   import { pan, pinch } from "svelte-gestures"
 
   import { farm, userState, gameState, gameHistory } from "$lib/stores/state"
-  import { onMount } from "svelte"
 
   export let levitate = false // animate the farm levitating
   export let highlightChanges = false // highlight squares different from initial grid
@@ -134,7 +135,7 @@
               <div class="food-item-fill bg-{food.colorId}"></div>
               <div class="food-item-image">
                 {#if food.image}
-                  <img src={food.image} alt={food.name} />
+                  <img src="{base}/{food.image}" alt={food.name} />
                 {:else}
                   {food.emoji}
                 {/if}

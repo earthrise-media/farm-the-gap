@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte"
+  import { base } from "$app/paths"
   import { spring } from "svelte/motion"
   import { fade } from "svelte/transition"
   import { userState } from "$lib/stores/state"
@@ -48,7 +49,7 @@
   {#if active}
     <div id="tooltip-food-item-body" transition:fade>
       {#if active.image}
-        <img src={active.image} alt={active.name} />
+        <img src="{base}/{active.image}" alt={active.name} />
       {:else}
         {active.emoji}
       {/if}
