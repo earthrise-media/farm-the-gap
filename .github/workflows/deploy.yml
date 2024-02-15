@@ -15,11 +15,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - name: Build
+          node-version: '20'
+      - name: build
         working-directory: ./
         run: |
-          npm install && npm run build-staging
+          npm install && npm run build
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
