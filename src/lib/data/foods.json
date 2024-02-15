@@ -3,7 +3,7 @@
     "id": "f01",
     "name": "Beef",
     "emoji": "🥩",
-    "image": "/img/icons/beef.png",
+    "image": "img/icons/beef.png",
     "type": "Ruminant meat",
     "proteinType": "animal",
     "landAllocation": 53,

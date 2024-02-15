@@ -19,7 +19,7 @@
 </script>
 
 <header class:article={isArticle} class="flex align-center justify-between">
-  <a href="/">
+  <a href="{base}/">
     <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
   </a>
   <div class="buttons">

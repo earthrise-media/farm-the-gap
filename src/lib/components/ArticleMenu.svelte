@@ -1,7 +1,7 @@
 <script lang="ts">
   import { userState } from "$lib/stores/state"
-
   import { page } from "$app/stores"
+  import { base } from "$app/paths"
 
   import articles from "$lib/data/articles"
 
@@ -20,7 +20,7 @@
         if (slug === $page.url.pathname) e.preventDefault()
         $userState.isMenuOpen = false
       }}
-      href="/learn/{slug}"
+      href="{base}/learn/{slug}"
     >
       <div class="article-link-title label">{title}</div>
       <div class="article-link-description"><b>{description}</b></div>
@@ -29,7 +29,7 @@
 </div>
 {#if maxItems < articles.length || showFeaturedOnly}
   <div class="see-all-link text-secondary-2 text-right">
-    <a href="/learn" on:click={() => ($userState.isMenuOpen = false)}>See all &rarr;</a>
+    <a href="{base}/learn" on:click={() => ($userState.isMenuOpen = false)}>See all &rarr;</a>
   </div>
 {/if}
 
