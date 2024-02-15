@@ -18,16 +18,16 @@
     {
       title: "Game",
       note: "Return to your game",
-      slug: "/"
+      slug: ""
     },
     {
       title: "About",
-      slug: "/about",
+      slug: "about",
       note: "More about the game, our methodology and team."
     },
     {
       title: "Learning center",
-      slug: "/learn",
+      slug: "learn",
       note: `${articles.length} micro-articles on food and the environment.`
     }
   ]
