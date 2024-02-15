@@ -3,6 +3,7 @@
     "id": "f01",
     "name": "Beef",
     "emoji": "🥩",
+    "image": "/img/icons/beef.png",
     "type": "Ruminant meat",
     "proteinType": "animal",
     "landAllocation": 53,
@@ -82,7 +83,7 @@
   {
     "id": "f06",
     "name": "Pork",
-    "emoji": "🐷",
+    "emoji": "🐖",
     "type": "Non-ruminant meat",
     "proteinType": "animal",
     "landAllocation": 4,
@@ -102,7 +103,7 @@
   {
     "id": "f07",
     "name": "Poultry",
-    "emoji": "🐔",
+    "emoji": "🐓",
     "type": "Non-ruminant meat",
     "proteinType": "animal",
     "landAllocation": 3,

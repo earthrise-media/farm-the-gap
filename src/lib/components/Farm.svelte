@@ -132,7 +132,13 @@
             >
               <!-- <div class="food-item-avatar bg-{food.colorId}" /> -->
               <div class="food-item-fill bg-{food.colorId}"></div>
-              <div class="food-item-image">{food.emoji}</div>
+              <div class="food-item-image">
+                {#if food.image}
+                  <img src={food.image} alt={food.name} />
+                {:else}
+                  {food.emoji}
+                {/if}
+              </div>
             </button>
           {/key}
         {/each}
@@ -253,7 +259,12 @@
   font-size: 2.25rem
   transition: all 0.3s ease-out
   transform: rotateZ(45deg) rotateY(-60deg) translate(0,0%)
-  text-shadow: 0 0 0.1rem rgba(black, 0.75)
+  // text-shadow: 0 0 0.1rem rgba(black, 0.75)
+
+  img
+    width: 1em
+    height: 1em
+    object-fit: contain
 
   .land-cell:not(.unswappable):hover &
     transform: rotateZ(45deg) rotateY(-60deg) translate(0, -5%)

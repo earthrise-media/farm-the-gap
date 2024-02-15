@@ -50,7 +50,13 @@
                 </span>
               </div>
               <span class="food-name">{food.name}</span>
-              <span class="food-emoji">{food.emoji}</span>
+              <span class="food-emoji">
+                {#if food.image}
+                  <img src={food.image} alt={food.name} />
+                {:else}
+                  {food.emoji}
+                {/if}
+              </span>
             </div>
           </Button>
         {/each}
@@ -109,6 +115,11 @@
 .food-emoji
   font-size: 1.25em
   margin-left: auto
+
+  img
+    width: 1em
+    height: 1em
+    object-fit: contain
 
 :global(#food-menu-wrapper button)
   padding: 0.125em 0.375em 0.125em 0.125em

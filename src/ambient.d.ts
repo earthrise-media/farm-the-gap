@@ -22,6 +22,7 @@ declare global {
     name: string
     type: string
     emoji: string
+    image?: string
     proteinType: string
     landAllocation: number
     yieldPerHa: number
