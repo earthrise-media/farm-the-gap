@@ -22,11 +22,11 @@
     <div class="flex-col flex-center">
       <div
         class="temp-farm-wrapper"
-        style="position: absolute; transform: scale(0.67) translate(0, 0%); top: 2rem;"
+        style="position: absolute; transform: scale(0.6) translate(0, 0%); top: 0rem;"
       >
         <Farm levitate />
       </div>
-      <div class="title" style="margin: 3rem auto 0.25rem;">Protein explorer</div>
+      <div class="title" style="margin: 5rem auto 0.25rem;">Protein explorer</div>
       <p>Check back here in March for an exciting digital launch.</p>
       <span>Visit <a href="https://theplotline.org/"><b>The Plotline &nearr;</b></a></span>
     </div>
