@@ -25,8 +25,15 @@
 </p>
 
 <figure id="diets-by-emissions" class="flex-col">
-  <h2 class="text-xl">Demand-side greenhouse gas mitigation potential of different diets</h2>
-  {#each dietsByEmissions as diet}
+  <div>
+    <h2 class="figure-title text-xl">
+      Demand-side greenhouse gas mitigation potential of different diets
+    </h2>
+    <h4 class="figure-subtitle label">
+      Measured in gigatonnes of CO<sub>2</sub> equivalents (GtCO<sub>2</sub>-eq) mitigated per year.
+    </h4>
+  </div>
+  {#each dietsByEmissions as diet, i}
     <div class="diet-item flex-col">
       <div class="bold">{diet.label}</div>
       <div class="label">{diet.summary}</div>
@@ -34,9 +41,9 @@
         <Progress
           value={diet.value}
           max={8}
-          showValue={false}
-          showLabels={false}
+          showLabels={!i}
           errorBars={diet.error}
+          showValue={false}
         />
       </div>
     </div>
@@ -55,6 +62,7 @@
   population at 60g per day would have a greater environmental impact than a quarter of that
   population going fully vegetarian.<sup
     ><a
+      target="_blank"
       href="https://files.wri.org/d8/s3fs-public/Shifting_Diets_for_a_Sustainable_Food_Future_1.pdf"
       >1</a
     ></sup
