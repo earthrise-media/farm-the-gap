@@ -12,22 +12,17 @@
   import Scroller from "$lib/components/Scroller.svelte"
   import ArticleMenu from "$lib/components/ArticleMenu.svelte"
 
-  let hoveringItemSlug = "/"
+  let hoveringItemLink = ""
 
   const items = [
     {
       title: "Game",
       note: "Return to your game",
-      slug: ""
-    },
-    {
-      title: "About",
-      slug: "about",
-      note: "More about the game, our methodology and team."
+      href: ""
     },
     {
       title: "Learning center",
-      slug: "learn",
+      href: "learn",
       note: `${articles.length} micro-articles on food and the environment.`
     }
   ]
@@ -37,34 +32,37 @@
   <Modal showHeader fullscreen fullWidth durationOut={200}>
     <div id="main-menu">
       <div id="main-menu-list">
-        {#each items as { title, slug, note }}
+        {#each items as { title, href, note }}
           <a
             class="main-menu-link"
-            class:hover={hoveringItemSlug === slug}
-            on:mouseenter={() => (hoveringItemSlug = slug)}
+            class:hover={hoveringItemLink === href}
+            on:mouseenter={() => (hoveringItemLink = href)}
             on:click={(e) => {
-              if (slug === $page.url.pathname) e.preventDefault()
+              if (href === $page.url.pathname) e.preventDefault()
               $userState.isMenuOpen = false
             }}
-            href="{base}/{slug}"
+            href="{base}/{href}"
           >
-            {title}
-            <div class="note text-tertiary-1 bold">{note}</div>
+            {@html title}
+            {#if note}
+              <div class="note bold">{note}</div>
+            {/if}
           </a>
         {/each}
         <div class="attribution">
-          This project was funded by <a href="https://theplotline.org/">The Plotline</a>, an open
-          innovation platform and resource hub working towards a more sustainable and equitable food
-          system. This game and website was designed and built by
-          <a href="https://brody.fyi/">Brody Smith</a>.
+          This project was funded by <a href="https://theplotline.org/"
+            ><b>The Plotline &nearr;</b></a
+          >, an open innovation platform and resource hub working towards a more sustainable and
+          equitable food system. This game and website was designed and built by
+          <a href="https://brody.fyi/"><b>Brody Smith &nearr;</b></a>.
         </div>
       </div>
       <div id="article-menu-wrap">
-        {#if hoveringItemSlug === "/"}
+        {#if hoveringItemLink === ""}
           <div class="rhs-container" transition:fade={{ duration: 200 }}>
             <Farm levitate />
           </div>
-        {:else if hoveringItemSlug === "/learn"}
+        {:else if hoveringItemLink === "learn"}
           <div class="rhs-container" transition:fade={{ duration: 200 }}>
             <Scroller gradient>
               <ArticleMenu maxItems={6} />
@@ -126,27 +124,29 @@
 a
   color: var(--color-secondary-3)
   text-decoration: none
-  transition: color 0.2s, transform 0.3s
+  transition: all 0.3s
 
   @media (hover: hover)
     &.hover,
     &:hover
       color: var(--color-secondary-1)
-      transform: translateY(-0.25rem)
+      transform: translateY(-0.125rem)
 
       .note
         opacity: 1
-        transform: translateY(0)
+        color: var(--color-tertiary-1)
+        transform: translateY(0.125rem)
 
   &.main-menu-link
     line-height: 1.5
 
 .note
-  opacity: 0
-  transition: opacity 0.2s, transform 0.3s
-  transform: translateY(-0.5rem)
+  transition: inherit
   font-size: 1rem
+  color: var(--color-secondary-3)
   line-height: 0.1
+  padding-left: 0.125rem
+  margin-bottom: 1rem
 
 .attribution
   line-height: 1.3
@@ -155,6 +155,9 @@ a
   margin-top: 1.25rem
   padding-top: 1.75rem
   border-top: 1px solid var(--color-primary-3)
+
+  a
+    color: var(--color-secondary-1)
 
 @media (max-width: $screen-sm)
   #main-menu
