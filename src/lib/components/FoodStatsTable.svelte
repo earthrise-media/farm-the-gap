@@ -1,10 +1,11 @@
 <script lang="ts">
+  import { base } from "$app/paths"
   import { flip } from "svelte/animate"
   import { quintInOut as easing } from "svelte/easing"
 
   import { foodItems } from "$lib/data/foods"
-  import { gameState, userState } from "$lib/stores/state"
   import { largeNumber } from "$lib/utils/written"
+  import { gameState, userState } from "$lib/stores/state"
 
   import Icon from "$lib/components/Icon.svelte"
   import Button from "$lib/components/Button.svelte"
@@ -219,7 +220,14 @@
         tabindex="-1"
       >
         <div class="td name">
-          <div class="food-item-avatar flex-center bg-{f.colorId}" />
+          <div class="food-item-avatar flex-center">
+            {#if f.image}
+              <img width="100%" src="{base}/{f.image}" alt={f.name} />
+            {:else}
+              {f.emoji}
+            {/if}
+            <!-- {f.emoji} -->
+          </div>
           <strong>{f.name}</strong>
         </div>
         {#each data.slice(1) as column}
