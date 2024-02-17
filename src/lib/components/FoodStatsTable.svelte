@@ -34,7 +34,7 @@
 
   const getCaveat = (food: Food, key: keyof Food) => {
     if (food.name === "Rice" && key === "waterPerKg")
-      return "Rice water usage is discounted 50% due to freshwater abundance in growing regions."
+      return "Rice water usage is discounted 25% due to freshwater abundance in growing regions."
 
     return undefined
   }
