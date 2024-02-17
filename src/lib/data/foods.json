@@ -2,7 +2,7 @@
   {
     "id": "f01",
     "name": "Beef",
-    "emoji": "🥩",
+    "emoji": "🐄",
     "image": "img/icons/beef.png",
     "type": "Ruminant meat",
     "proteinType": "animal",
@@ -215,11 +215,11 @@
     "carbRatio": 276,
     "fatRatio": 444.3,
     "nutritionSources": "Average of peanuts, almonds, cashews, raw",
-    "ghgPerKg": 0.4,
-    "waterPerKg": 4133.8,
-    "eutrophyPerKg": 19.2,
-    "landPerKg": 13,
-    "impactSources": "Nuts (food commodity)"
+    "ghgPerKg": 1.8,
+    "waterPerKg": 2993.1,
+    "eutrophyPerKg": 16.6,
+    "landPerKg": 11,
+    "impactSources": "Average of Nuts and Ground Nuts (food commodity)"
   },
   {
     "id": "f13",
@@ -244,7 +244,7 @@
   {
     "id": "f14",
     "name": "Wheat",
-    "emoji": "🌾",
+    "emoji": "🍞",
     "image": "img/icons/wheat.png",
     "type": "Cereal",
     "proteinType": "plant",
