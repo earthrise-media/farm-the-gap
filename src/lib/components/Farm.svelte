@@ -258,7 +258,8 @@
   position: relative
   width: auto
   height: auto
-  font-size: 2.25rem
+  // font-size: 1.875rem
+  font-size: 200%
   transition: all 0.3s ease-out
   transform: rotateZ(45deg) rotateY(-60deg) translate(0,0%)
   text-shadow: 0 0 0.1rem rgba(black, 0.5)
@@ -272,12 +273,20 @@
     transform: rotateZ(45deg) rotateY(-60deg) translate(0, -5%)
 
   [data-food="Dairy"] &,
-  [data-food="Eggs"] &
+  [data-food="Eggs"] &,
+  [data-food="Lamb"] &,
+  [data-food="Corn"] &,
+  [data-food="Nuts"] &
     font-size: 1.75rem
+
+  [data-food="Corn"] &
+    transform: rotateZ(65deg) rotateX(-20deg) rotateY(-60deg) translate(0,0%)
+
+  [data-food="Vegetables"] &
+    transform: rotateZ(30deg) rotateX(15deg) rotateY(-60deg) translate(0,0%)
 
 @media (hover: hover)
   .land-cell:not(.unswappable):hover
-    // background: var(--color-secondary-3)
     .food-item-fill
       opacity: 1
 
