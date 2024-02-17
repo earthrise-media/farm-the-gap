@@ -24,7 +24,7 @@
   impact will be comparable to going vegan alone.
 </p>
 
-<figure id="diets-by-emissions" class="flex-col">
+<figure id="diets-by-emissions">
   <div>
     <h2 class="figure-title text-xl">
       Demand-side greenhouse gas mitigation potential of different diets
@@ -33,21 +33,23 @@
       Measured in gigatonnes of CO<sub>2</sub> equivalents (GtCO<sub>2</sub>-eq) mitigated per year.
     </h4>
   </div>
-  {#each dietsByEmissions as diet, i}
-    <div class="diet-item flex-col">
-      <div class="bold">{diet.label}</div>
-      <div class="label">{diet.summary}</div>
-      <div class="progress-bar text-base">
-        <Progress
-          value={diet.value}
-          max={8}
-          showLabels={!i}
-          errorBars={diet.error}
-          showValue={false}
-        />
+  <div class="diet-items flex-col">
+    {#each dietsByEmissions as diet, i}
+      <div class="diet-item flex-col">
+        <div class="bold">{diet.label}</div>
+        <div class="label">{diet.summary}</div>
+        <div class="progress-bar">
+          <Progress
+            value={diet.value}
+            max={8}
+            showLabels={!i}
+            errorBars={diet.error}
+            showValue={false}
+          />
+        </div>
       </div>
-    </div>
-  {/each}
+    {/each}
+  </div>
   <figcaption class="label">
     Adapted from the IPCC’s <a
       href="https://www.ipcc.ch/srccl/chapter/chapter-5/5-5-mitigation-options-challenges-and-opportunities/5-5-2-demand-side-mitigation-options/5-5-2-1-mitigation-potential-of-different-diets/figure-5-12/"
@@ -86,9 +88,10 @@
 
 <style lang="sass">
   #diets-by-emissions
-    gap: 1rem
+    .diet-items
+      gap: 1rem
 
     .progress-bar
-      font-size: 0.75rem
+      font-size: 0.875rem
       margin-top: 0.25rem
 </style>

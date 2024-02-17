@@ -1,5 +1,6 @@
 <script lang="ts">
   import ArticleMenu from "$lib/components/ArticleMenu.svelte"
+  import Tooltip from "$lib/components/Tooltip.svelte"
 
   export let data
 
@@ -25,6 +26,8 @@
   </div>
   <ArticleMenu />
 </section>
+
+<Tooltip />
 
 <style lang="sass">
 
