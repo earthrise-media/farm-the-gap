@@ -63,9 +63,7 @@
   The <em>World Resources Institute</em> found a similar result: capping protein for the entire
   population at 60g per day would have a greater environmental impact than a quarter of the
   population going fully vegetarian.<sup
-    ><a
-      target="_blank"
-      href="https://files.wri.org/d8/s3fs-public/Shifting_Diets_for_a_Sustainable_Food_Future_1.pdf"
+    ><a target="_blank" href="https://www.wri.org/research/shifting-diets-sustainable-food-future"
       >1</a
     ></sup
   >
