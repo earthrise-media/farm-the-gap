@@ -1,6 +1,7 @@
 <script lang="ts">
-  import Progress from "$lib/components/Progress.svelte"
+  import { base } from "$app/paths"
   import { foodItems } from "$lib/data/foods"
+
   import FoodprintBarChart from "./FoodprintBarChart.svelte"
 
   const foods = foodItems.filter((o) => ["🐄", "🐓", "🫘", "🥜"].includes(o.emoji))
@@ -115,7 +116,7 @@
 </p>
 
 <p class="bold">
-  To learn more about what to eat, read <a href="/learn/diet-types"
+  To learn more about what to eat, read <a href="{base}/learn/diet-types"
     >Which diets are best for the planet?</a
   >
 </p>
