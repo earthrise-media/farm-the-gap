@@ -65,7 +65,7 @@
         {:else if hoveringItemLink === "learn"}
           <div class="rhs-container" transition:fade={{ duration: 200 }}>
             <Scroller gradient>
-              <ArticleMenu maxItems={6} />
+              <ArticleMenu />
             </Scroller>
           </div>
         {/if}
