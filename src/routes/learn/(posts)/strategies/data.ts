@@ -68,45 +68,40 @@ export const productionStrategies = [
     title: "Improving crop yields",
     summary:
       "Precision agriculture, new seed varieties, optimized fertilizer use, all aim to produce more in the same space.",
-    potential: "Moderate to significant gains possible, but limits exist to what land can handle"
+    potential:
+      "Moderate to significant gains possible, but there are natural limits to what the land can handle."
   },
   {
-    title: "Livestock & Aquaculture Efficiency",
+    title: "Livestock & aquaculture efficiency",
     summary:
       "Advances in breeding, feed optimization, and disease control increase production levels per animal.",
     potential:
-      "Moderate: Improvement achievable, but won't negate the core resource needs of livestock"
+      "Moderate improvements achievable, but unlikely to negate the core resource needs of livestock without comprimising animal welfare. Lab-grown meat is promising but currently extremely energy intensive."
   },
   {
-    title: "Expanding into Marginal Lands",
-    summary: "Using underutilized areas with care.",
+    title: "Expanding into marginal lands",
+    summary: "Attempts to begin farming on currently underutilized or challenging land.",
     potential:
-      "Potential is limited, as these 'marginal' lands often hold ecosystems despite lacking current crop suitability."
+      "Limited as marginal lands often contain vulnerable ecosystems and lack long-term potential."
   }
 ]
 
 export const consumptionStrategies = [
   {
-    title: "Reducing Biofuel Reliance",
+    title: "Reducing biofuel reliance",
     summary: "Competition between food and fuel for land drives food prices up.",
-    potential: "Significant on specific crops (corn), less so globally"
+    potential: "Significant on specific crops (corn), less so globally."
   },
   {
-    title: "Population Stabilization",
+    title: "Food waste reduction",
     summary:
-      "Slowing population growth is key long-term, but impact in coming decades limited by current demographics.",
-    potential: ""
+      "Enormous volumes lost across the chain. Infrastructure and consumer shifts are vital.",
+    potential: "Significant opportunity to reduce production pressures."
   },
   {
-    title: "Food Waste Reduction",
-    summary:
-      "Shockingly large volumes lost across the chain. Infrastructure, consumer shifts vital.",
-    potential: "Significant"
-  },
-  {
-    title: "Dietary Shifts",
-    summary: "Less meat/dairy consumption frees up land, eases pressure.",
-    potential: "Massive, but social change is complex",
+    title: "Dietary shifts",
+    summary: "Less meat/dairy consumption frees up land and eases pressure.",
+    potential: "Massive, but social change is complex.",
     highlight: true
   }
 ]

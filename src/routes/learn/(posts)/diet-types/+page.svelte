@@ -6,9 +6,9 @@
 
 <p>
   Ruminant meats (beef, sheep and goat) are by far the most resource-intensive foods. Per gram of
-  protein, ruminant meats require 18-20 times more land and generate 3-8 times more greenhouse gas
-  emissions than pork and poultry. When compared to beans, lentils, and other plant-based proteins,
-  they perform even worse.
+  protein, ruminant meats require roughly 20 times more land and generate up to 10 times more
+  greenhouse gas emissions than pork and poultry. When compared to beans, lentils, and other
+  plant-based proteins, they perform even worse.
 </p>
 
 <p>
@@ -61,7 +61,7 @@
 
 <p>
   The <em>World Resources Institute</em> found a similar result: capping protein for the entire
-  population at 60g per day would have a greater environmental impact than a quarter of that
+  population at 60g per day would have a greater environmental impact than a quarter of the
   population going fully vegetarian.<sup
     ><a
       target="_blank"

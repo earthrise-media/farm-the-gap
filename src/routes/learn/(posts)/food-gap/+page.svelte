@@ -1,6 +1,10 @@
+<script>
+  import { base } from "$app/paths"
+</script>
+
 <p>
-  By 2050, the global population is projected to reach 9.7 billion, with continued urbanization and
-  expansion of the middle class.<sup
+  By 2050, the global population will reach 9.7 billion. Populations will continue to urbanize, and
+  millions of people will join the middle class.<sup
     ><a
       href="https://www.un.org/en/global-issues/population#:~:text=The%20world%20population%20is%20projected,surrounding%20these%20latest%20population%20projections."
       target="_blank">1</a
@@ -43,4 +47,9 @@
   significant pressure on land, water, and greenhouse gas emissions. Relying solely on scaling up
   production using current methods risks deforestation, biodiversity loss, water scarcity and
   pollution, and climate change intensification.
+</p>
+
+<p>
+  There are multiple strategies that can contribute to closing this food gap, which we explore in
+  the <a href="{base}/learn/strategies">next article</a>.
 </p>

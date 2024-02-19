@@ -1,11 +1,16 @@
 <script lang="ts">
+  import FoodIcon from "$lib/components/FoodIcon.svelte"
   import Progress from "$lib/components/Progress.svelte"
 
   export let foods: Food[]
   export let unit: string
   export let title: string
   export let subtitle: string
+  export let caption: string | undefined
+  export let callouts: Food[] | undefined
   export let fv: (item: Food) => number
+
+  console.log(callouts)
 
   $: max = Math.ceil(Math.max(...foods.map(fv)))
 </script>
@@ -17,15 +22,22 @@
   </div>
   {#each foods.sort((a, b) => fv(b) - fv(a)) as food, i}
     <div class="flex align-end" data-tooltip="{Math.round(fv(food))}&thinsp;{unit}">
-      <span class="food-bar-chart-label label bold">{food.emoji} {food.name}</span>
+      <span class="food-bar-chart-label label bold flex align-center">
+        <FoodIcon {food} />
+        {food.name}{#if callouts?.includes(food)}*{/if}
+      </span>
       <div class="flex-grow">
         <Progress value={Math.round(fv(food))} {max} showLabels={!i} showValue={false} />
       </div>
     </div>
   {/each}
+  {#if caption}
+    <figcaption class="label">{@html caption}</figcaption>
+  {/if}
 </figure>
 
 <style lang="sass">
   .food-bar-chart-label
     min-width: 11ch
+    gap: 0.25rem
 </style>

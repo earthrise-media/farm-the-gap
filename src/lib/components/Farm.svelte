@@ -131,7 +131,6 @@
                 )
               }}
             >
-              <!-- <div class="food-item-avatar bg-{food.colorId}" /> -->
               <div class="food-item-fill bg-{food.colorId}"></div>
               <div class="food-item-image">
                 {#if food.image}

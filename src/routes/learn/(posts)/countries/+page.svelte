@@ -20,7 +20,7 @@
 <p>
   Compared to the global average, the average US diet requires double the agricultural land and
   generates twice the emissions per person. Animal-based foods, especially beef, drive this
-  difference. For instance, in an average US diet, beef provides about 5% of the calories but
+  difference. For instance, in an average US diet, beef provides just 5% of the calories but
   accounts for 50% of the resources used:
 </p>
 
@@ -100,7 +100,7 @@
 
 <p>
   High-consuming nations – those with diets consistently exceeding both recommended caloric and
-  protein intake – hold major responsibility and potential for change. Adjustments in developing
+  protein intakes – hold major responsibility and potential for change. Adjustments in developing
   nations are less about restriction, and more about guiding the rising affluence towards
   sustainable consumption. Supporting sustainable local production methods is crucial as well.
 </p>

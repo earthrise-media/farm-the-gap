@@ -9,7 +9,7 @@
     {#each cards as { title, summary, potential, highlight }, i}
       <li class="flex-1" class:highlight>
         <div class="bold">{i + 1}. {title}</div>
-        <div class="summary label">{summary} <b>Potential:</b> {potential}</div>
+        <div class="summary label">{summary} <b>Potential:</b>&nbsp;{potential}</div>
       </li>
     {/each}
   </ul>

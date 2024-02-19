@@ -10,7 +10,7 @@
 </script>
 
 <p>
-  Historically, feeding our growing population has hinged on boosting production level and
+  Historically, feeding our growing population has hinged on boosting production levels and
   increasing efficiency – that is, reducing the input resources needed to produce a certain output
   yield.
 </p>
@@ -36,7 +36,7 @@
     data={landPerUnitCrop.map(({ v }) => v)}
   ></LineChart>
   <figcaption class="label">
-    Source: Food and Agriculture Organization of the United Nations – processed by <a
+    Source: Food and Agriculture Organization of the UN – processed by <a
       href="https://ourworldindata.org/grapher/arable-land-pin?time=earliest..latest"
       target="_blank">Our World in Data &nearr;</a
     >
@@ -55,7 +55,7 @@
 
 <p>
   With finite land, a changing climate, and diminishing returns from improved farming techniques,
-  feeding the future will require more than just increasing output.
+  feeding the future will require more than just increasing outputs.
 </p>
 
 <h3>Strategies to increase production</h3>

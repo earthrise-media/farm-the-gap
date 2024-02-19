@@ -1,32 +1,35 @@
 <script lang="ts">
-  import { base } from "$app/paths"
   import { foodItems } from "$lib/data/foods"
 
+  import FoodIcon from "$lib/components/FoodIcon.svelte"
   import FoodprintBarChart from "./FoodprintBarChart.svelte"
 
-  const foods = foodItems.filter((o) => ["🐄", "🐓", "🫘", "🥜"].includes(o.emoji))
+  const foods = foodItems.filter((o) => ["🐄", "🐓", "🐖", "🫘", "🥜", "🍞"].includes(o.emoji))
 
   const charts = {
     land: {
-      title: "Land use per 100 grams of protein",
+      title: "Land use per 100g of protein",
       subtitle: "Land measured in m<sup>2</sup>",
+      callouts: foodItems.filter((o) => o.emoji === "🐓" || o.emoji === "🐖"),
+      caption:
+        "*The land efficiency of poultry and pork depends largely on living conditions. Land efficiency can come at a significant cost to animal welfare. Almost all the chickens consumed in the United States come from factory farms – massive, concentrated, enclosed chicken sheds. To learn more about this, visit <a target='_blank' href='https://stories.theplotline.org/cafo-explorer/'>Earth Genome's CAFO Explorer &nearr;</a>.",
       unit: "m²",
       fv: (f: Food) => (100 * f.landPerKg) / f.proteinRatio
     },
     water: {
-      title: "Water use per 100 grams of protein",
+      title: "Water use per 100g of protein",
       subtitle: "Water measured in liters",
       unit: "L",
       fv: (f: Food) => (100 * f.waterPerKg) / f.proteinRatio
     },
     eutrophy: {
-      title: "Water eutrophy per 100 grams of protein",
+      title: "Water eutrophy per 100g of protein",
       subtitle: "Water measured in liters",
       unit: "L",
       fv: (f: Food) => (100 * f.eutrophyPerKg) / f.proteinRatio
     },
     emissions: {
-      title: "Emissions per 100 grams of protein",
+      title: "Emissions per 100g of protein",
       subtitle: "Greenhouse gas emissions measured in kgCO<sub>2</sub>eq",
       unit: "kgCO₂eq",
       fv: (f: Food) => (100 * f.ghgPerKg) / f.proteinRatio
@@ -35,25 +38,26 @@
 </script>
 
 <div class="emoji-block flex-center text-2xl">
-  {#each foods as { emoji, name }}
+  {#each foods as food}
     <div class="flex-col">
-      <span>{emoji}</span>
-      <span class="label">{name}</span>
+      <FoodIcon {food} />
+      <span class="label">{food.name}</span>
     </div>
   {/each}
 </div>
 
 <p class="label text-center">
-  (Peanuts are technically legumes, but for simplicity we group them together in the Nuts category)
+  Peanuts are technically legumes, but for clarity we categorise them under Nuts. Legumes include
+  foods like beans, lentils, and peas.
 </p>
 
 <h2>Land use</h2>
 
 <p>
-  Half the world's habitable land is used to feed humans. Beef (and other grazing animals) is a
-  highly inefficient converter of land to protein because of the vast area needed for grazing and
-  growing feed crops. It requires 30 times the land per gram of protein as poultry and nearly 20
-  times that of legumes.
+  Half the world's habitable land is used to feed humans. Beef and other grazing animals are highly
+  inefficient converters of land to protein because of the vast area needed for grazing and growing
+  feed crops. Beef requires over 50 times the land per gram of protein as wheat, 30 times more than
+  poultry and nearly 20 times more than legumes.
 </p>
 
 <p>
@@ -76,9 +80,9 @@
 </p>
 
 <p>
-  Beef is close behind, requiring more than the average person uses for showering in a week per 100g
-  of protein. In contrast, legumes are remarkably water efficient. Eating more water-efficient
-  proteins is important because water-intensive agriculture intensifies scarcity, diminishes healthy
+  Beef is similar, requiring more water than the average person uses for showering in a week per
+  100g of protein. In contrast, legumes are remarkably water efficient. Eating more water-efficient
+  proteins is important because water-intensive agriculture intensifies drought, diminishes healthy
   rivers and lakes, and pollutes crucial waterways through fertilizer and pesticide runoff.
 </p>
 
@@ -90,15 +94,18 @@
 
 <p>
   Agriculture accounts for a 26% of global greenhouse gas emissions. Methane, with roughly 80 times
-  the global warming potential of CO2 over a 20-year period, underscores the serious climate
-  challenges posed by ruminants – methane-emitting animals like cattle and sheep.
+  the global warming potential of CO2 over a 20-year period, underscores the climate challenges
+  posed by ruminant animals – methane-burpers like cattle and sheep.
 </p>
 
 <p>
   What we eat is more important than where it's from. Emissions from transport, processing, and
   packaging are often dwarfed by deforestation driven by agriculture, fertilizer use, methane
   emissions, and food waste. Across most foods – both plant and animal – these factors typically
-  account for over 50% of total supply-chain emissions.
+  account for over 50% of total supply-chain emissions.<sup
+    ><a href="https://ourworldindata.org/grapher/food-emissions-supply-chain" target="_blank">1</a
+    ></sup
+  >
 </p>
 
 <FoodprintBarChart {foods} {...charts.emissions} />
@@ -108,25 +115,11 @@
 <h3>Conclusion</h3>
 
 <p>
-  Legumes are an efficient protein source, boasting the lowest emissions, water use, and land
-  requirements. Integrate more beans, lentils, and peas into your diet for a lower footprint. Nuts,
-  despite their water needs, hold advantages over animal proteins when it comes to land use and are
-  almost carbon-neutral. Although animal proteins underperform environmentally, the disparity
-  between poultry and beef is vast – the decision of <em>which</em> meat is important.
+  Legumes and whole wheat are efficient protein sources, boasting low emissions, water use, and land
+  requirements. Nuts, despite their water needs, are almost carbon-neutral. The disparity of pork
+  and poultry compared to beef is vast – the decision of <em>which</em> animal proteins you choose to
+  eat is critical.
 </p>
-
-<p class="bold">
-  To learn more about what to eat, read <a href="{base}/learn/diet-types"
-    >Which diets are best for the planet?</a
-  >
-</p>
-
-<figure class="label">
-  <div><b>Sources</b></div>
-  <a href="https://ourworldindata.org/grapher/food-emissions-supply-chain" target="_blank"
-    >Greenhouse gas emissions across the food chain</a
-  > (Our World in Data)
-</figure>
 
 <style lang="sass">
 .emoji-block
