@@ -84,7 +84,6 @@
   align-items: center
   min-height: 100%
   padding: 2rem
-  top: 0
 
   &.content-page
     background: var(--color-primary-2)
