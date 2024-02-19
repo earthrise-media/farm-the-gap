@@ -75,6 +75,7 @@
           <ChartStackedBar
             height="2.5rem"
             max={1.5}
+            nTicks={6}
             data={o.emissions.map((o) => o.value)}
             {colorClasses}
           />

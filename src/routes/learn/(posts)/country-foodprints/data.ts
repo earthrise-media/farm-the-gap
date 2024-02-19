@@ -41,7 +41,7 @@ export const footprints = [
     emissions: [
       {
         label: "Plant-based foods",
-        value: 0.25
+        value: 0.2
       },
       {
         label: "Other animal-based foods",
@@ -53,29 +53,29 @@ export const footprints = [
       },
       {
         label: "Beef",
-        value: 0.65
+        value: 0.7
       }
     ]
   },
   {
     title: "World average",
-    totals: { calories: 2433, landUse: 0.5, emissions: 600 },
+    totals: { calories: 2433, landUse: 0.49, emissions: 800 },
     calories: [
       {
         label: "Plant-based foods",
-        value: 80
+        value: 84
       },
       {
         label: "Other animal-based foods",
-        value: 15
+        value: 10
       },
       {
         label: "Dairy",
-        value: 4
+        value: 4.5
       },
       {
         label: "Beef",
-        value: 1
+        value: 1.5
       }
     ],
     landUse: [

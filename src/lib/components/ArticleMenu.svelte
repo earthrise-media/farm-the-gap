@@ -40,9 +40,10 @@
   display: flex
   flex-wrap: wrap
   font-size: 1rem
-  margin-top: 1rem
+  margin: 1rem auto 0
   border-radius: 0 0.25rem 0.25rem 0
   overflow: hidden
+  max-width: 750px
 
   &.grid
     display: grid
