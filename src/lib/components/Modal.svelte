@@ -94,7 +94,7 @@ $radius: 1rem
       background: var(--color-error-0)
 
   &.show-header
-    margin: 3.75rem 0.5rem 0.5rem
+    margin: 3.25rem 0.5rem 0.5rem
     background: var(--color-primary-2)
     border-radius: var(--border-radius)
 

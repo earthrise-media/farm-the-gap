@@ -5,12 +5,12 @@
 
   import articles from "$lib/data/articles"
 
-  export let grid = true
+  export let isInsideMenu = false
   export let maxItems = articles.length
   export let showFeaturedOnly = false
 </script>
 
-<div id="article-menu-list" class:grid>
+<div id="article-menu-list" class:in-menu={isInsideMenu}>
   {#each articles
     .filter((a) => !showFeaturedOnly || a.featured)
     .slice(0, maxItems) as { title, slug }, i}
@@ -41,19 +41,24 @@
   flex-wrap: wrap
   font-size: 1rem
   margin: 1rem auto 0
-  border-radius: 0 0.25rem 0.25rem 0
   overflow: hidden
   max-width: 750px
+  width: 100%
+  gap: 0.5rem
+  display: grid
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+  gap: 1rem
 
-  &.grid
+  &.in-menu
     display: grid
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
-    gap: 0.5rem
+    grid-template-columns: repeat(2, minmax(200px, 1fr))
     gap: 1rem
+    min-height: 90%
 
+    .article-link
+      min-height: 4rem
 
 .article-link
-  width: 100%
   padding: 1rem
   min-height: 8rem
   border-radius: 0.25rem
@@ -62,7 +67,6 @@
   background: var(--color-primary-3)
   border: 1px solid transparent
   transition: all 0.3s
-  flex-grow: 1
 
   &.current
     opacity: 0.75

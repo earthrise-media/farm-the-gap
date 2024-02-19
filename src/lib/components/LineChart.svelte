@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { text } from "@sveltejs/kit"
-
   export let isDark: boolean = false
   export let data: number[] = []
   export let yMax: number = 100
@@ -72,14 +70,14 @@
       {/if}
     </svg>
   {/key}
-  {#if labels || xLabels}
+  {#if labels || xLabels.length}
     <svg class="text">
-      {#if yDatum !== null}
+      {#if labels && yDatum !== null}
         <text x="-4" y="{fy(yDatum)}%" text-anchor="end">
           {yDatum === 0 ? 0 : labelFormat(yDatum)}
         </text>
       {/if}
-      {#if yLimit !== null}
+      {#if labels && yLimit !== null}
         <text x="-4" y="{fy(yLimit)}%" text-anchor="end">
           {labelFormat(yLimit)}
         </text>

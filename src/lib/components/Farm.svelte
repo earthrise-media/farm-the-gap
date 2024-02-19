@@ -189,6 +189,7 @@
   .levitate &
     animation: levitate 1s ease-in-out infinite alternate
     width: 66%
+    pointer-events: none
 
     &::before
       animation: levitate-shadow 1s ease-in-out infinite alternate
@@ -271,7 +272,6 @@
   .land-cell:not(.unswappable):hover &
     transform: rotateZ(45deg) rotateY(-60deg) translate(0, -5%)
 
-  [data-food="Dairy"] &,
   [data-food="Eggs"] &,
   [data-food="Lamb"] &,
   [data-food="Corn"] &,

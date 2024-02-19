@@ -23,7 +23,9 @@
     <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
   </a>
   <div class="buttons">
-    <ButtonUndo showIcon />
+    {#if !isArticle}
+      <ButtonUndo showIcon />
+    {/if}
     <Button bare color="secondary" onClick={() => ($userState.isMenuOpen = !$userState.isMenuOpen)}>
       <Icon classList="text-2xl" type={$userState.isMenuOpen ? "close" : "menu"} />
     </Button>
@@ -34,14 +36,31 @@
 @import "src/styles/vars/screens"
 
 header
+  z-index: 10000
   grid-area: header
 
   &.article
     top: 0
     left: 0
     right: 0
-    z-index: 100
+    margin-top: -0.75rem
+    padding-top: 0.5rem
+    padding-bottom: 0.5rem
     position: sticky
+    overflow: visible
+    background: var(--color-primary-0)
+
+    &:after
+      content: ""
+      position: absolute
+      padding: var(--border-radius) 0 0
+      left: -6px
+      right: -6px
+      top: calc(100% - 6px)
+      border: 6px solid var(--color-primary-0)
+      border-radius: var(--border-radius) var(--border-radius) 0 0 
+      border-bottom: none
+      background: transparent
 
 .buttons
   gap: 0.75rem

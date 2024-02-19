@@ -44,6 +44,7 @@
     "id": "f03",
     "name": "Dairy",
     "emoji": "🥛",
+    "image": "img/icons/dairy.png",
     "type": "Animal product",
     "proteinType": "animal",
     "landAllocation": 6,

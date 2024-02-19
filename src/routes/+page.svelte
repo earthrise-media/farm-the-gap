@@ -65,8 +65,8 @@ main
   height: 100vh
   height: 100svh
   display: grid
-  gap: 0.75rem 0.25rem
-  padding: 0.75rem
+  gap: 0.5rem 0.25rem
+  padding: 0.5rem 0.75rem 0.75rem
   grid-template-rows: auto 1fr
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
   grid-template-areas: "header header" "data game"

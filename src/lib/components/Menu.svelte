@@ -26,11 +26,13 @@
       note: `${articles.length} micro-articles on food and the environment.`
     }
   ]
+
+  $: isContentPage = $page.url.pathname !== "/"
 </script>
 
 {#if $userState.isMenuOpen}
-  <Modal showHeader fullscreen fullWidth durationOut={200}>
-    <div id="main-menu">
+  <Modal id="main-menu-modal" showHeader={!isContentPage} fullscreen fullWidth durationOut={200}>
+    <div id="main-menu" class:content-page={isContentPage}>
       <div id="main-menu-list">
         {#each items as { title, href, note }}
           <a
@@ -64,8 +66,8 @@
           </div>
         {:else if hoveringItemLink === "learn"}
           <div class="rhs-container" transition:fade={{ duration: 200 }}>
-            <Scroller gradient>
-              <ArticleMenu />
+            <Scroller>
+              <ArticleMenu isInsideMenu={true} />
             </Scroller>
           </div>
         {/if}
@@ -82,6 +84,15 @@
   align-items: center
   min-height: 100%
   padding: 2rem
+  top: 0
+
+  &.content-page
+    background: var(--color-primary-2)
+    min-height: calc(100% - 4.25rem)
+    width: calc(100% - 1.25rem)
+    margin-left: 0.625rem
+    border-radius: 1rem
+    margin-top: 3.25rem
 
 #main-menu-list,
 #article-menu-wrap
@@ -93,6 +104,7 @@
   font-size: 3rem
   display: flex
   justify-content: space-between
+  align-items: flex-start
   flex-direction: column
 
 .rhs-container
