@@ -74,8 +74,6 @@ header
 @media (max-width: $screen-sm)
   header
     display: none
-    .buttons
-      display: none
-    img
-      width: 60px
+    &.article
+      display: flex
 </style>
