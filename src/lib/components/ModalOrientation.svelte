@@ -3,12 +3,15 @@
   import { onMount } from "svelte"
   import Icon from "./Icon.svelte"
 
+  import { page } from "$app/stores"
+
   let show: boolean
 
   const onResize = () => {
     const isSmallDevice = window.innerWidth < 900
+    const isGamePage = $page.url.pathname === "/"
     const isPortrait = window.innerWidth < window.innerHeight
-    show = isSmallDevice && isPortrait
+    show = isGamePage && isSmallDevice && isPortrait
   }
 
   onMount(onResize)
