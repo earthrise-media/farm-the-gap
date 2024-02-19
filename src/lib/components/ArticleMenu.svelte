@@ -13,17 +13,17 @@
 <div id="article-menu-list" class:grid>
   {#each articles
     .filter((a) => !showFeaturedOnly || a.featured)
-    .slice(0, maxItems) as { title, slug, description }, i}
+    .slice(0, maxItems) as { title, slug }, i}
     <a
-      class="article-link border-tertiary-1 border-plnt-{(i % 5) + 4}"
+      class="article-link flex-center flex-col"
+      class:current={$page.url.pathname === `${base}/learn/${slug}`}
       on:click={(e) => {
         if (slug === $page.url.pathname) e.preventDefault()
         $userState.isMenuOpen = false
       }}
       href="{base}/learn/{slug}"
     >
-      <div class="article-link-title label">{title}</div>
-      <div class="article-link-description"><b>{description}</b></div>
+      <div class="article-link-title">{title}</div>
     </a>
   {/each}
 </div>
@@ -50,44 +50,32 @@
     gap: 0.5rem
     gap: 1rem
 
-  .article-link
-    border: none
-    display: flex
-    flex-direction: column
-    text-align: center
-    align-items: center
-    justify-content: center
-    min-height: 8rem
-    // aspect-ratio: 1
-    border-radius: 0.25rem
 
 .article-link
-  text-decoration: none
-  transition: color 0.2s
-  padding: 0.75rem
   width: 100%
+  padding: 1rem
+  min-height: 8rem
+  border-radius: 0.25rem
+  text-decoration: none
   color: var(--color-secondary-2)
   background: var(--color-primary-3)
-  border-width: 2px
-  border-left-style: solid
+  border: 1px solid transparent
   transition: all 0.3s
   flex-grow: 1
+
+  &.current
+    opacity: 0.75
+    pointer-events: none
+    background: var(--color-primary-1)
 
   @media (hover: hover)
     &:hover
       color: var(--color-secondary-1)
       background: var(--color-primary-1)
-      border-color: var(--color-secondary-1)
+
 
 .article-link-title
-  font-weight: bold
-  margin-bottom: 0.25rem
-  letter-spacing: -0.05em
-  line-height: 1.3
-  text-transform: uppercase
-  color: var(--color-secondary-3)
-
-.article-link-description
+  font-weight: 600
   letter-spacing: -0.01em
   line-height: 1.2
 

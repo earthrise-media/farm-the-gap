@@ -68,8 +68,8 @@
 <h2>Water use and water pollution</h2>
 
 <p>
-  Agriculture is responsible for 70% of global freshwater withdrawals and 78% of ocean and
-  freshwater pollution. Nuts are particularly thirsty: some almond varieties need about four liters
+  Agriculture is responsible for 70% of freshwater withdrawals and 78% of ocean and freshwater
+  pollution globally. Nuts are particularly thirsty: some almond varieties need about four liters
   per nut! In water-stressed California, where 80% of the world's almonds are grown, this has
   significant environmental and economic implications.
 </p>
@@ -88,9 +88,9 @@
 <h2>Greenhouse gas emissions</h2>
 
 <p>
-  Agriculture accounts for a staggering 26% of global greenhouse gas emissions. Methane, with
-  roughly 80 times the global warming potential of CO2 over a 20-year period, underscores the
-  serious climate challenges posed by ruminants – methane-emitting animals like cattle and sheep.
+  Agriculture accounts for a 26% of global greenhouse gas emissions. Methane, with roughly 80 times
+  the global warming potential of CO2 over a 20-year period, underscores the serious climate
+  challenges posed by ruminants – methane-emitting animals like cattle and sheep.
 </p>
 
 <p>
@@ -107,11 +107,11 @@
 <h3>Conclusion</h3>
 
 <p>
-  Legumes are a valuable protein source, boasting the lowest emissions, water use, and land
-  requirements. Integrate more beans, lentils, and peas into your diet for a lower footprint! Nuts,
+  Legumes are an efficient protein source, boasting the lowest emissions, water use, and land
+  requirements. Integrate more beans, lentils, and peas into your diet for a lower footprint. Nuts,
   despite their water needs, hold advantages over animal proteins when it comes to land use and are
   almost carbon-neutral. Although animal proteins underperform environmentally, the disparity
-  between poultry and beef is vast – the choice of meat is important.
+  between poultry and beef is vast – the decision of <em>which</em> meat is important.
 </p>
 
 <p class="bold">

@@ -1,15 +1,16 @@
 <script lang="ts">
+  import "shown/src/css/shown.css"
+
   import ArticleMenu from "$lib/components/ArticleMenu.svelte"
   import Tooltip from "$lib/components/Tooltip.svelte"
 
   export let data
 
-  $: ({ title, description, lede } = data.post)
+  $: ({ title, lede } = data.post)
 </script>
 
 <section class="article-hero">
-  <h1 class="description">{title}</h1>
-  <h1 class="title">{description}</h1>
+  <h1 class="title">{title}</h1>
 </section>
 
 <article>

@@ -1,56 +1,75 @@
+<script lang="ts">
+  import {
+    landPerUnitCrop,
+    productionStrategies,
+    consumptionStrategies,
+    type TimeseriesData
+  } from "./data"
+  import LineChart from "$lib/components/LineChart.svelte"
+  import StrategyCards from "./StrategyCards.svelte"
+</script>
+
 <p>
-  Historically, feeding our growing population has hinged on boosting production levels. But, with
-  limited land and a changing climate, solely increasing output has drawbacks. Relying on this alone
-  risks catastrophic deforestation and further damage to vital ecosystems. Could advanced
-  technologies hold the key? The answer isn't simple. Rather, a mix of both production and
-  consumption changes offers the most sustainable path.
+  Historically, feeding our growing population has hinged on boosting production level and
+  increasing efficiency – that is, reducing the input resources needed to produce a certain output
+  yield.
 </p>
 
-<h3>Strategies at a glance</h3>
+<p>Today, we can produce the same amount of crops from a quarter of the land required in 1961:</p>
 
-<p><b>Increased production:</b></p>
-<ul>
-  <li>
-    Improving Crop Yields: Precision agriculture, new seed varieties, optimized fertilizer use, all
-    aim to produce more in the same space. [Potential: Moderate - Significant gains possible, but
-    limits exist to what land can handle]
-  </li>
-  <li>
-    Livestock & Aquaculture Efficiency Advances in breeding, feed optimization, and disease control
-    increase production levels per animal. [Potential: Moderate – Improvement achievable, but won't
-    negate the core resource needs of livestock]
-  </li>
-  <li>
-    Expanding into Marginal Lands: Using underutilized areas with care. Potential is limited, as
-    these 'marginal' lands often hold ecosystems despite lacking current crop suitability.
-  </li>
-</ul>
+<!-- <figure class="bg-primary-1 text-secondary-2"> -->
+<figure>
+  <div class="figure-title">Land needed to produce a fixed quantity of crops</div>
+  <div class="figure-subtitle label">
+    Shows improved land efficiency from 1961 to 2020. Land per crop quantity calculated by dividing
+    arable land by the crop production index (1961 = 1).
+  </div>
+  <LineChart
+    labels
+    isDark
+    xLabels={[1961, 2020]}
+    yMax={1}
+    yLimit={1}
+    yDatum={0}
+    showEndPointValue
+    endPointValuePrecision={2}
+    data={landPerUnitCrop.map(({ v }) => v)}
+  ></LineChart>
+  <figcaption class="label">
+    Source: Food and Agriculture Organization of the United Nations – processed by <a
+      href="https://ourworldindata.org/grapher/arable-land-pin?time=earliest..latest"
+      target="_blank">Our World in Data &nearr;</a
+    >
+  </figcaption>
+</figure>
 
-<p><b>Limiting consumption</b></p>
-<ul>
-  <li>
-    Reducing Biofuel Reliance: Competition between food and fuel for land drives food prices up.
-    [Potential: Significant on specific crops (corn), less so globally]
-  </li>
-  <li>
-    Population Stabilization: Slowing population growth is key long-term, but impact in coming
-    decades limited by current demographics.
-  </li>
-  <li>
-    Food Waste Reduction: Shockingly large volumes lost across the chain. Infrastructure, consumer
-    shifts vital. [Potential: Huge]
-  </li>
-  <li>
-    Dietary Shifts: Less meat/dairy consumption frees up land, eases pressure. [Potential: Massive,
-    but social change is complex]
-  </li>
-</ul>
+<p>
+  However, over the same time period, we have expanded our agrigultural footprint by 490 million
+  hectares – an area 1.5 times the size of India.<sup
+    ><a
+      href="https://ourworldindata.org/grapher/total-agricultural-area-over-the-long-term?time=1820..latest&country=~OWID_WRL"
+      target="_blank">1</a
+    ></sup
+  >
+</p>
+
+<p>
+  With finite land, a changing climate, and diminishing returns from improved farming techniques,
+  feeding the future will require more than just increasing output.
+</p>
+
+<h3>Strategies to increase production</h3>
+
+<StrategyCards cards={productionStrategies} />
+
+<h3>Strategies to shift consumption</h3>
+
+<StrategyCards cards={consumptionStrategies} />
 
 <h3>It's not "either/or"</h3>
 
 <p>
-  Technological breakthroughs will undeniably contribute. However, no single innovation eradicates
-  our resource burden. It's the blend of increased efficiency with thoughtful, reduced consumption
-  patterns that creates lasting impact. Our choices on this issue will shape not just what we
-  produce, but what landscapes we save.
+  Technological breakthroughs will undeniably contribute, but a combination of increased efficiency
+  with thoughtful, smarter consumption that will feed our future sustainably. What we decide to eat
+  will shape what we produce and what landscapes and water we save.
 </p>

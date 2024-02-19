@@ -10,8 +10,8 @@
 </p>
 
 <p>
-  A <em>Nature</em> meta-analysis of 57 food security projections found that between 2010 and 2050,
-  global food demand is expected to increase by 30–62% when climate change is taken into account.<sup
+  A <em>Nature</em> meta-analysis of 57 food projection studies found that between 2010 and 2050,
+  global food demand was expected to increase by 30–62% with climate change taken into account.<sup
     ><a target="_blank" href="https://www.nature.com/articles/s43016-021-00322-9">2</a></sup
   > This "food gap" is driven by a complex mix of factors, including:
 </p>
