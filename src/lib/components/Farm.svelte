@@ -292,6 +292,7 @@
   overflow: hidden
   aspect-ratio: 1
   user-select: none
+  pointer-events: all
   transition: background 0.2s, transform 0.2s ease-out
   
   &.swappable
