@@ -203,7 +203,7 @@
   -webkit-transform-origin: center
   -webkit-transform-style: preserve-3d
 
-  *
+  *, *::before, *::after
     transform-origin: center
     transform-style: preserve-3d
     -webkit-transform-origin: center
@@ -261,6 +261,7 @@
     left: 0
     width: 100%
     height: 100%
+    transition: all 0.4s
     background: var(--color-primary-0)
 
   &::after
@@ -316,8 +317,8 @@
   position: relative
   width: auto
   height: auto
-  // font-size: 1.875rem
   font-size: 200%
+  // font-size: 1.875rem
   transition: all 0.3s ease-out
   transform: rotateZ(45deg) rotateY(-60deg) translate(0,0%)
   text-shadow: 0 0 0.1rem rgba(black, 0.5)
@@ -347,10 +348,15 @@
     .food-item-fill
       opacity: 1
 
-@media (max-height: 650px)
+@media (max-height: 650px) and (min-width: $screen-sm)
   #farm-wrapper
     padding-bottom: 5%
   #land-grid
     width: 60%
+
+@media (max-width: $screen-sm)
+  .land-cell
+    font-size: 0.875rem
+
 
 </style>
