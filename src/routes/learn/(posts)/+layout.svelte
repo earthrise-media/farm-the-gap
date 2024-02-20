@@ -1,8 +1,9 @@
 <script lang="ts">
   import "shown/src/css/shown.css"
 
-  import ArticleMenu from "$lib/components/ArticleMenu.svelte"
+  import Meta from "$lib/components/Meta.svelte"
   import Tooltip from "$lib/components/Tooltip.svelte"
+  import ArticleMenu from "$lib/components/ArticleMenu.svelte"
 
   export let data
 
@@ -29,6 +30,7 @@
 </section>
 
 <Tooltip />
+<Meta {title} description={lede} />
 
 <style lang="sass">
 

@@ -1,27 +1,25 @@
 <script lang="ts">
+  import { dev } from "$app/environment"
   import { userState } from "$lib/stores/state"
 
+  import Meta from "$lib/components/Meta.svelte"
   import Dock from "$lib/components/Dock.svelte"
   import Farm from "$lib/components/Farm.svelte"
-  import Button from "$lib/components/Button.svelte"
+  import Toast from "$lib/components/Toast.svelte"
+  import Header from "$lib/components/Header.svelte"
+  import Tooltip from "$lib/components/Tooltip.svelte"
   import FoodMenu from "$lib/components/FoodMenu.svelte"
+  import EndScreen from "$lib/components/EndScreen.svelte"
   import MobileMenu from "$lib/components/MobileMenu.svelte"
-  import BlockImpact from "$lib/components/BlockImpact.svelte"
-  import FoodStatsTable from "$lib/components/FoodStatsTable.svelte"
+  import WelcomeScreen from "$lib/components/WelcomeScreen.svelte"
   import FoodItemsGrid from "$lib/components/FoodItemsGrid.svelte"
   import BlockGameState from "$lib/components/BlockGameState.svelte"
-  import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
-  import WelcomeScreen from "$lib/components/WelcomeScreen.svelte"
-  import EndScreen from "$lib/components/EndScreen.svelte"
-  import Tooltip from "$lib/components/Tooltip.svelte"
-  import Toast from "$lib/components/Toast.svelte"
-  import Modal from "$lib/components/Modal.svelte"
-  import FoodChangesTable from "$lib/components/FoodChangesTable.svelte"
+  import FoodStatsTable from "$lib/components/FoodStatsTable.svelte"
   import TooltipFoodItem from "$lib/components/TooltipFoodItem.svelte"
-  import Header from "$lib/components/Header.svelte"
-  import { foodItems } from "$lib/data/foods"
-  import { dev } from "$app/environment"
+  import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
 </script>
+
+<Meta />
 
 <main class:food-item-selected={$userState.itemSelectedForSwap}>
   <Header />
