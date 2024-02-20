@@ -27,7 +27,7 @@
   <meta name="author" content={author} />
   <meta name="og:site_name" content={author} />
   <meta name="twitter:title" content={title} />
-  <meta name="twitter:site" content="@EarthGenome" />
+  <meta name="twitter:site" content="@the_plotline" />
 
   {#if image}
     <meta name="og:image" content="{siteurl}{base}{image}" />
