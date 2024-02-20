@@ -316,15 +316,15 @@
     &.active
       color: var(--color-secondary-1)
 
-@media (max-width: 1120px) and (min-width: $screen-sm)
+  .td
+    font-size: 0.625rem
+
+@media (max-width: 1360px) and (min-width: $screen-sm)
   .food-items-grid-body
     margin: 0 -0.5rem
 
   .food-card
     grid-template-columns: minmax(11ch, 11fr) minmax(8ch, 8fr) minmax(7ch, 7fr) minmax(9ch, 9fr) minmax(8.5ch, 8.5fr)
-
-    .th
-      font-size: 0.5rem
 
 @media (max-width: $screen-sm)
   .food-items-grid

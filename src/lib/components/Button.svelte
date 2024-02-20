@@ -61,6 +61,7 @@ a, button
 
   &.bare
     background: none
+    color: inherit
 
   &:disabled
     cursor: not-allowed

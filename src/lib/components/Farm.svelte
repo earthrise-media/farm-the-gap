@@ -1,12 +1,15 @@
 <script lang="ts">
   import { onMount } from "svelte"
   import { base } from "$app/paths"
-  import { scale } from "svelte/transition"
+  import { fade, scale } from "svelte/transition"
   import { backOut as easing } from "svelte/easing"
 
   import { pan, pinch } from "svelte-gestures"
 
   import { farm, userState, gameState, gameHistory } from "$lib/stores/state"
+  import { get } from "svelte/store"
+  import Button from "./Button.svelte"
+  import Icon from "./Icon.svelte"
 
   export let levitate = false // animate the farm levitating
   export let highlightChanges = false // highlight squares different from initial grid
@@ -16,6 +19,9 @@
   let disableGestures = false
   let farmWrapperElement: HTMLDivElement
   let transform = { x: 0, y: 0, z: 1, cx: 0, cy: 0, cz: 1, x0: 0, y0: 0 }
+
+  const minZoom = 0.5
+  const maxZoom = 3.5
 
   const isSwappable = (food: Food) => food.id !== $userState.itemSelectedForSwap?.id
 
@@ -55,7 +61,7 @@
   use:pan={{ delay: 0 }}
   use:pinch={{ delay: 0 }}
   on:pandown={(e) => {
-    if (e.detail.event.pointerType === "mouse") disableGestures = true
+    if (e.detail.event.pointerType === "mouse") disableGestures = false
     else disableGestures = false
   }}
   on:pan={(e) => {
@@ -77,20 +83,51 @@
   on:pinch={(e) => {
     if (disableGestures) return
     if (isNewPinch) {
+      transform.x0 = e.detail.center.x
+      transform.y0 = e.detail.center.y
+      transform.cx = transform.x
+      transform.cy = transform.y
       transform.cz = transform.z
       isNewPinch = false
     }
-    transform.z = e.detail.scale * transform.cz
+
+    const { scale } = e.detail
+    const { cx, cy, cz } = transform
+
+    if (scale > 1 && transform.z >= maxZoom) return
+    if (scale < 1 && transform.z <= minZoom) return
+
+    transform.x = cx * scale
+    transform.y = cy * scale
+    transform.z = Math.max(Math.min(scale * cz, maxZoom), minZoom)
   }}
   on:wheel={(e) => {
     const delta = e.deltaY / 100
-    transform.z = Math.max(0.5, transform.z - delta)
+
+    if (delta < 0 && transform.z >= maxZoom) return
+    if (delta > 0 && transform.z <= minZoom) return
+
+    const { top, left, width, height } = farmWrapperElement.getBoundingClientRect()
+
+    const cx = e.clientX - (left + width / 2) // center of the farm from the left
+    const cy = e.clientY - (top + height / 2) // center of the farm from the top
+
+    transform.x += (delta * (cx - transform.x)) / transform.z
+    transform.y += (delta * (cy - transform.y)) / transform.z
+    transform.z = Math.max(Math.min(transform.z - delta, maxZoom), minZoom)
   }}
   on:pinchup={(e) => {
     isNewPinch = true
   }}
   class:levitate
 >
+  {#if transform.x || transform.y || transform.z !== 1}
+    <div transition:fade id="reset-transform-button" data-tooltip="Re-center">
+      <Button bare onClick={onResize}>
+        <Icon type="center-focus"></Icon>
+      </Button>
+    </div>
+  {/if}
   <div
     id="gesture-element"
     style="transform: translate3d({transform.x}px, {transform.y}px, 0) scale({transform.z})"
@@ -153,10 +190,12 @@
 
 #farm-wrapper
   width: 100%
+  max-height: 100%
   overflow: hidden
-  padding-bottom: 12.5%
+  padding-bottom: 10%
   display: flex
   align-items: center
+  position: relative
   justify-content: center
   border-radius: var(--border-radius)
   transform-origin: center
@@ -170,6 +209,26 @@
     -webkit-transform-origin: center
     -webkit-transform-style: preserve-3d
 
+#reset-transform-button
+  position: absolute
+  top: 0
+  right: 0
+  z-index: 2
+  width: 2.5rem
+  height: 2.5rem
+  font-size: 2rem
+  display: flex
+  align-items: center
+  justify-content: center
+  margin: 0.25rem
+  color: var(--color-secondary-1)
+  background: var(--color-primary-1)
+  border-radius: 2rem
+
+  :global(button)
+    padding: 0
+    line-height: 0
+
 #gesture-element
   width: 100%
 
@@ -180,7 +239,6 @@
   display: grid
   grid-template-rows: repeat(10, 1fr)
   grid-template-columns: repeat(10, 1fr)
-  // gap: 1px
   position: relative
   z-index: 1
   background: var(--color-primary-0)
@@ -289,8 +347,10 @@
     .food-item-fill
       opacity: 1
 
-@media (max-width: $screen-sm)
-
-  // .food-item-image
+@media (max-height: 650px)
+  #farm-wrapper
+    padding-bottom: 5%
+  #land-grid
+    width: 60%
 
 </style>
