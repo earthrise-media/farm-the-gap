@@ -6,7 +6,7 @@
   export let description: string | undefined =
     "The strategy game and learning platform about feeding the future."
 
-  export let coverImage: string | undefined = undefined
+  export let image: string | undefined = "/img/cover.png"
   export let siteurl: string | undefined = "https://stories.theplotline.org"
 
   const titleSuffix = `The Plotline`
@@ -29,10 +29,10 @@
   <meta name="twitter:title" content={title} />
   <meta name="twitter:site" content="@EarthGenome" />
 
-  {#if coverImage}
-    <meta name="og:image" content="{siteurl}{base}{coverImage}" />
-    <meta name="image" property="og:image" content="{siteurl}{base}{coverImage}" />
-    <meta name="twitter:image" content="{siteurl}{base}{coverImage}" />
+  {#if image}
+    <meta name="og:image" content="{siteurl}{base}{image}" />
+    <meta name="image" property="og:image" content="{siteurl}{base}{image}" />
+    <meta name="twitter:image" content="{siteurl}{base}{image}" />
     <meta name="twitter:card" content="summary_large_image" />
   {/if}
 
