@@ -149,7 +149,8 @@ $radius: 1rem
 
 @media (max-width: $screen-sm)
   .modal-screen
-    &.show-header
-      margin: 0.5rem 0.5rem 0.5rem 4.25rem
+    @media (orientation: landscape)
+      &.show-header
+        margin: 0.5rem 0.75rem 0.75rem 4.25rem
 
 </style>

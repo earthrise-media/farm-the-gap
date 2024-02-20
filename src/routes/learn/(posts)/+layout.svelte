@@ -26,7 +26,7 @@
   <div class="article-footer-subtitle bold text-tertiary-1">
     8 micro-articles on food and the environment.
   </div>
-  <ArticleMenu />
+  <ArticleMenu linkToGame />
 </section>
 
 <Tooltip />

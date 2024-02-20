@@ -19,12 +19,14 @@
 </script>
 
 <header class:article={isArticle} class="flex align-center justify-between">
-  <a href="{base}/">
+  <a href="{base}/" on:click={() => ($userState.isMenuOpen = false)}>
     <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
   </a>
   <div class="buttons">
     {#if !isArticle}
-      <ButtonUndo showIcon />
+      <div class="sm-hidden">
+        <ButtonUndo showIcon />
+      </div>
     {/if}
     <Button bare color="secondary" onClick={() => ($userState.isMenuOpen = !$userState.isMenuOpen)}>
       <Icon classList="text-2xl" type={$userState.isMenuOpen ? "close" : "menu"} />
@@ -51,13 +53,14 @@ header
     background: var(--color-primary-0)
 
     &:after
+      $r: 5px
       content: ""
       position: absolute
       padding: var(--border-radius) 0 0
-      left: -6px
-      right: -6px
-      top: calc(100% - 6px)
-      border: 6px solid var(--color-primary-0)
+      left: -$r
+      right: -$r
+      top: calc(100% - $r)
+      border: $r solid var(--color-primary-0)
       border-radius: var(--border-radius) var(--border-radius) 0 0 
       border-bottom: none
       background: transparent
@@ -72,6 +75,9 @@ header
     line-height: 0
 
 @media (max-width: $screen-sm)
+  header:not(.article)
+    padding-left: 0.5rem
+@media (max-width: $screen-sm) and (orientation: landscape)
   header
     display: none
     &.article

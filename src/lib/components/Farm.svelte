@@ -16,7 +16,7 @@
 
   let isNewPan = true
   let isNewPinch = true
-  let disableGestures = false
+  let disableGestures = levitate
   let farmWrapperElement: HTMLDivElement
   let transform = { x: 0, y: 0, z: 1, cx: 0, cy: 0, cz: 1, x0: 0, y0: 0 }
 
@@ -61,8 +61,8 @@
   use:pan={{ delay: 0 }}
   use:pinch={{ delay: 0 }}
   on:pandown={(e) => {
-    if (e.detail.event.pointerType === "mouse") disableGestures = false
-    else disableGestures = false
+    // if (e.detail.event.pointerType === "mouse") disableGestures = false
+    // else disableGestures = false
   }}
   on:pan={(e) => {
     if (disableGestures) return
@@ -102,6 +102,7 @@
     transform.z = Math.max(Math.min(scale * cz, maxZoom), minZoom)
   }}
   on:wheel={(e) => {
+    if (disableGestures) return
     const delta = e.deltaY / 100
 
     if (delta < 0 && transform.z >= maxZoom) return
@@ -191,7 +192,7 @@
 #farm-wrapper
   width: 100%
   max-height: 100%
-  overflow: hidden
+  overflow: visible
   padding-bottom: 10%
   display: flex
   align-items: center
@@ -246,8 +247,10 @@
 
   .levitate &
     animation: levitate 1s ease-in-out infinite alternate
-    width: 66%
     pointer-events: none
+
+    .land-cell
+      pointer-events: none
 
     &::before
       animation: levitate-shadow 1s ease-in-out infinite alternate

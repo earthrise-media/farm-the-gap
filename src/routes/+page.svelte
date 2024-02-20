@@ -16,10 +16,12 @@
   import BlockGameState from "$lib/components/BlockGameState.svelte"
   import FoodStatsTable from "$lib/components/FoodStatsTable.svelte"
   import TooltipFoodItem from "$lib/components/TooltipFoodItem.svelte"
+  import ModalOrientation from "$lib/components/ModalOrientation.svelte"
   import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
 </script>
 
 <Meta />
+<ModalOrientation />
 
 <main class:food-item-selected={$userState.itemSelectedForSwap}>
   <Header />
@@ -116,6 +118,6 @@ main
     padding-left: 0.75rem
 
   .panel-data
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr)
+    grid-template-columns: 4rem minmax(0, 2.5fr)
 
 </style>

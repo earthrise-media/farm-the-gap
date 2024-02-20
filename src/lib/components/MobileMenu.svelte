@@ -54,7 +54,7 @@
 @media (max-width: $screen-sm)
   #mobile-menu
     position: relative
-    z-index: 1000
+    z-index: 1
     gap: 0.75rem
     display: flex
     align-items: center

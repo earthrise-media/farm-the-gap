@@ -6,8 +6,9 @@
   import articles from "$lib/data/articles"
 
   export let isInsideMenu = false
-  export let maxItems = articles.length
+  export let linkToGame = false
   export let showFeaturedOnly = false
+  export let maxItems = articles.length
 </script>
 
 <div id="article-menu-list" class:in-menu={isInsideMenu}>
@@ -26,6 +27,12 @@
       <div class="article-link-title">{title}</div>
     </a>
   {/each}
+  {#if linkToGame}
+    <a class="game-link flex-center" href="{base}/">
+      <div class="icon"></div>
+      <div class="article-link-title">Play game &rarr;</div>
+    </a>
+  {/if}
 </div>
 {#if maxItems < articles.length || showFeaturedOnly}
   <div class="see-all-link text-secondary-2 text-right">
@@ -42,10 +49,10 @@
   font-size: 1rem
   margin: 1rem auto 0
   overflow: hidden
-  max-width: 750px
-  width: 100%
+  width: 750px
   gap: 0.5rem
   display: grid
+  max-width: 100%
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
   gap: 1rem
 
@@ -78,21 +85,52 @@
       color: var(--color-secondary-1)
       background: var(--color-primary-1)
 
+.game-link
+  gap: 1rem
+  margin-top: 1rem
+  font-size: 1.25rem
+  grid-column: 1 / -1
+
+  .icon
+    width: 2rem
+    height: 2rem
+    z-index: 1
+    overflow: visible
+    position: relative
+    border-radius: 2px
+    background: var(--color-primary-3)
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(-45deg)
+
+    &:after
+      content: ""
+      position: absolute
+      z-index: -1
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      transition: all 0.4s
+      transform: translate3d(0, 0, 4px)
+      box-shadow: -0.25rem 0.25rem 0.125rem rgba(black, 0.25)
 
 .article-link-title
   font-weight: 600
-  letter-spacing: -0.01em
   line-height: 1.2
+  letter-spacing: -0.01em
 
 .see-all-link
+  font-size: 1rem
   margin-top: 1rem
-  font-size: 0.825rem
   align-self: flex-end
 
 
 @media (max-width: $screen-sm)
-  #main-menu-list
-    width: 40%
-    flex-basis: 40%
+  #article-menu-list
+    &.in-menu
+      gap: 0.5rem
+      grid-template-columns: minmax(200px, 1fr)
+
+  .article-link
+    min-height: 5rem
 
 </style>

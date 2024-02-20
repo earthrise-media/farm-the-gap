@@ -15,7 +15,6 @@
 
 <Menu />
 <ModalShare />
-<ModalOrientation />
 
 <svelte:window bind:innerHeight={vh} bind:innerWidth={vw} />
 

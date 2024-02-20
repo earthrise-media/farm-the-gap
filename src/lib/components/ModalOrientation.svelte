@@ -21,15 +21,18 @@
 <svelte:window on:resize={onResize} />
 
 {#if show}
-  <Modal fullscreen hideCloseButton>
-    <div class="modal-orientation flex-col flex-center title">
-      <h2>Please rotate to landscape mode!</h2>
+  <Modal id="modal-orientation" fullscreen hideCloseButton>
+    <div class="modal-orientation-body flex-col flex-center title">
+      <h2>Please rotate to landscape to play game</h2>
       <Icon type="rotate-phone" />
     </div>
   </Modal>
 {/if}
 
 <style lang="sass">
-.modal-orientation
+:global(#modal-orientation)
+  z-index: 10
+  opacity: 0.9
+.modal-orientation-body
   height: calc(100% - 1.5rem)
 </style>
