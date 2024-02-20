@@ -10,8 +10,6 @@
   export let callouts: Food[] | undefined
   export let fv: (item: Food) => number
 
-  console.log(callouts)
-
   $: max = Math.ceil(Math.max(...foods.map(fv)))
 </script>
 

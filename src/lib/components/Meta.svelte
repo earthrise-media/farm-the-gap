@@ -18,6 +18,8 @@
       title += " - " + titleSuffix
     }
   }
+
+  $: basepath = base.replace(/[\.\/]+/, "")
 </script>
 
 <svelte:head>
@@ -28,12 +30,13 @@
   <meta name="og:site_name" content={author} />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:site" content="@the_plotline" />
+  <meta property="og:url" content="{siteurl}{basepath}" />
 
   {#if image}
-    <meta name="og:image" content="{siteurl}{base}{image}" />
-    <meta name="image" property="og:image" content="{siteurl}{base}{image}" />
-    <meta name="twitter:image" content="{siteurl}{base}{image}" />
+    <meta name="image" property="og:image" content="{siteurl}{basepath}{image}" />
+    <meta name="twitter:image" content="{siteurl}{basepath}{image}" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="og:image" content="{siteurl}{basepath}{image}" />
   {/if}
 
   {#if description}
