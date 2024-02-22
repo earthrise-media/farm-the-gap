@@ -2,7 +2,7 @@
   import { base } from "$app/paths"
 
   export let author = "The Plotline"
-  export let title: string | undefined = "Foodprints"
+  export let title: string | undefined = "Farm the Gap"
   export let description: string | undefined =
     "The strategy game and learning platform about feeding the future."
 
