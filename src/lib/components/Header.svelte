@@ -23,7 +23,7 @@
     <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
   </a>
   <div class="buttons">
-    {#if !isArticle}
+    {#if !isArticle && !$userState.isGameComplete}
       <div class="sm-hidden">
         <ButtonUndo showIcon />
       </div>

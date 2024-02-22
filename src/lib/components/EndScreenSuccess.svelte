@@ -1,19 +1,22 @@
 <script lang="ts">
   import {
-    gameSettings,
+    farm,
+    userState,
     gameState,
-    successMetrics,
     gameHistory,
-    userState
+    gameSettings,
+    successMetrics
   } from "$lib/stores/state"
   import { prettyPercent, largeNumber } from "$lib/utils/written"
 
   import Button from "$lib/components/Button.svelte"
-  import Farm from "$lib/components/Farm.svelte"
   import Slides from "$lib/components/Slides.svelte"
   import Slide from "$lib/components/Slide.svelte"
   import EndSlideYourFarm from "$lib/components/EndSlideYourFarm.svelte"
   import LineChart from "./LineChart.svelte"
+  import FoodIcon from "./FoodIcon.svelte"
+  import ArticleMenu from "./ArticleMenu.svelte"
+  import Icon from "./Icon.svelte"
 
   export let reset = () => {}
 
@@ -40,6 +43,7 @@
             <div class="line-chart label flex-center">
               <LineChart
                 labels
+                xLabels={[$gameState.year.start, $gameState.year.end]}
                 labelFormat={prettyPercent}
                 pulseEndPoint
                 length={$gameState.year.end - $gameState.year.start}
@@ -62,9 +66,16 @@
             )}.
           </p>
         </div>
-        <div class="farm-container">[Graphic showing animated food icons here.]</div>
+        <div class="food-icons flex-center title">
+          {#each $farm.foodChanges.filter((o) => o.delta > 0) as { food }}
+            <div class="food-icon">
+              <FoodIcon {food} />
+            </div>
+          {/each}
+        </div>
         <div class="cta-buttons">
           <Button
+            classList="flex-center"
             onClick={() =>
               ($userState.shareText = `Without clearing any new land, I increased global calorie supply by ${prettyPercent(
                 Math.abs($successMetrics.calorieProductionChange)
@@ -73,9 +84,8 @@
               )}, feeding an additional
               ${largeNumber(
                 $successMetrics.currentPopulationFed - $gameSettings.populationStart
-              )} people!`)}>Share this</Button
+              )} people!`)}>Share&nbsp;<Icon type="share" /></Button
           >
-          <Button color="secondary" onClick={() => slideIndex++}>Next</Button>
         </div>
       </div>
     </Slide>
@@ -85,19 +95,21 @@
     </Slide>
   {:else if slideIndex === 2}
     <Slide>
-      <h2 class="title">Learn more</h2>
+      <div class="slide-2">
+        <h2 class="slide-title title">Learn more</h2>
+      </div>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus voluptatem itaque
-        voluptatibus ducimus laborum, accusantium odit dicta numquam tempora, possimus architecto
-        sed eveniet reprehenderit, consectetur iusto maiores eligendi nihil aperiam.
+        This platform also features six micro-articles on food systems and the environment. Try one
+        below!
       </p>
-      <Button color="secondary" onClick={reset}>Play again</Button>
+      <ArticleMenu tight />
+      <hr class="spacer" />
+      <Button classList="flex-center" onClick={reset}>Play again&nbsp;<Icon type="undo" /></Button>
     </Slide>
   {/if}
 </Slides>
 
 <style lang="sass">
-
 .slide-0
   .slide-title-block
     margin-bottom: 1.5rem
@@ -105,6 +117,13 @@
     margin-bottom: 1.5rem
     gap: 0.5rem
   .line-chart
-    margin-top: 0.75rem
-    height: 2.25rem
+    margin-top: 1.25rem
+    height: 4.5rem
+
+.food-icons
+  gap: 0.75rem
+  font-size: 2.5rem
+
+.food-icon
+  animation: dance 0.75s infinite alternate ease-in-out
 </style>

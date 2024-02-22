@@ -41,8 +41,8 @@
   class:show-header={showHeader}
   on:click={close}
   on:keydown={handleKeydown}
-  in:fade|global={{ duration: durationIn }}
-  out:fade|global={{ duration: durationOut }}
+  in:fade={{ duration: durationIn }}
+  out:fade={{ duration: durationOut }}
 >
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
@@ -91,7 +91,7 @@ $radius: 1rem
     background: var(--color-primary-0)
 
     &.error
-      background: var(--color-error-0)
+      background: var(--color-error-1)
 
   &.show-header
     margin: 3.25rem 0.5rem 0.5rem

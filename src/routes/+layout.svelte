@@ -1,14 +1,22 @@
 <script>
   import "/src/styles/app.sass"
 
-  import Header from "$lib/components/Header.svelte"
-  import Menu from "$lib/components/Menu.svelte"
-  import ModalShare from "$lib/components/ModalShare.svelte"
-  import ModalOrientation from "$lib/components/ModalOrientation.svelte"
+  import { page } from "$app/stores"
   import { dev } from "$app/environment"
 
-  let vh = 0,
-    vw = 0
+  import Menu from "$lib/components/Menu.svelte"
+  import ModalShare from "$lib/components/ModalShare.svelte"
+  import { afterNavigate } from "$app/navigation"
+
+  let vh = 0
+  let vw = 0
+
+  afterNavigate(() => {
+    // scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: "smooth" })
+
+    console.log("Navigated to", $page.url.pathname)
+  })
 </script>
 
 <slot />

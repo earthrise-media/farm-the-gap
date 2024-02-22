@@ -5,13 +5,15 @@
 
   import articles from "$lib/data/articles"
 
-  export let isInsideMenu = false
+  export let tight = false
+  export let color: "primary" | "secondary" | "error" = "primary"
   export let linkToGame = false
+  export let isInsideMenu = false
   export let showFeaturedOnly = false
   export let maxItems = articles.length
 </script>
 
-<div id="article-menu-list" class:in-menu={isInsideMenu}>
+<div id="article-menu-list" class="color-{color}" class:in-menu={isInsideMenu} class:tight>
   {#each articles
     .filter((a) => !showFeaturedOnly || a.featured)
     .slice(0, maxItems) as { title, slug }, i}
@@ -75,6 +77,13 @@
   border: 1px solid transparent
   transition: all 0.3s
 
+  .tight &
+    min-height: 4rem
+
+  .color-error &
+    background: var(--color-error-2)
+    color: var(--color-secondary-1)
+
   &.current
     opacity: 0.75
     pointer-events: none
@@ -84,6 +93,10 @@
     &:hover
       color: var(--color-secondary-1)
       background: var(--color-primary-1)
+
+    .color-error &:hover
+      filter: brightness(1.1)
+      background: var(--color-error-2)
 
 .game-link
   gap: 1rem

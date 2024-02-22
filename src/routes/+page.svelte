@@ -51,7 +51,7 @@
 
   <TooltipFoodItem />
 
-  {#if !dev}
+  {#if true || !dev}
     <WelcomeScreen />
     <EndScreen />
     <Toast />

@@ -49,15 +49,12 @@
       tabindex="0"
       in:fade={{ duration: 2000, delay: 100, easing }}
     >
-      <Slides
-        bind:slideIndex
-        {slides}
-        {close}
-        showPagers={slideIndex > 0 && slideIndex < slides.length - 1}
-      >
+      <Slides bind:slideIndex {slides} {close} showPagers={slideIndex > 0}>
         <div out:fade class="backing-screen">
           <div class="welcome-farm-wrapper">
-            <Farm levitate />
+            <div class="farm-transform">
+              <Farm levitate />
+            </div>
           </div>
         </div>
         {#if slideIndex === 0}
@@ -137,29 +134,39 @@
 
 .welcome-farm-wrapper
   margin: 0 auto
-  max-width: 420px
-  width: 100%
   top: 0
-  transition: all 0.6s ease-in-out
+  left: 0
+  right: 0
+  bottom: 0
+  display: flex
+  position: absolute
+  align-items: center
+  justify-content: center
   transform-origin: center
   transform-style: preserve-3d
   -webkit-transform-origin: center
   -webkit-transform-style: preserve-3d
-  transform: scale(0.7) translate(0, 75%)
 
-  .slide-0 &
-    transition: all 0.8s ease
-    transform: scale(0.5) translate(0, 0%)
+  .farm-transform
+    max-width: 420px
+    transition: all 0.6s ease-in-out
+    transform: scale(0.7)
 
-  .slide-1 &
-    transform: scale(2) translate(0, -30%)
-    opacity: 1
+    :global(.land-cell)
+      font-size: 75%
 
-  .slide-2 &
-    transform: scale(0.9) translate(0, 10%)
+    .slide-0 &
+      transition: all 0.8s ease
+      transform: scale(0.85) translate(0, -68%)
 
-  .slide-3 &
-    transform: scale(0.6) translate(0, 0%)
+    .slide-1 &
+      transform: scale(2) translate(0, -60%)
+
+    .slide-2 &
+      transform: scale(1) translate(0, -40%)
+
+    .slide-3 &
+      transform: scale(0.85) translate(0, -70%)
 
 .impact-charts
   gap: 0 1.25rem

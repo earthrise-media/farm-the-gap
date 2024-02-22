@@ -85,8 +85,8 @@ a, button
   background: var(--color-secondary-2)
 
 .color-error-invert
-  background: var(--color-error-1)
-  color: var(--color-secondary-2)
+  background: var(--color-error-2)
+  color: var(--color-secondary-1)
 
 .bare
   background: none

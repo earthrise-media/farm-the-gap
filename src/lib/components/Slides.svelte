@@ -30,7 +30,9 @@
 
 {#if showPagers}
   <div transition:fade class="pager-wrap">
-    <div class="label text-secondary-1">{pagersText}</div>
+    {#if pagersText}
+      <div transition:fade class="label text-secondary-1">{pagersText}</div>
+    {/if}
     <div class="pagers">
       {#each slides as s, i}
         <button
