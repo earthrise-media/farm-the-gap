@@ -363,6 +363,14 @@
   #land-grid
     width: 60%
 
+@media (min-width: 1500px)
+  .land-cell
+    font-size: 1.125rem
+
+@media (min-width: 1700px)
+  .land-cell
+    font-size: 1.25rem
+
 @media (max-width: $screen-sm)
   .land-cell
     font-size: 0.875rem
