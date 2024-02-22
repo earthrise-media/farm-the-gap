@@ -111,6 +111,8 @@
 </p>
 
 <style lang="sass">
+@import "src/styles/vars/screens.sass"
+
 legend
   gap: 0.25rem
   margin: 1.5rem 0
@@ -143,4 +145,11 @@ legend
 
 figcaption
   margin-top: 3.5rem
+
+@media (max-width: $screen-sm)
+  .comparative-charts-wrap
+    gap: 1rem
+    .country-column
+      > .flex
+        flex-direction: column
 </style>
