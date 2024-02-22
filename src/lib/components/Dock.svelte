@@ -78,6 +78,7 @@
   width: 100%
   padding: 1em
   z-index: 1
+  pointer-events: none
 
 .dock-item
   gap: 0.125em

@@ -81,7 +81,7 @@ main
   grid-area: game
   background: var(--color-primary-2)
   border-radius: var(--border-radius)
-  padding: 0 1rem
+  padding: 0
   grid-template-rows: auto 1fr
 
 .panel-farm

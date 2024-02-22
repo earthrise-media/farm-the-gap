@@ -7,7 +7,6 @@
   import { pan, pinch } from "svelte-gestures"
 
   import { farm, userState, gameState, gameHistory } from "$lib/stores/state"
-  import { get } from "svelte/store"
   import Button from "./Button.svelte"
   import Icon from "./Icon.svelte"
 
@@ -26,7 +25,7 @@
   const isSwappable = (food: Food) => food.id !== $userState.itemSelectedForSwap?.id
 
   const swapFoodItem = (e: MouseEvent, x: number, y: number) => {
-    e.stopImmediatePropagation()
+    e.stopPropagation()
 
     const foodAdded = JSON.parse(JSON.stringify($userState.itemSelectedForSwap))
     const foodRemoved = JSON.parse(JSON.stringify($farm.grid[y][x]))
@@ -147,9 +146,7 @@
                     /s$/,
                     ""
                   )} square on the board at all times.`
-                : $userState.itemSelectedForSwap && isSwappable(food)
-                  ? `Replace ${food.name} with ${$userState.itemSelectedForSwap.name}`
-                  : food.name}
+                : undefined}
               class:is-only={$farm.getCropCount(food.id) === 1}
               class:highlighted={$userState.itemHighlighted?.id === food.id}
               class:unswappable={$userState.itemSelectedForSwap && !isSwappable(food)}
@@ -159,7 +156,7 @@
               on:click={(e) => {
                 const isOnly = $farm.getCropCount(food.id) === 1
 
-                if (isOnly) return
+                if (isOnly || !isSwappable(food)) return
 
                 return (
                   $userState.itemSelectedForSwap &&
@@ -298,13 +295,17 @@
   pointer-events: all
   transition: background 0.2s, transform 0.2s ease-out
   
+  &.swappable, &.unswappable
+    cursor: none
   &.swappable
     background: var(--color-primary-1)
   &.highlighted
     background: var(--color-primary-3)
     animation: flash 0.5s ease-in-out infinite alternate
   &.unswappable
-    background: var(--color-tertiary-2)
+    background: var(--color-primary-0)
+    animation: none
+    pointer-events: none
   &.has-changed
     background: var(--color-primary-3)
     animation: flash 0.5s ease-in-out infinite alternate
@@ -321,8 +322,7 @@
   position: relative
   width: auto
   height: auto
-  font-size: 200%
-  // font-size: 1.875rem
+  font-size: 2.25em
   transition: all 0.3s ease-out
   transform: rotateZ(45deg) rotateY(-60deg) translate(0,0%)
   text-shadow: 0 0 0.1rem rgba(black, 0.5)
@@ -332,14 +332,17 @@
     height: 1em
     object-fit: contain
 
-  .land-cell:not(.unswappable):hover &
-    transform: rotateZ(45deg) rotateY(-60deg) translate(0, -5%)
+  [data-food="Lamb"] &,
+  [data-food="Pork"] &
+    font-size: 2.125em
+
+  [data-food="Poultry"] &
+    font-size: 2em
 
   [data-food="Eggs"] &,
-  [data-food="Lamb"] &,
   [data-food="Corn"] &,
   [data-food="Nuts"] &
-    font-size: 1.75rem
+    font-size: 1.875em
 
   [data-food="Corn"] &
     transform: rotateZ(65deg) rotateX(-20deg) rotateY(-60deg) translate(0,0%)
@@ -351,6 +354,8 @@
   .land-cell:not(.unswappable):hover
     .food-item-fill
       opacity: 1
+    // .food-item-image
+    //   transform: rotateZ(45deg) rotateY(-60deg) translate(0, -2px)
 
 @media (max-height: 650px) and (min-width: $screen-sm)
   #farm-wrapper
