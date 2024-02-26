@@ -1,48 +1,32 @@
 <script lang="ts">
-  import type { IconName } from "$lib/data/icon"
   import { gameState, userState } from "$lib/stores/state"
 
   import Icon from "$lib/components/Icon.svelte"
   import Button from "$lib/components/Button.svelte"
   import ButtonUndo from "./ButtonUndo.svelte"
-
-  type Item = {
-    icon: IconName
-    fn: () => void
-  }
-
-  const items: Item[] = [
-    {
-      icon: "menu",
-      fn: () => ($userState.isMenuOpen = !$userState.isMenuOpen)
-    },
-    {
-      icon: "tables",
-      fn: () => ($userState.isMobileTablesOpen = !$userState.isMobileTablesOpen)
-    },
-    {
-      icon: "undo",
-      fn: () => console.log("undo")
-    }
-  ]
 </script>
 
 <div id="mobile-menu" class="text-2xl">
-  {#each items as { icon, fn }}
-    <svelte:component
-      this={icon === "undo" ? ButtonUndo : Button}
-      bare
-      color="secondary"
-      onClick={fn}
+  <Button bare onClick={() => ($userState.isMenuOpen = !$userState.isMenuOpen)}>
+    <div class="icon icon-menu flex-center bg-primary-2">
+      <Icon type={$userState.isMenuOpen ? "close" : "menu"} />
+    </div>
+  </Button>
+  <Button bare onClick={() => ($userState.isMobileTablesOpen = !$userState.isMobileTablesOpen)}>
+    <div
+      class="icon icon-tables flex-center {$userState.isMobileTablesOpen
+        ? 'bg-tertiary-2 text-primary-0'
+        : 'bg-primary-2'}"
     >
-      <div class="icon icon-{icon} flex-center bg-primary-2">
-        <Icon type={icon === "menu" ? ($userState.isMenuOpen ? "close" : "menu") : icon} />
-        {#if icon === "undo"}
-          <span class="label bg-primary-0 food-item-avatar">{$gameState.undosRemaining}</span>
-        {/if}
-      </div>
-    </svelte:component>
-  {/each}
+      <Icon type="tables" />
+    </div>
+  </Button>
+  <ButtonUndo bare>
+    <div class="icon icon-undo flex-center bg-primary-2">
+      <Icon type="undo" />
+      <span class="label bg-primary-0 food-item-avatar">{$gameState.undosRemaining}</span>
+    </div>
+  </ButtonUndo>
 </div>
 
 <style lang="sass">

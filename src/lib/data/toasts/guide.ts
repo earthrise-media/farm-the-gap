@@ -58,7 +58,19 @@ export const guide: Toast[] = [
     button: "Next",
     next: 4,
     mobilePosition: "bottom right",
-    target: ".food-items-grid"
+    target: ".food-items-grid",
+    onEnter: () => {
+      userState.update(($u) => {
+        $u.isMobileTablesOpen = true
+        return $u
+      })
+    },
+    onDismiss: () => {
+      userState.update(($u) => {
+        $u.isMobileTablesOpen = false
+        return $u
+      })
+    }
   },
   {
     id: 4,
