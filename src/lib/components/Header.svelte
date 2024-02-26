@@ -32,7 +32,7 @@
     </div>
   </a>
   <div class="buttons">
-    {#if !isArticle && !$userState.isGameComplete}
+    {#if !isArticle && !$userState.isGameComplete && !$userState.isMenuOpen && $userState.hasBeenWelcomed}
       <div class="sm-hidden">
         <ButtonUndo showIcon />
       </div>
@@ -62,7 +62,7 @@ header
     background: var(--color-primary-0)
 
     &:after
-      $r: 5px
+      $r: 0.325rem
       content: ""
       position: absolute
       padding: var(--border-radius) 0 0

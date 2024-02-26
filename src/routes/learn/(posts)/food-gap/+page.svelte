@@ -23,7 +23,7 @@
 <figure>
   <div class="figure-title">Key drivers of the food gap</div>
   <div class="figure-subtitle label">Why do we need to increase food production by 50%?</div>
-  <ul>
+  <ul class="text-sm">
     <li>
       <b>Rising population</b>: We need to feed an additional two billion people by 2050.
     </li>
