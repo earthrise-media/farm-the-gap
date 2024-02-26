@@ -31,7 +31,7 @@
 
 <style lang="sass">
 :global(#modal-orientation)
-  z-index: 10
+  z-index: 101
   opacity: 0.9
 .modal-orientation-body
   height: calc(100% - 1.5rem)

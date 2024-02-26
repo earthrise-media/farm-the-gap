@@ -13,7 +13,6 @@
   import { activeToastId, activeTipId } from "$lib/stores/toast"
 
   import { toasts } from "$lib/data/toasts"
-  import { dev } from "$app/environment"
 
   import type { Toast, CallBackProps } from "$lib/data/toasts/types"
 
@@ -25,6 +24,10 @@
     mounted = true
     document.addEventListener("click", (e) => setTimeout(() => onGlobalInteraction(e), 25), true)
   })
+
+  const onResize = () => {
+    toast = toast
+  }
 
   const onGlobalInteraction = (e: InteractionEvent) => {
     let hasCompletedTask = toast?.task?.(callbackProps)
@@ -91,6 +94,8 @@
     }
   }
 </script>
+
+<svelte:window on:resize={onResize} />
 
 {#if toast}
   <div class="toast-wrapper">
