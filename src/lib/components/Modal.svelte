@@ -41,7 +41,7 @@
   class:show-header={showHeader}
   on:click={close}
   on:keydown={handleKeydown}
-  in:fade={{ duration: durationIn }}
+  in:fade|global={{ duration: durationIn }}
   out:fade={{ duration: durationOut }}
 >
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->

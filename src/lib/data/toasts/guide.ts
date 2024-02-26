@@ -31,7 +31,7 @@ export const guide: Toast[] = [
     type: "guide",
     title: "Your food inventory",
     // prettier-ignore
-    message: `<p>These are the foods available to you. Close the food gap by swapping these with the foods on your global farm grid.</p><p>To maintain nutritional and market balance, you only have ${avatar(1,"3")} of each item to use. You must keep at least one of each item on the farm at all times.</p>`,
+    message: `<p>These are the foods available to you. Close the food gap by swapping these with the foods on your global farm grid.</p><p>To maintain nutritional and market balance, you only have ${avatar(1,"4")} of each item to use. You must keep at least one of each item on the farm at all times.</p>`,
     button: "Next",
     target: "#food-menu-wrapper",
     next: 2

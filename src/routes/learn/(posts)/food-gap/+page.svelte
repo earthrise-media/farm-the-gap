@@ -4,7 +4,7 @@
 
 <p>
   By 2050, the global population will reach 9.7 billion. Populations will continue to urbanize, and
-  millions of people will join the middle class.<sup
+  millions more people will join the middle class.<sup
     ><a
       href="https://www.un.org/en/global-issues/population#:~:text=The%20world%20population%20is%20projected,surrounding%20these%20latest%20population%20projections."
       target="_blank">1</a

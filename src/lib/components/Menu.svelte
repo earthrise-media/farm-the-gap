@@ -68,7 +68,7 @@
           This project was funded by <a href="https://theplotline.org/"
             ><b>The&nbsp;Plotline&nbsp;&nearr;</b></a
           >, an open innovation platform and resource hub working towards a more sustainable and
-          equitable food system. This game and website was designed and built by
+          equitable food system. This platform was designed, built, and written by
           <a href="https://brody.fyi/"><b>Brody&nbsp;Smith&nbsp;&nearr;</b></a>.
         </div>
       </div>

@@ -15,6 +15,7 @@
         "*The land efficiency of poultry and pork depends largely on living conditions. Land efficiency can come at a significant cost to animal welfare. Almost all the chickens consumed in the United States come from factory farms – massive, concentrated, enclosed chicken sheds. To learn more about this, visit <a target='_blank' href='https://stories.theplotline.org/cafo-explorer/'>The Plotline's CAFO Explorer &nearr;</a>.",
       unit: "m²",
       fv: (f: Food) => (100 * f.landPerKg) / f.proteinRatio
+      // fv: (f: Food) => 1 / ((f.yieldPerHa / 10000) * (100 * f.proteinRatio))
     },
     water: {
       title: "Water use per 100g of protein",

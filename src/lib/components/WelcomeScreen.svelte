@@ -59,7 +59,7 @@
         </div>
         {#if slideIndex === 0}
           <Slide>
-            <h1 class="title slide-title slide-title-0">The Food Gap Challenge</h1>
+            <h1 class="title slide-title slide-title-0">Farm the Gap</h1>
             <p>
               The world faces a food gap. By {$gameState.year.end}, we must produce {prettyPercent(
                 $gameSettings.gap
@@ -109,7 +109,7 @@
             </p>
             <p>
               You must continually deliver a nutritionally-balanced diet to a growing population,
-              while meeting market demands and keeping environmental impacts in check.
+              while keeping environmental impacts in check.
             </p>
             <p>
               <b class="text-tertiary-1"> Let's play! </b>

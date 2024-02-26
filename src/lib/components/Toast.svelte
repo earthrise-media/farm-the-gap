@@ -144,7 +144,7 @@
 {:else}
   <button
     class="guide-img-button"
-    data-tooltip="Give me a tip"
+    data-tooltip="Give me some advice"
     transition:fly={{ x: -40 }}
     on:click={() => ($activeToastId = $activeTipId)}
   >

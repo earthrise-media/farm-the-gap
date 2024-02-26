@@ -4,7 +4,7 @@
   export let author = "The Plotline"
   export let title: string | undefined = "Farm the Gap"
   export let description: string | undefined =
-    "The strategy game and learning platform about feeding the future."
+    "The strategy game and learning platform for feeding the future."
 
   export let image: string | undefined = "/img/cover.png"
   export let siteurl: string | undefined = "https://stories.theplotline.org"

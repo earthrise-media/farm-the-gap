@@ -19,8 +19,17 @@
 </script>
 
 <header class:article={isArticle} class="flex align-center justify-between">
-  <a href="{base}/" on:click={() => ($userState.isMenuOpen = false)}>
-    <img width="100" src="{base}/brand/logo.png" alt="The Plotline Logo" />
+  <a
+    id="logo"
+    class="flex align-center"
+    href="{base}/"
+    on:click={() => ($userState.isMenuOpen = false)}
+  >
+    <img src="{base}/brand/icon@128.png" alt="The Farm The Gap Logo" />
+    <div class="wordmark label flex-col">
+      <div class="wordmark-title bold">Farm the Gap</div>
+      <div class="wordmark-subtitle italic">by The Plotline</div>
+    </div>
   </a>
   <div class="buttons">
     {#if !isArticle && !$userState.isGameComplete}
@@ -64,6 +73,20 @@ header
       border-radius: var(--border-radius) var(--border-radius) 0 0 
       border-bottom: none
       background: transparent
+
+#logo
+  gap: 0.5rem
+
+  img
+    height: 2.25rem
+
+  .wordmark
+    gap: 0.125rem
+    font-size: 0.75rem
+  .wordmark-subtitle
+    font-size: 0.625rem
+    letter-spacing: -0.025em
+    color: var(--color-secondary-3)
 
 .buttons
   gap: 0.75rem
