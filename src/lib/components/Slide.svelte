@@ -25,5 +25,6 @@
   font-size: 1.125rem
   line-height: 1.3
   max-width: 700px
+  padding: 0.5rem
   margin: 0 auto
 </style>

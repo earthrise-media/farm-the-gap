@@ -24,7 +24,7 @@
   <Modal id="modal-orientation" fullscreen hideCloseButton>
     <div class="modal-orientation-body flex-col flex-center title">
       <h2>Please rotate to landscape to play game</h2>
-      <Icon type="rotate-phone" />
+      <Icon type="rotate-phone-landscape" />
     </div>
   </Modal>
 {/if}

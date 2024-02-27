@@ -19,6 +19,7 @@
   import Icon from "./Icon.svelte"
 
   export let reset = () => {}
+  export let isMobile = false
 
   let slideIndex = 0
   let slides = ["Summary", "Farm", "Learn more"]
@@ -29,8 +30,9 @@
 <Slides
   {slides}
   bind:slideIndex
+  close={() => (slideIndex = 0)}
   pagersText={slideIndex === 0
-    ? "Or click anywhere to learn more about your game"
+    ? "Click anywhere to learn more about your game"
     : "Keep clicking for more about your game"}
 >
   {#if slideIndex === 0}
@@ -102,7 +104,7 @@
         This platform also features six micro-articles on food systems and the environment. Try one
         below!
       </p>
-      <ArticleMenu tight />
+      <ArticleMenu tight maxItems={isMobile ? 3 : undefined} />
       <hr class="spacer" />
       <Button classList="flex-center" onClick={reset}>Play again&nbsp;<Icon type="undo" /></Button>
     </Slide>
@@ -110,6 +112,8 @@
 </Slides>
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 .slide-0
   .slide-title-block
     margin-bottom: 1.5rem
@@ -126,4 +130,5 @@
 
 .food-icon
   animation: dance 0.75s infinite alternate ease-in-out
+
 </style>

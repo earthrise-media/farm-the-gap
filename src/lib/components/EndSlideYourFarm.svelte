@@ -20,7 +20,7 @@
     prettyList(foodCounts.slice(0, max).map(describeCount), max, { wrap })
 </script>
 
-<div class="slide-{slideNumber}">
+<div class="your-farm-slide-wrapper slide-{slideNumber}">
   <h2 class="slide-title title" class:text-error-3={isFailed}>Your farm</h2>
   <p>
     By reducing global production of {@html describe(foodsRemoved)}, you freed up enough land to
@@ -52,17 +52,20 @@
 </div>
 
 <style lang="sass">
-.slide-1
+.your-farm-slide-wrapper
   width: 100%
 
   p
     font-weight: bold
 
 .farm-container
-  width: 67%
+  max-width: 475px
   margin: 0 auto
-  margin-top: -7.5%
-  margin-bottom: -15%
+  margin-top: -6%
+  margin-bottom: -16%
+
+.cta-buttons
+  padding-top: 1rem
 
 .end-slide-farm-container
   :global(.land-cell)

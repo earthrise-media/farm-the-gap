@@ -303,7 +303,8 @@
     pointer-events: none
   &.has-changed
     background: var(--color-tertiary-2)
-    animation: flash 0.5s ease-in-out infinite alternate
+    background: var(--color-primary-3)
+    animation: flash 1s ease-in-out infinite alternate
 
 .food-item-fill,
 .food-item-image

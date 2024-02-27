@@ -20,6 +20,7 @@
   type FailureMetric = typeof $successMetrics.emissionsChange
 
   export let reset = () => {}
+  export let isMobile = false
   export let failedMetric: FailureMetric | undefined
   export let exhaustedTurns: boolean
 
@@ -168,7 +169,7 @@
         This platform also features six micro-articles on food systems and the environment. Try one
         below!
       </p>
-      <ArticleMenu tight color="error" />
+      <ArticleMenu tight color="error" maxItems={isMobile ? 3 : undefined} />
       <hr class="spacer" />
       <Button color="error" classList="flex-center" onClick={reset}
         >Play again&nbsp;<Icon type="undo" /></Button
@@ -178,6 +179,7 @@
 </Slides>
 
 <style lang="sass">
+@import "src/styles/vars/screens"
 
 .slide-0
   .slide-title-block
@@ -199,6 +201,8 @@
   .progress-bar
     margin: 1.5rem auto
     gap: 0.5rem
+  #summary
+    margin-top: 1.5rem
 
 :global(#end-screen .cta-buttons)
   display: inline-flex
@@ -208,5 +212,10 @@
   background: var(--color-error-2)
 :global(#end-screen .is-failed .pager.active)
   background: var(--color-error-3)
+
+@media (max-width: $screen-sm)
+  .slide-0
+    .slide-title
+      font-size: 2.25rem
 
 </style>

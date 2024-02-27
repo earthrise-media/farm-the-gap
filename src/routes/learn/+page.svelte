@@ -24,6 +24,11 @@ section.article-hero
   flex-direction: column
   align-items: center
 
+.article-menu-wrap
+  padding: 0 0.75rem
+  max-width: 100%
+  position: relative
+
 .description
   margin: -0.5rem auto 2.5rem
 
