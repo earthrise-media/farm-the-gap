@@ -1,15 +1,15 @@
 <script lang="ts">
   import { userState } from "$lib/stores/state"
 
+  import Icon from "$lib/components/Icon.svelte"
   import Modal from "$lib/components/Modal.svelte"
-  import Button from "$lib/components/Button.svelte"
 
   const platforms = [
     {
       name: "Twitter",
       url: "https://twitter.com/intent/tweet?text=",
       icon: "twitter",
-      color: "#1DA1F2"
+      color: "#141414"
     },
     {
       name: "Facebook",
@@ -30,10 +30,17 @@
       color: "#FF4500"
     },
     {
+      name: "Whatsapp",
+      url: `https://wa.me/?text=`,
+      icon: "whatsapp",
+      color: "#25d366",
+      mobileOnly: true
+    },
+    {
       name: "Email",
       url: "mailto:?subject=The%20Plotline&body=",
       icon: "mail",
-      color: "#000"
+      color: "#141414"
     }
   ]
 </script>
@@ -49,7 +56,7 @@
     <div slot="title">Share</div>
     <p>{$userState.shareText}</p>
     <div class="buttons">
-      {#each platforms as { name, url, icon, color }}
+      {#each platforms as { name, url, icon, color, mobileOnly }}
         <a
           class="button-share"
           href="{url}{$userState.shareText}"
@@ -57,9 +64,13 @@
           rel="noopener noreferrer"
           style="background-color: {color}"
           data-tooltip={name}
+          class:mobile-only={mobileOnly}
         >
-          <i class="icon icon-{icon}" />
-          {name.slice(0, 1)}
+          {#if icon}
+            <Icon classList="text-xl" type={icon} fillRule="evenodd" />
+          {:else}
+            {name.slice(0, 1)}
+          {/if}
         </a>
       {/each}
     </div>
@@ -67,21 +78,28 @@
 {/if}
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 .buttons
   display: flex
   justify-content: center
-  gap: 1em
+  gap: 0.75em
   color: var(--color-secondary-1)
   font-weight: bold
+  flex-grow: 1
 
 .button-share
-  padding: 1em
+  padding: 0
   text-decoration: none
   display: flex
   align-items: center
   justify-content: center
   border-radius: 50rem
-  height: 2em
-  width: 2em
+  height: 2.5rem
+  width: 2.5rem
+
+  &.mobile-only
+    @media (min-width: calc($screen-sm + 1px))
+      display: none
 
 </style>

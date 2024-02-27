@@ -24,7 +24,7 @@
 
 <svelte:element
   this={link ? "a" : "button"}
-  href="{base}/{link}"
+  href={link.startsWith("http") ? link : `${base}/${link}`}
   {type}
   {target}
   {disabled}

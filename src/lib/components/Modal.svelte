@@ -106,7 +106,6 @@ $radius: 1rem
   width: 550px
   max-width: 95vw
   height: auto
-  min-height: 200px
   max-height: 80vh
   max-height: 80svh
   padding: $padding

@@ -37,6 +37,24 @@
         <ButtonUndo showIcon />
       </div>
     {/if}
+    <Button
+      bare
+      classList="flex-center"
+      onClick={() =>
+        ($userState.shareText =
+          "Farm the Gap: The strategy game and learning platform for feeding the future.")}
+    >
+      <Icon type="share" classList="text-lg text-secondary-2" />
+    </Button>
+    <Button
+      bare
+      target="_blank"
+      link="https://github.com/earthrise-media/farm-the-gap"
+      classList="flex-center"
+      onClick={() => ($userState.shareText = "Farm the Gap")}
+    >
+      <Icon type="github" classList="text-lg text-secondary-2" />
+    </Button>
     <Button bare color="secondary" onClick={() => ($userState.isMenuOpen = !$userState.isMenuOpen)}>
       <Icon classList="text-2xl" type={$userState.isMenuOpen ? "close" : "menu"} />
     </Button>

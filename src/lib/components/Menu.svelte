@@ -7,6 +7,7 @@
 
   import articles from "$lib/data/articles"
 
+  import Icon from "$lib/components/Icon.svelte"
   import Farm from "$lib/components/Farm.svelte"
   import Modal from "$lib/components/Modal.svelte"
   import ArticleMenu from "$lib/components/ArticleMenu.svelte"
