@@ -58,7 +58,7 @@
   id="farm-wrapper"
   bind:this={farmWrapperElement}
   use:pan={{ delay: 0 }}
-  use:pinch={{ delay: 0 }}
+  use:pinch
   on:pandown={(e) => {
     // if (e.detail.event.pointerType === "mouse") disableGestures = false
     // else disableGestures = false
@@ -196,16 +196,6 @@
   position: relative
   justify-content: center
   border-radius: var(--border-radius)
-  transform-origin: center
-  transform-style: preserve-3d
-  -webkit-transform-origin: center
-  -webkit-transform-style: preserve-3d
-
-  *, *::before, *::after
-    transform-origin: center
-    transform-style: preserve-3d
-    -webkit-transform-origin: center
-    -webkit-transform-style: preserve-3d
 
 #reset-transform-button
   position: absolute
@@ -241,6 +231,10 @@
   z-index: 1
   background: var(--color-primary-0)
   border: 1px solid var(--color-primary-0)
+  transform-origin: center
+  transform-style: preserve-3d
+  -webkit-transform-origin: center
+  -webkit-transform-style: preserve-3d
 
   .levitate &
     animation: levitate 1s ease-in-out infinite alternate
@@ -265,10 +259,10 @@
     background: var(--color-primary-0)
 
   &::after
-    width: calc(0.375rem)
+    width: 0.375rem
     height: 141.4213% // ~ sqrt(2)
     transform: rotateZ(-45deg) rotateY(-60deg) translate(calc(-0.375rem - 1px), 0)
-    transform-origin: top
+    transform-origin: top left
     -webkit-transform-origin: top left
 
   &::before
@@ -294,6 +288,7 @@
   user-select: none
   pointer-events: all
   transition: background 0.2s, transform 0.2s ease-out
+  z-index: 10
   
   &.swappable, &.unswappable
     cursor: none
@@ -309,6 +304,10 @@
   &.has-changed
     background: var(--color-tertiary-2)
     animation: flash 0.5s ease-in-out infinite alternate
+
+.food-item-fill,
+.food-item-image
+  pointer-events: none
 
 .food-item-fill
   position: absolute
