@@ -15,7 +15,10 @@
   yield.
 </p>
 
-<p>Today, we can produce the same amount of crops from a quarter of the land required in 1961:</p>
+<p>
+  Today, we are able to grow the same quantity of crops using only one-fourth of the land that was
+  needed in 1961:
+</p>
 
 <!-- <figure class="bg-primary-1 text-secondary-2"> -->
 <figure>
