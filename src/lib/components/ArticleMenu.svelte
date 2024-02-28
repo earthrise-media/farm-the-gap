@@ -5,6 +5,7 @@
 
   import articles from "$lib/data/articles"
 
+  export let wide = false
   export let tight = false
   export let color: "primary" | "secondary" | "error" = "primary"
   export let linkToGame = false
@@ -13,7 +14,13 @@
   export let maxItems = articles.length
 </script>
 
-<div id="article-menu-list" class="color-{color}" class:in-menu={isInsideMenu} class:tight>
+<div
+  id="article-menu-list"
+  class="color-{color}"
+  class:in-menu={isInsideMenu}
+  class:tight
+  class:wide
+>
   {#each articles
     .filter((a) => !showFeaturedOnly || a.featured)
     .slice(0, maxItems) as { title, slug }, i}
@@ -46,17 +53,19 @@
 @import "src/styles/vars/screens"
 
 #article-menu-list
-  display: flex
+  display: grid
   flex-wrap: wrap
   font-size: 1rem
   margin: 1rem auto 0
   overflow: hidden
   width: 750px
-  gap: 0.5rem
-  display: grid
   max-width: 100%
+  gap: 0.5rem
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
   gap: 1rem
+
+  &.wide
+    width: 100%
 
   &.in-menu
     display: grid

@@ -106,7 +106,6 @@
   height: 100%
 
   :global(p)
-    max-width: 525px
     margin: 0 auto 1em
     font-weight: bold
 

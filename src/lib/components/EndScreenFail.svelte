@@ -41,7 +41,7 @@
       : "Keep clicking for more about your game"}
 >
   {#if slideIndex === 0}
-    <Slide>
+    <Slide hasPagers>
       <div class="slide-0">
         <div class="slide-title-block flex align-center">
           <h2 class="slide-title text-left title text-error-3">
@@ -157,23 +157,23 @@
       </div>
     </Slide>
   {:else if slideIndex === 1}
-    <Slide>
+    <Slide hasPagers>
       <EndSlideYourFarm isFailed {foodsAdded} {foodsRemoved} {reset} />
     </Slide>
   {:else if slideIndex === 2}
-    <Slide>
-      <div class="slide-2">
+    <Slide hasPagers>
+      <div class="slide-2 flex-col align-center">
         <h2 class="slide-title title text-error-3">Learn more</h2>
+        <p>
+          This platform also features six micro-articles on food systems and the environment. Try
+          one below!
+        </p>
+        <ArticleMenu tight color="error" maxItems={isMobile ? 3 : undefined} />
+        <hr class="spacer" />
+        <Button color="error" classList="flex-center" onClick={reset}
+          >Play again&nbsp;<Icon type="undo" /></Button
+        >
       </div>
-      <p>
-        This platform also features six micro-articles on food systems and the environment. Try one
-        below!
-      </p>
-      <ArticleMenu tight color="error" maxItems={isMobile ? 3 : undefined} />
-      <hr class="spacer" />
-      <Button color="error" classList="flex-center" onClick={reset}
-        >Play again&nbsp;<Icon type="undo" /></Button
-      >
     </Slide>
   {/if}
 </Slides>
@@ -203,6 +203,10 @@
     gap: 0.5rem
   #summary
     margin-top: 1.5rem
+
+.slide-2
+  hr.spacer
+    margin: 1rem auto 0
 
 :global(#end-screen .cta-buttons)
   display: inline-flex

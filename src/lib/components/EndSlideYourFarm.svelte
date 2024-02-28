@@ -52,6 +52,8 @@
 </div>
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 .your-farm-slide-wrapper
   width: 100%
 
@@ -64,10 +66,11 @@
   margin-top: -6%
   margin-bottom: -16%
 
-.cta-buttons
-  padding-top: 1rem
-
 .end-slide-farm-container
   :global(.land-cell)
     font-size: 75%
+
+@media (max-width: $screen-sm)
+  .cta-buttons
+    padding-top: 1rem
 </style>

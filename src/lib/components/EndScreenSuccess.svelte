@@ -36,7 +36,7 @@
     : "Keep clicking for more about your game"}
 >
   {#if slideIndex === 0}
-    <Slide>
+    <Slide hasPagers>
       <div class="slide-0">
         <div class="slide-title-block flex-col align-center">
           <h2 class="title text-tertiary-1">You won!</h2>
@@ -92,21 +92,22 @@
       </div>
     </Slide>
   {:else if slideIndex === 1}
-    <Slide>
+    <Slide hasPagers>
       <EndSlideYourFarm {foodsAdded} {foodsRemoved} reset={() => slideIndex++} />
     </Slide>
   {:else if slideIndex === 2}
-    <Slide>
-      <div class="slide-2">
+    <Slide hasPagers>
+      <div class="slide-2 flex-col align-center">
         <h2 class="slide-title title">Learn more</h2>
+        <p>
+          This platform also features six micro-articles on food systems and the environment. Try
+          one below!
+        </p>
+        <ArticleMenu wide tight maxItems={isMobile ? 3 : undefined} />
+        <hr class="spacer" />
+        <Button classList="flex-center" onClick={reset}>Play again&nbsp;<Icon type="undo" /></Button
+        >
       </div>
-      <p>
-        This platform also features six micro-articles on food systems and the environment. Try one
-        below!
-      </p>
-      <ArticleMenu tight maxItems={isMobile ? 3 : undefined} />
-      <hr class="spacer" />
-      <Button classList="flex-center" onClick={reset}>Play again&nbsp;<Icon type="undo" /></Button>
     </Slide>
   {/if}
 </Slides>
@@ -130,5 +131,12 @@
 
 .food-icon
   animation: dance 0.75s infinite alternate ease-in-out
+
+.slide-2
+  position: relative
+  width: 100%
+
+  hr.spacer
+    margin: 1rem auto 0
 
 </style>
