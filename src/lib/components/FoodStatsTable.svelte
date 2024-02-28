@@ -258,7 +258,6 @@
   display: grid
   grid-template-columns: minmax(12ch, 12fr) minmax(9.75ch, 9.75fr) minmax(8.75ch, 8.75fr) minmax(11.25ch, 11.25fr) minmax(11ch, 11fr)
   font-size: 0.625rem
-  height: 100%
   cursor: pointer
   position: relative
   overflow: hidden

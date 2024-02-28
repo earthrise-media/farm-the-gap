@@ -87,7 +87,6 @@
   gap: 0.75em
   font-size: 0.625rem
   padding: 0.25em
-  height: 100%
   transition: filter 0.2s ease-in-out
   cursor: pointer
   position: relative
