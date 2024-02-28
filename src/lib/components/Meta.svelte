@@ -36,10 +36,10 @@
   <meta name="twitter:site" content="@the_plotline" />
 
   {#if image}
-    <meta name="image" property="og:image" content="{siteurl}{basepath}{image}" />
-    <meta name="twitter:image" content="{siteurl}{basepath}{image}" />
+    <meta name="image" property="og:image" content="{siteurl}{base}{image}" />
+    <meta name="twitter:image" content="{siteurl}{base}{image}" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta property="og:image" content="{siteurl}{basepath}{image}" />
+    <meta property="og:image" content="{siteurl}{base}{image}" />
   {/if}
 
   {#if description}
