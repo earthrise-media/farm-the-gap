@@ -40,6 +40,7 @@
     <Button
       bare
       classList="flex-center"
+      tooltip="Share"
       onClick={() =>
         ($userState.shareText =
           "Farm the Gap: The strategy game and learning platform for feeding the future.")}
@@ -49,6 +50,7 @@
     <Button
       bare
       target="_blank"
+      tooltip="Codebase"
       link="https://github.com/earthrise-media/farm-the-gap"
       classList="flex-center"
       onClick={() => ($userState.shareText = "Farm the Gap")}
