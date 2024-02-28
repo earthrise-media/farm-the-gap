@@ -7,7 +7,7 @@
     "The strategy game and learning platform for feeding the future."
 
   export let image: string | undefined = "/img/cover.png"
-  export let siteurl: string | undefined = "https://stories.theplotline.org"
+  export let siteurl: string | undefined = "https://stories.theplotline.org/farm-the-gap"
 
   const titleSuffix = `The Plotline`
 
@@ -36,10 +36,10 @@
   <meta name="twitter:site" content="@the_plotline" />
 
   {#if image}
-    <meta name="image" property="og:image" content="{siteurl}{base}{image}" />
-    <meta name="twitter:image" content="{siteurl}{base}{image}" />
+    <meta name="image" property="og:image" content="{siteurl}{basepath}{image}" />
+    <meta name="twitter:image" content="{siteurl}{basepath}{image}" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta property="og:image" content="{siteurl}{base}{image}" />
+    <meta property="og:image" content="{siteurl}{basepath}{image}" />
   {/if}
 
   {#if description}
