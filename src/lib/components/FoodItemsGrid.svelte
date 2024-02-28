@@ -12,7 +12,7 @@
 
 <div class="food-items-grid">
   <h3 class="block-title">
-    <span>🥇 Your farm's top foods by</span>
+    <span>Your farm's top foods by</span>
     <Select
       id="top-foods-select-key"
       name="top-foods-select-key"

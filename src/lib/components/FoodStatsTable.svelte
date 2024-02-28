@@ -138,7 +138,7 @@
   class:mobile-hidden={!$userState.isMobileTablesOpen}
 >
   <h3 class="block-title flex align-center">
-    🥫 Food output data
+    Food output data
     <sup class="label" data-tooltip-title="Sources" data-tooltip="Our World in Data; USDA.">ⓘ</sup>
   </h3>
   <div class="measure-buttons label-caps flex align-center">
