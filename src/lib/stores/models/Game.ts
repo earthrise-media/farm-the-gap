@@ -10,7 +10,6 @@ export class GameSettings {
 }
 
 export class UserState {
-  showAboutPage: boolean = false
   hasBeenWelcomed: boolean = false
   itemInspecting: Food | null = null
   itemHighlighted: Food | null = null

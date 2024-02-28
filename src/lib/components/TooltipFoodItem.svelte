@@ -10,13 +10,17 @@
   const coords = spring(
     { x: 0, y: 0 },
     {
-      stiffness: 0.1,
-      damping: 0.7
+      stiffness: 0.14,
+      damping: 0.6
     }
   )
 
   const move = (e: InteractionEvent) => {
-    if (!active) return
+    document.body.style.cursor = "none"
+    if (!active) {
+      document.body.style.cursor = "initial"
+      return
+    }
 
     let x = 0
     let y = 0
@@ -36,8 +40,20 @@
 
   onMount(() => {
     // Todo: implement global pointer tracking and import coords into components
-    document.addEventListener("mousemove", move, true)
-    document.addEventListener("click", (e) => setTimeout(() => move(e), 5), true)
+    document.addEventListener("pointermove", move, true)
+    document.addEventListener("touchstart", move, true)
+    document.addEventListener(
+      "click",
+      (e) => {
+        setTimeout(() => move(e), 5)
+
+        if (e.target instanceof HTMLElement && e.target.closest(".swappable")) {
+          active = null
+          setTimeout(() => (active = $userState.itemSelectedForSwap), 250)
+        }
+      },
+      true
+    )
   })
 
   $: active = $userState.itemSelectedForSwap
@@ -47,7 +63,7 @@
 
 <div id="tooltip-food-item" style="left: {$coords.x}px; top: {$coords.y}px">
   {#if active}
-    <div id="tooltip-food-item-body" transition:fade>
+    <div id="tooltip-food-item-body" in:fade={{ duration: 140 }} out:fade={{ duration: 70 }}>
       {#if active.image}
         <img src="{base}/{active.image}" alt={active.name} />
       {:else}
@@ -71,6 +87,7 @@
   font-weight: 500
   text-align: center
   font-size: 1.25rem
+  font-size: 1.5rem
   text-shadow: 0 0 0.5rem #0008
   transform: translate(-50%, calc(-50% - 0.25rem))
   transition: transform 0.3s

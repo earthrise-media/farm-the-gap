@@ -1,10 +1,11 @@
 <script lang="ts">
+  import { base } from "$app/paths"
   import { flip } from "svelte/animate"
   import { quintInOut as easing } from "svelte/easing"
 
   import { foodItems } from "$lib/data/foods"
-  import { gameState, userState } from "$lib/stores/state"
   import { largeNumber } from "$lib/utils/written"
+  import { gameState, userState } from "$lib/stores/state"
 
   import Icon from "$lib/components/Icon.svelte"
   import Button from "$lib/components/Button.svelte"
@@ -34,7 +35,7 @@
 
   const getCaveat = (food: Food, key: keyof Food) => {
     if (food.name === "Rice" && key === "waterPerKg")
-      return "Rice water usage is discounted 50% due to freshwater abundance in growing regions."
+      return "Rice water usage is discounted 25% due to freshwater abundance in growing regions."
 
     return undefined
   }
@@ -108,7 +109,7 @@
     },
     {
       key: "waterPerKg",
-      label: "Water",
+      label: "Water use",
       hectare: {
         value: (f: Food) => largeNumber(impactPerHectare(f, f.waterPerKg)),
         sort: (a: Food, b: Food) =>
@@ -117,20 +118,6 @@
       calorie: {
         value: (f: Food) => ((1000 * f.waterPerKg) / f.calorieRatio).toFixed(0),
         sort: (a: Food, b: Food) => b.waterPerKg / b.calorieRatio - a.waterPerKg / a.calorieRatio
-      }
-    },
-    {
-      key: "eutrophyPerKg",
-      label: "Eutrophy",
-      hectare: {
-        value: (f: Food) => largeNumber(impactPerHectare(f, f.eutrophyPerKg)),
-        sort: (a: Food, b: Food) =>
-          impactPerHectare(b, b.eutrophyPerKg) - impactPerHectare(a, a.eutrophyPerKg)
-      },
-      calorie: {
-        value: (f: Food) => ((1000 * f.eutrophyPerKg) / f.calorieRatio).toFixed(0),
-        sort: (a: Food, b: Food) =>
-          b.eutrophyPerKg / b.calorieRatio - a.eutrophyPerKg / a.calorieRatio
       }
     }
   ]
@@ -151,7 +138,7 @@
   class:mobile-hidden={!$userState.isMobileTablesOpen}
 >
   <h3 class="block-title flex align-center">
-    🥫 Food output data
+    Food output data
     <sup class="label" data-tooltip-title="Sources" data-tooltip="Our World in Data; USDA.">ⓘ</sup>
   </h3>
   <div class="measure-buttons label-caps flex align-center">
@@ -194,7 +181,7 @@
             color="secondary"
             active={sortFunction === column[currentMeasure.key].sort}
           >
-            {column.label}
+            {@html column.label}
             <Icon
               type={sortedColumnIndex === i
                 ? sortedColumnDescending
@@ -219,7 +206,13 @@
         tabindex="-1"
       >
         <div class="td name">
-          <div class="food-item-avatar flex-center bg-{f.colorId}" />
+          <div class="food-item-avatar flex-center">
+            {#if f.image}
+              <img width="100%" src="{base}/{f.image}" alt={f.name} />
+            {:else}
+              {f.emoji}
+            {/if}
+          </div>
           <strong>{f.name}</strong>
         </div>
         {#each data.slice(1) as column}
@@ -263,9 +256,8 @@
 
 .food-card
   display: grid
-  grid-template-columns: minmax(12ch, 1fr) minmax(10.5ch, 1fr) minmax(9.5ch, 1fr) minmax(12ch, 1fr) minmax(8ch, 1fr) minmax(11ch, 1fr)
+  grid-template-columns: minmax(12ch, 12fr) minmax(9.75ch, 9.75fr) minmax(8.75ch, 8.75fr) minmax(11.25ch, 11.25fr) minmax(11ch, 11fr)
   font-size: 0.625rem
-  height: 100%
   cursor: pointer
   position: relative
   overflow: hidden
@@ -323,18 +315,15 @@
     &.active
       color: var(--color-secondary-1)
 
-@media (max-width: 1380px)
-  // hide eutrophy column
-  .food-card
-    grid-template-columns: minmax(12ch, 1fr) minmax(10.5ch, 1fr) minmax(9.5ch, 1fr) minmax(12ch, 1fr) minmax(8ch, 1fr)
+  .td
+    font-size: 0.625rem
 
-    .td,.th
-      &:nth-child(6)
-        display: none
+@media (max-width: 1360px) and (min-width: $screen-sm)
+  .food-items-grid-body
+    margin: 0 -0.5rem
 
-@media (max-width: 1120px)
   .food-card
-    grid-template-columns: repeat(4, 1fr) 0.75fr
+    grid-template-columns: minmax(11ch, 11fr) minmax(8ch, 8fr) minmax(7ch, 7fr) minmax(9ch, 9fr) minmax(8.5ch, 8.5fr)
 
 @media (max-width: $screen-sm)
   .food-items-grid

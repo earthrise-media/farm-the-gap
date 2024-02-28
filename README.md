@@ -1,6 +1,6 @@
-# Protein Explorer
+# Farm the Gap
 
-Repo for the protein explorer project from the Plotline.
+Repo for the Farm the Gap project from the Plotline.
 
 ## Developing
 

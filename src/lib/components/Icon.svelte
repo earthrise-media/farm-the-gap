@@ -4,6 +4,7 @@
   export let type: IconName = "default"
   export let stroke = false
   export let classList = ""
+  export let fillRule: "evenodd" | "nonzero" = "nonzero"
   export let onClick: () => void = () => {}
 
   const viewBox = "0 0 24 24"
@@ -17,6 +18,7 @@
   class="icon icon-{type} {classList}"
   role="button"
   tabindex="-1"
+  fill-rule={fillRule}
   on:click={onClick}
   on:keydown={(e) => {
     if (e.key === "Enter") onClick()

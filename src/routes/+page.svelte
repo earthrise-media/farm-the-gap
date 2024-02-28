@@ -1,27 +1,27 @@
 <script lang="ts">
+  import { dev } from "$app/environment"
   import { userState } from "$lib/stores/state"
 
+  import Meta from "$lib/components/Meta.svelte"
   import Dock from "$lib/components/Dock.svelte"
   import Farm from "$lib/components/Farm.svelte"
-  import Button from "$lib/components/Button.svelte"
+  import Toast from "$lib/components/Toast.svelte"
+  import Header from "$lib/components/Header.svelte"
+  import Tooltip from "$lib/components/Tooltip.svelte"
   import FoodMenu from "$lib/components/FoodMenu.svelte"
+  import EndScreen from "$lib/components/EndScreen.svelte"
   import MobileMenu from "$lib/components/MobileMenu.svelte"
-  import BlockImpact from "$lib/components/BlockImpact.svelte"
-  import FoodStatsTable from "$lib/components/FoodStatsTable.svelte"
+  import WelcomeScreen from "$lib/components/WelcomeScreen.svelte"
   import FoodItemsGrid from "$lib/components/FoodItemsGrid.svelte"
   import BlockGameState from "$lib/components/BlockGameState.svelte"
-  import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
-  import WelcomeScreen from "$lib/components/WelcomeScreen.svelte"
-  import EndScreen from "$lib/components/EndScreen.svelte"
-  import Tooltip from "$lib/components/Tooltip.svelte"
-  import Toast from "$lib/components/Toast.svelte"
-  import Modal from "$lib/components/Modal.svelte"
-  import FoodChangesTable from "$lib/components/FoodChangesTable.svelte"
+  import FoodStatsTable from "$lib/components/FoodStatsTable.svelte"
   import TooltipFoodItem from "$lib/components/TooltipFoodItem.svelte"
-  import Header from "$lib/components/Header.svelte"
-  import { foodItems } from "$lib/data/foods"
-  import { dev } from "$app/environment"
+  import ModalOrientation from "$lib/components/ModalOrientation.svelte"
+  import FoodInformationCard from "$lib/components/FoodInformationCard.svelte"
 </script>
+
+<Meta />
+<ModalOrientation />
 
 <main class:food-item-selected={$userState.itemSelectedForSwap}>
   <Header />
@@ -51,7 +51,7 @@
 
   <TooltipFoodItem />
 
-  {#if !dev}
+  {#if true || !dev}
     <WelcomeScreen />
     <EndScreen />
     <Toast />
@@ -65,8 +65,8 @@ main
   height: 100vh
   height: 100svh
   display: grid
-  gap: 0.75rem 0.25rem
-  padding: 0.75rem
+  gap: 0.5rem 0.25rem
+  padding: 0.5rem 0.75rem 0.75rem
   grid-template-rows: auto 1fr
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)
   grid-template-areas: "header header" "data game"
@@ -81,7 +81,7 @@ main
   grid-area: game
   background: var(--color-primary-2)
   border-radius: var(--border-radius)
-  padding: 0 1rem
+  padding: 0
   grid-template-rows: auto 1fr
 
 .panel-farm
@@ -118,6 +118,6 @@ main
     padding-left: 0.75rem
 
   .panel-data
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr)
+    grid-template-columns: 4rem minmax(0, 2.5fr)
 
 </style>

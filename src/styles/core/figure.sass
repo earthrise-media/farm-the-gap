@@ -3,12 +3,27 @@ figure
   background: var(--color-secondary-2)
   border-radius: var(--border-radius)
 
-  + p
+  &.figure-wide
+    margin-left: -4rem
+    margin-right: -4rem
+
+  + p, + h2, + h3
     margin-top: 2.5em
 
 .figure-title
-  line-height: 1.25
+  line-height: 1.2
+  font-size: 1.675rem
+  font-weight: bold
+  margin-bottom: 0.4em
 
 .figure-subtitle
   font-size: 1rem
   margin-top: -0.25rem
+  margin-bottom: 1rem
+
+figcaption
+  margin-top: 1.5rem
+
+// Shown overrides
+.shown .chart-pie-svg
+  width: 100%!important

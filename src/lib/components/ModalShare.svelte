@@ -1,41 +1,51 @@
 <script lang="ts">
+  import { page } from "$app/stores"
   import { userState } from "$lib/stores/state"
 
+  import Icon from "$lib/components/Icon.svelte"
   import Modal from "$lib/components/Modal.svelte"
-  import Button from "$lib/components/Button.svelte"
 
   const platforms = [
     {
       name: "Twitter",
-      url: "https://twitter.com/intent/tweet?text=",
+      href: "https://twitter.com/intent/tweet?url={{url}}&text={{text}}",
       icon: "twitter",
-      color: "#1DA1F2"
+      color: "#141414"
     },
     {
       name: "Facebook",
-      url: "https://www.facebook.com/sharer/sharer.php?u=",
+      href: "https://www.facebook.com/sharer/sharer.php?u={{url}}",
       icon: "facebook",
       color: "#4267B2"
     },
     {
       name: "LinkedIn",
-      url: "https://www.linkedin.com/shareArticle?mini=true&url=",
+      href: "https://www.linkedin.com/sharing/share-offsite/?url={{url}}",
       icon: "linkedin",
       color: "#0077B5"
     },
     {
       name: "Reddit",
-      url: "https://reddit.com/submit?url=",
+      href: "https://reddit.com/submit?url={{url}}&title={{text}}",
       icon: "reddit",
       color: "#FF4500"
     },
     {
+      name: "Whatsapp",
+      href: `https://wa.me/?text={{text}} {{url}}`,
+      icon: "whatsapp",
+      color: "#25d366"
+    },
+    {
       name: "Email",
-      url: "mailto:?subject=The%20Plotline&body=",
+      href: "mailto:?subject=Check this out&body={{text}} {{url}}",
       icon: "mail",
-      color: "#000"
+      color: "#141414"
     }
   ]
+
+  $: url = "https://earthrise-media.github.io/farm-the-gap/" || $page.url.pathname
+  $: text = encodeURIComponent($userState.shareText)
 </script>
 
 {#if $userState.shareText}
@@ -49,17 +59,21 @@
     <div slot="title">Share</div>
     <p>{$userState.shareText}</p>
     <div class="buttons">
-      {#each platforms as { name, url, icon, color }}
+      {#each platforms as { name, href, icon, color, mobileOnly }}
         <a
           class="button-share"
-          href="{url}{$userState.shareText}"
+          href={href.replace("{{url}}", url).replace("{{text}}", text)}
           target="_blank"
           rel="noopener noreferrer"
           style="background-color: {color}"
           data-tooltip={name}
+          class:mobile-only={mobileOnly}
         >
-          <i class="icon icon-{icon}" />
-          {name.slice(0, 1)}
+          {#if icon}
+            <Icon classList="text-xl" type={icon} fillRule="evenodd" />
+          {:else}
+            {name.slice(0, 1)}
+          {/if}
         </a>
       {/each}
     </div>
@@ -67,21 +81,28 @@
 {/if}
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 .buttons
   display: flex
   justify-content: center
-  gap: 1em
+  gap: 0.75em
   color: var(--color-secondary-1)
   font-weight: bold
+  flex-grow: 1
 
 .button-share
-  padding: 1em
+  padding: 0
   text-decoration: none
   display: flex
   align-items: center
   justify-content: center
   border-radius: 50rem
-  height: 2em
-  width: 2em
+  height: 2.5rem
+  width: 2.5rem
+
+  &.mobile-only
+    @media (min-width: calc($screen-sm + 1px))
+      display: none
 
 </style>

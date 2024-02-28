@@ -31,7 +31,7 @@ export const guide: Toast[] = [
     type: "guide",
     title: "Your food inventory",
     // prettier-ignore
-    message: `<p>These are the foods available to you. Close the food gap by swapping these with the foods on your global farm grid.</p><p>To maintain nutritional and market balance, you only have ${avatar(1,"3")} of each item to use. You must keep at least one of each item on the farm at all times.</p>`,
+    message: `<p>These are the foods available to you. Close the food gap by swapping these with the foods on your global farm grid.</p><p>To maintain nutritional and market balance, you only have ${avatar(1,"4")} of each item to use. You must keep at least one of each item on the farm at all times.</p>`,
     button: "Next",
     target: "#food-menu-wrapper",
     next: 2
@@ -58,7 +58,19 @@ export const guide: Toast[] = [
     button: "Next",
     next: 4,
     mobilePosition: "bottom right",
-    target: ".food-items-grid"
+    target: ".food-items-grid",
+    onEnter: () => {
+      userState.update(($u) => {
+        $u.isMobileTablesOpen = true
+        return $u
+      })
+    },
+    onDismiss: () => {
+      userState.update(($u) => {
+        $u.isMobileTablesOpen = false
+        return $u
+      })
+    }
   },
   {
     id: 4,
@@ -66,7 +78,7 @@ export const guide: Toast[] = [
     type: "guide",
     title: "Make your first move",
     // prettier-ignore
-    message: `<p>You're ready to get started!</p><p>Click <span class="bg-primary-2 inline-flex align-center bold">${avatar(6,"","plant")}&nbsp;Corn</span> from your food inventory and replace it with <span class="bg-primary-2 inline-flex align-center bold">${avatar(2)}&nbsp;Lamb</span> on the farm grid.</p><p>Then watch how your key metrics change.</p>`,
+    message: `<p>You're ready to get started!</p><p>Click <span class="bold">🌽&nbsp;Corn</span> in your food inventory and replace it with <span class="bold">🐏&nbsp;Lamb</span> on the farm grid.</p><p>Then watch how your key metrics change.</p>`,
     next: 5,
     target: "#food-menu-wrapper [data-food-name='Corn']",
     task: ({ userState }) => userState.itemSelectedForSwap?.name === "Corn",
@@ -81,7 +93,7 @@ export const guide: Toast[] = [
     type: "guide",
     title: "Finish your move",
     // prettier-ignore
-    message: `Corn is selected. Now click on a <span class="bg-primary-2 inline-flex align-center bold">${avatar(2)}&nbsp;Lamb</span> cell on the farm grid to complete the swap.`,
+    message: `Corn is selected. Now click on a <span class="bold">🐏&nbsp;Lamb</span> cell on the farm grid to complete the swap.`,
     next: 6,
     target: "#land-grid",
     task: ({ gameState }) => gameState.year.current > gameState.year.start,

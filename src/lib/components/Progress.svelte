@@ -13,6 +13,7 @@
   export let min = 0
   export let max = isPercent ? 1 : 100
   export let errorBars: [number, number] | [] = []
+  export let valuePrecision = 0
 
   export let delay = 0
   export let duration = 400
@@ -44,7 +45,7 @@
     >
       {#if showValue}
         <div class="progress-bar-value-label" class:visible={$width > 10}>
-          <Number {value} {delay} {duration} {easing} {isPercent} />
+          <Number {value} {delay} {duration} {easing} {isPercent} precision={valuePrecision} />
         </div>
       {/if}
     </div>

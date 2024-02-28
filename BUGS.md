@@ -1,2 +1,0 @@
-- Guide target square isn't responsive to screen resizing
--

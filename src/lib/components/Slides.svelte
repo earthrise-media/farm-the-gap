@@ -30,7 +30,9 @@
 
 {#if showPagers}
   <div transition:fade class="pager-wrap">
-    <div class="label text-secondary-1">{pagersText}</div>
+    {#if pagersText}
+      <div transition:fade class="label text-secondary-1">{pagersText}</div>
+    {/if}
     <div class="pagers">
       {#each slides as s, i}
         <button
@@ -44,6 +46,8 @@
 {/if}
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 .slide-wrap
   position: relative
   flex-grow: 1
@@ -75,6 +79,7 @@
   width: 1em
   height: 1em
   cursor: pointer
+  padding: 0
   border-radius: 1em
   border: none
   transition: background 0.2s ease-in-out
@@ -82,5 +87,9 @@
 
   &.active
     background: var(--color-primary-3)
+
+@media (max-width: $screen-sm)
+  .pager-wrap
+    bottom: 1rem
 
 </style>

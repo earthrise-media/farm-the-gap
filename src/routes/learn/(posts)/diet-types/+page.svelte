@@ -6,9 +6,9 @@
 
 <p>
   Ruminant meats (beef, sheep and goat) are by far the most resource-intensive foods. Per gram of
-  protein, ruminant meats require 18-20 times more land and generate 3-8 times more greenhouse gas
-  emissions than pork and poultry. When compared to beans, lentils, and other plant-based proteins,
-  they perform even worse.
+  protein, ruminant meats require roughly 20 times more land and generate up to 10 times more
+  greenhouse gas emissions than pork and poultry. When compared to beans, lentils, and other
+  plant-based proteins, they perform even worse.
 </p>
 
 <p>
@@ -24,7 +24,7 @@
   impact will be comparable to going vegan alone.
 </p>
 
-<figure id="diets-by-emissions" class="flex-col">
+<figure id="diets-by-emissions">
   <div>
     <h2 class="figure-title text-xl">
       Demand-side greenhouse gas mitigation potential of different diets
@@ -33,21 +33,23 @@
       Measured in gigatonnes of CO<sub>2</sub> equivalents (GtCO<sub>2</sub>-eq) mitigated per year.
     </h4>
   </div>
-  {#each dietsByEmissions as diet, i}
-    <div class="diet-item flex-col">
-      <div class="bold">{diet.label}</div>
-      <div class="label">{diet.summary}</div>
-      <div class="progress-bar text-base">
-        <Progress
-          value={diet.value}
-          max={8}
-          showLabels={!i}
-          errorBars={diet.error}
-          showValue={false}
-        />
+  <div class="diet-items flex-col">
+    {#each dietsByEmissions as diet, i}
+      <div class="diet-item flex-col">
+        <div class="bold">{diet.label}</div>
+        <div class="label">{diet.summary}</div>
+        <div class="progress-bar">
+          <Progress
+            value={diet.value}
+            max={8}
+            showLabels={!i}
+            errorBars={diet.error}
+            showValue={false}
+          />
+        </div>
       </div>
-    </div>
-  {/each}
+    {/each}
+  </div>
   <figcaption class="label">
     Adapted from the IPCC’s <a
       href="https://www.ipcc.ch/srccl/chapter/chapter-5/5-5-mitigation-options-challenges-and-opportunities/5-5-2-demand-side-mitigation-options/5-5-2-1-mitigation-potential-of-different-diets/figure-5-12/"
@@ -59,11 +61,9 @@
 
 <p>
   The <em>World Resources Institute</em> found a similar result: capping protein for the entire
-  population at 60g per day would have a greater environmental impact than a quarter of that
+  population at 60g per day would have a greater environmental impact than a quarter of the
   population going fully vegetarian.<sup
-    ><a
-      target="_blank"
-      href="https://files.wri.org/d8/s3fs-public/Shifting_Diets_for_a_Sustainable_Food_Future_1.pdf"
+    ><a target="_blank" href="https://www.wri.org/research/shifting-diets-sustainable-food-future"
       >1</a
     ></sup
   >
@@ -86,9 +86,10 @@
 
 <style lang="sass">
   #diets-by-emissions
-    gap: 1rem
+    .diet-items
+      gap: 1rem
 
     .progress-bar
-      font-size: 0.75rem
+      font-size: 0.875rem
       margin-top: 0.25rem
 </style>

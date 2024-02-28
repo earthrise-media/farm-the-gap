@@ -1,50 +1,32 @@
 [
   {
-    "title": "Planet of the plates",
-    "slug": "overview",
-    "description": "Why do foods have different ‘foodprints’?",
-    "lede": "Your dining choices hold surprising power. Everyday meals make a global difference through the resources they demand."
+    "slug": "foodprints",
+    "title": "What makes up a food’s footprint?",
+    "lede": "A food footprint is comprised of land use, water use, water pollution, and greenhouse gas emissions. In this article, we break down those hidden costs across six major protein sources."
   },
   {
-    "title": "Vegans and climate carnivores",
     "slug": "diet-types",
-    "description": "DONE: Which diets are best for the planet?",
+    "title": "Which diets are best for the planet?",
     "lede": "Ultimately, the best diet for the planet is fueled by the collective. Small changes you make can be multiplied by the masses."
   },
   {
-    "title": "The 50% food gap",
     "slug": "food-gap",
-    "description": "Why do we need to increase food production by 50% by 2060?",
-    "lede": "A looming population boom combined with shifting dietary trends towards resource-intensive foods puts massive pressure on our planet's ability to feed itself in the decades to come."
+    "title": "Why do we need to increase food production by 50%?",
+    "lede": "Population growth combined with shifting trends towards resource-intensive diets will put massive pressure on our planet's ability to feed us in the decades to come."
   },
   {
-    "title": "Country foodprints",
-    "slug": "country-foodprints",
-    "description": "Which high-consuming countries have the greatest potential for change?",
-    "lede": "Not all nations eat equally. Data reveals the wide disparity in diet-related resource use – some can change more than others."
+    "slug": "strategies",
+    "title": "What strategies can help close the food gap?",
+    "lede": "A truly sustainable future needs both smarter yields and smarter consumption."
   },
   {
-    "title": "Grasslands and red meat reduction",
-    "slug": "grasslands-red-meat",
-    "description": "Would reducing beef consumption result in wasted grazing lands?",
-    "lede": "Reduced red meat demand won't suddenly empty grazing lands or upend livelihoods. However, it could free up croplands currently used for animal feed and mitigate future deforestation."
+    "slug": "countries",
+    "title": "Which countries have the greatest potential for change?",
+    "lede": "Not all nations eat equally. Data reveals a wide disparity in diet-related resource use, indicating that some countries can change more than others."
   },
   {
-    "title": "The role of increased productivity",
-    "slug": "productivity",
-    "description": "Can better agricultural technology help close the food gap?",
-    "lede": "Increased production is vital, but technology doesn't exist in a vacuum. A truly sustainable future needs both smarter yields and smarter consumption."
-  },
-  {
-    "title": "Don't have a cow, man",
-    "slug": "one-change",
-    "description": "What is the single most impactful dietary shift?",
-    "lede": "Reducing your red meat consumption has an outsized impact on your individual food footprints...and is dead simple to implement."
-  },
-  {
-    "title": "Further reading",
     "slug": "further-reading",
-    "description": "Links to more articles, reports and datasets.",
-    "lede": "For those who want to dig deeper into the data and research behind the food and climate change connection."
+    "title": "Further reading",
+    "lede": "Links to more articles, reports and datasets for those who want to dig deeper into food and the environment."
   }
 ]

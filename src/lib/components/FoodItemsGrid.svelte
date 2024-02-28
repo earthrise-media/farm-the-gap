@@ -1,12 +1,6 @@
 <script lang="ts">
-  import { flip } from "svelte/animate"
-  import { fade } from "svelte/transition"
-  import { quintInOut as easing } from "svelte/easing"
-
   import { farm, userState } from "$lib/stores/state"
 
-  import Button from "$lib/components/Button.svelte"
-  import Number from "$lib/components/Number.svelte"
   import Select from "./Select.svelte"
 
   let sortKey: FarmMetricKey = "yield"
@@ -18,7 +12,7 @@
 
 <div class="food-items-grid">
   <h3 class="block-title">
-    <span>🥇 Your farm's top foods by</span>
+    <span>Your farm's top foods by</span>
     <Select
       id="top-foods-select-key"
       name="top-foods-select-key"
@@ -36,7 +30,6 @@
           class:is-highlighted={$userState.itemHighlighted?.id === food.id}
           on:mouseenter={() => ($userState.itemHighlighted = food)}
           on:mouseleave={() => ($userState.itemHighlighted = null)}
-          on:click={() => ($userState.itemInspecting = food)}
           on:keydown={(e) => {
             if (e.key === "Enter") $userState.itemInspecting = food
           }}
@@ -94,7 +87,6 @@
   gap: 0.75em
   font-size: 0.625rem
   padding: 0.25em
-  height: 100%
   transition: filter 0.2s ease-in-out
   cursor: pointer
   position: relative

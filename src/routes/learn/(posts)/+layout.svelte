@@ -1,14 +1,17 @@
 <script lang="ts">
+  import "shown/src/css/shown.css"
+
+  import Meta from "$lib/components/Meta.svelte"
+  import Tooltip from "$lib/components/Tooltip.svelte"
   import ArticleMenu from "$lib/components/ArticleMenu.svelte"
 
   export let data
 
-  $: ({ title, description, lede } = data.post)
+  $: ({ title, lede } = data.post)
 </script>
 
 <section class="article-hero">
-  <h1 class="description">{title}</h1>
-  <h1 class="title">{description}</h1>
+  <h1 class="title">{title}</h1>
 </section>
 
 <article>
@@ -23,8 +26,11 @@
   <div class="article-footer-subtitle bold text-tertiary-1">
     8 micro-articles on food and the environment.
   </div>
-  <ArticleMenu />
+  <ArticleMenu linkToGame />
 </section>
+
+<Tooltip />
+<Meta {title} description={lede} />
 
 <style lang="sass">
 

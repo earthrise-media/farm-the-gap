@@ -16,18 +16,19 @@
 
 <style lang="sass">
 select
-  background: inherit
   color: inherit
-  border-color: currentColor
+  background: inherit
+  background-color: var(--color-primary-2)
+  border-color: transparent
   border-radius: 1em
-  padding: 0 0 0 0.125em
+  padding: 0 0.125em 0 0.25em
   white-space: nowrap
-  font-size: 0.75em
+  font-size: 0.875em
   font-weight: inherit
+  cursor: pointer
 
   &:focus
     outline: none
     border-color: var(--color-tertiary-1)
-    
 
 </style>

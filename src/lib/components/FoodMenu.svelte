@@ -24,7 +24,10 @@
 <svelte:window
   bind:innerWidth={vw}
   bind:innerHeight={vh}
-  on:click={() => ($userState.itemSelectedForSwap = null)}
+  on:click={(e) => {
+    if (e.target instanceof HTMLElement && e.target.closest("#land-grid")) return
+    $userState.itemSelectedForSwap = null
+  }}
 />
 
 <Scroller gradient={vw < 900 && vh < 600}>
@@ -77,6 +80,7 @@
   grid-gap: 1.5rem
   margin-top: 1rem
   align-items: start
+  padding: 0 0.75rem
 
 .group-animal,
 .group-plant

@@ -1,19 +1,22 @@
 <script lang="ts">
+  import { onMount } from "svelte"
+
   import {
+    farm,
     userState,
     gameState,
-    successMetrics,
+    gameHistory,
     sparklineData,
-    farm,
-    gameHistory
+    successMetrics
   } from "$lib/stores/state"
 
+  import Icon from "$lib/components/Icon.svelte"
   import Modal from "$lib/components/Modal.svelte"
-  import Button from "$lib/components/Button.svelte"
+  import ModalUndo from "$lib/components/ModalUndo.svelte"
   import EndScreenFail from "$lib/components/EndScreenFail.svelte"
   import EndScreenSuccess from "$lib/components/EndScreenSuccess.svelte"
-  import ModalUndo from "./ModalUndo.svelte"
 
+  let isMobile = false
   let slideIndex = 0
 
   let exhaustedTurns: boolean = false
@@ -30,6 +33,12 @@
     $gameHistory = $gameHistory
   }
 
+  const onResize = () => {
+    isMobile = window.innerWidth <= 900
+  }
+
+  onMount(onResize)
+
   $: $userState.isGameComplete = $successMetrics.hasSucceeded || $successMetrics.hasFailed
   $: exhaustedTurns = $gameState.year.current >= $gameState.year.end
   $: {
@@ -40,7 +49,7 @@
     }
   }
   $: {
-    if ($userState.isGameComplete && $gameState.undosRemaining <= 0) {
+    if ($userState.isGameComplete) {
       $userState.itemInspecting = null
       $userState.itemHighlighted = null
       $userState.itemSelectedForSwap = null
@@ -48,6 +57,8 @@
     }
   }
 </script>
+
+<svelte:window on:resize={onResize} />
 
 {#if $userState.isGameComplete}
   {#if $successMetrics.hasFailed && failedMetric && $gameState.undosRemaining > 0}
@@ -63,10 +74,22 @@
         class="end-wrapper slide-{slideIndex}"
         class:is-failed={$successMetrics.hasFailed && (exhaustedTurns || failedMetric)}
       >
+        {#if $userState.isGameComplete && isMobile}
+          <div
+            id="mobile-rotate"
+            class:bg-error-1={$successMetrics.hasFailed}
+            class="flex-center bg-primary-0"
+          >
+            <div class="flex-col align-center">
+              <h2 class="text-xl">Please rotate back to portrait<br />to view your results.</h2>
+              <Icon type="rotate-phone-portrait" classList="title" />
+            </div>
+          </div>
+        {/if}
         {#if $successMetrics.hasSucceeded}
-          <EndScreenSuccess {reset} />
+          <EndScreenSuccess {isMobile} {reset} />
         {:else if $successMetrics.hasFailed && (exhaustedTurns || failedMetric)}
-          <EndScreenFail {exhaustedTurns} {failedMetric} {reset} />
+          <EndScreenFail {isMobile} {exhaustedTurns} {failedMetric} {reset} />
         {:else}
           <p>An error has occurred.</p>
         {/if}
@@ -76,7 +99,37 @@
 {/if}
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 .end-wrapper
   display: flex
   height: 100%
+
+  :global(p)
+    margin: 0 auto 1em
+    font-weight: bold
+
+#mobile-rotate
+  display: none
+
+@media (max-width: $screen-sm)
+  .slide-0
+    .slide-title
+      font-size: 2.25rem
+
+  #mobile-rotate
+    display: flex
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 100
+    opacity: 0.95
+    line-height: 1.3
+
+  @media (orientation: portrait)
+    #mobile-rotate
+      display: none
+
 </style>

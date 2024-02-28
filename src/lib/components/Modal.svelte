@@ -42,7 +42,7 @@
   on:click={close}
   on:keydown={handleKeydown}
   in:fade|global={{ duration: durationIn }}
-  out:fade|global={{ duration: durationOut }}
+  out:fade={{ duration: durationOut }}
 >
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <div
@@ -91,10 +91,10 @@ $radius: 1rem
     background: var(--color-primary-0)
 
     &.error
-      background: var(--color-error-0)
+      background: var(--color-error-1)
 
   &.show-header
-    margin: 3.75rem 0.5rem 0.5rem
+    margin: 3.25rem 0.5rem 0.5rem
     background: var(--color-primary-2)
     border-radius: var(--border-radius)
 
@@ -106,7 +106,6 @@ $radius: 1rem
   width: 550px
   max-width: 95vw
   height: auto
-  min-height: 200px
   max-height: 80vh
   max-height: 80svh
   padding: $padding
@@ -149,7 +148,8 @@ $radius: 1rem
 
 @media (max-width: $screen-sm)
   .modal-screen
-    &.show-header
-      margin: 0.5rem 0.5rem 0.5rem 4.25rem
+    @media (orientation: landscape)
+      &.show-header
+        margin: 0.5rem 0.75rem 0.75rem 4.25rem
 
 </style>

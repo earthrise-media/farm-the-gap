@@ -13,7 +13,6 @@
   import { activeToastId, activeTipId } from "$lib/stores/toast"
 
   import { toasts } from "$lib/data/toasts"
-  import { dev } from "$app/environment"
 
   import type { Toast, CallBackProps } from "$lib/data/toasts/types"
 
@@ -25,6 +24,10 @@
     mounted = true
     document.addEventListener("click", (e) => setTimeout(() => onGlobalInteraction(e), 25), true)
   })
+
+  const onResize = () => {
+    toast = toast
+  }
 
   const onGlobalInteraction = (e: InteractionEvent) => {
     let hasCompletedTask = toast?.task?.(callbackProps)
@@ -92,6 +95,8 @@
   }
 </script>
 
+<svelte:window on:resize={onResize} />
+
 {#if toast}
   <div class="toast-wrapper">
     {#if toast.target}
@@ -117,11 +122,13 @@
         out:fly|global={{ y: 32, easing }}
         in:fly|global={{ y: 32, easing, delay: 200 }}
       >
-        {#if toast.img}
-          <div class="toast-img"><img width="100%" src="{base}/img/{toast.img}" alt="" /></div>
-        {:else if toast.icon}
-          <div class="toast-icon"><AnimatedIcon name={toast.icon} /></div>
-        {/if}
+        <div class="toast-img">
+          <img
+            width="100%"
+            src="{base}/img/{toast.img ?? 'guide.png'}"
+            alt="graphic of game guide"
+          />
+        </div>
         <div class="toast-body">
           {#if toast.title}
             <div class="toast-title bold">{@html toast.title}</div>
@@ -144,11 +151,13 @@
 {:else}
   <button
     class="guide-img-button"
-    data-tooltip="Give me a tip"
+    data-tooltip="Give me some advice"
     transition:fly={{ x: -40 }}
     on:click={() => ($activeToastId = $activeTipId)}
   >
-    <img width="100%" src="{base}/img/guide.png" alt="graphic of game guide" />
+    <div class="toast-img">
+      <img width="100%" src="{base}/img/guide.png" alt="graphic of game guide" />
+    </div>
   </button>
 {/if}
 
@@ -217,15 +226,11 @@
     right: 0
     left: auto
 
-.toast-img,
-.toast-icon
+.toast-img
   width: 35px
   display: flex
   align-items: end
   justify-content: center
-
-  img
-    width: 30px
 
 .guide-img-button
   left: 0
