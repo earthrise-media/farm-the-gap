@@ -1,12 +1,6 @@
 <script lang="ts">
-  import { flip } from "svelte/animate"
-  import { fade } from "svelte/transition"
-  import { quintInOut as easing } from "svelte/easing"
-
   import { farm, userState } from "$lib/stores/state"
 
-  import Button from "$lib/components/Button.svelte"
-  import Number from "$lib/components/Number.svelte"
   import Select from "./Select.svelte"
 
   let sortKey: FarmMetricKey = "yield"
@@ -36,7 +30,6 @@
           class:is-highlighted={$userState.itemHighlighted?.id === food.id}
           on:mouseenter={() => ($userState.itemHighlighted = food)}
           on:mouseleave={() => ($userState.itemHighlighted = null)}
-          on:click={() => ($userState.itemInspecting = food)}
           on:keydown={(e) => {
             if (e.key === "Enter") $userState.itemInspecting = food
           }}
