@@ -16,14 +16,16 @@
 
 <style lang="sass">
 select
-  background: inherit
   color: inherit
-  border-color: currentColor
+  background: inherit
+  background-color: rgba(white, 0.1)
+  border-color: transparent
   border-radius: 1em
-  padding: 0 0 0 0.125em
+  padding: 0 0.125em 0 0.25em
   white-space: nowrap
-  font-size: 0.75em
+  font-size: 0.875em
   font-weight: inherit
+  cursor: pointer
 
   &:focus
     outline: none
