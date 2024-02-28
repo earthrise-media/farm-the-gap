@@ -19,7 +19,7 @@ jobs:
 
       - name: build
         env:
-          BASE_PATH: "/protein-explorer"
+          BASE_PATH: "/farm-the-gap"
         run: |
           npm install && npm run build
       - name: Configure AWS
@@ -31,7 +31,7 @@ jobs:
       - name: Copy to S3
         working-directory: ./
         run: |
-          aws s3 sync build s3://stories2.theplotline.org/protein-explorer/ --delete
+          aws s3 sync build s3://stories2.theplotline.org/farm-the-gap/ --delete
       - name: Clear Cloudfront cache
         run: |
           aws cloudfront create-invalidation --distribution-id $cloudfront_distribution --paths '/*'
