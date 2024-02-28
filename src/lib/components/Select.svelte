@@ -18,7 +18,7 @@
 select
   color: inherit
   background: inherit
-  background-color: rgba(white, 0.1)
+  background-color: var(--color-primary-2)
   border-color: transparent
   border-radius: 1em
   padding: 0 0.125em 0 0.25em
@@ -30,6 +30,5 @@ select
   &:focus
     outline: none
     border-color: var(--color-tertiary-1)
-    
 
 </style>
