@@ -73,7 +73,7 @@
           <a href="https://brody.fyi/"><b>Brody&nbsp;Smith&nbsp;&nearr;</b></a>.
         </div>
       </div>
-      <div id="article-menu-wrap">
+      <div id="article-menu-wrap" class="flex-col justify-center">
         {#key hoveringItemLink}
           <div transition:fade={{ duration: 300 }}>
             {#if hoveringItemLink === ""}
@@ -204,6 +204,7 @@ a
   #article-menu-wrap
     width: 60%
     flex-basis: 60%
+    justify-content: flex-start
 
   .attribution
     margin-top: 0
