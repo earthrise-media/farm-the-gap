@@ -67,7 +67,6 @@
           rel="noopener noreferrer"
           style="background-color: {color}"
           data-tooltip={name}
-          class:mobile-only={mobileOnly}
         >
           {#if icon}
             <Icon classList="text-xl" type={icon} fillRule="evenodd" />
