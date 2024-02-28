@@ -20,7 +20,7 @@
   let transform = { x: 0, y: 0, z: 1, cx: 0, cy: 0, cz: 1, x0: 0, y0: 0 }
 
   const minZoom = 0.5
-  const maxZoom = 3.5
+  const maxZoom = 2.5
 
   const isSwappable = (food: Food) => food.id !== $userState.itemSelectedForSwap?.id
 
@@ -324,19 +324,20 @@
   height: auto
   font-size: 2.25em
   transition: all 0.3s ease-out
-  transform: rotateZ(45deg) rotateY(-60deg) translate(0,0%)
+  transform: rotateZ(45deg) rotateY(-60deg) translate(0%, 3%)
   text-shadow: 0 0 0.1rem rgba(black, 0.5)
 
   img
     width: 1em
     height: 1em
     object-fit: contain
+    object-position: top
 
   [data-food="Lamb"] &,
-  [data-food="Pork"] &
-    font-size: 2.125em
-
-  [data-food="Poultry"] &
+  [data-food="Pork"] &,
+  [data-food="Poultry"] &,
+  [data-food="Wheat"] &,
+  [data-food="Rice"] &
     font-size: 2em
 
   [data-food="Eggs"] &,
@@ -344,18 +345,20 @@
   [data-food="Nuts"] &
     font-size: 1.875em
 
+  [data-food="Nuts"] &,
+  [data-food="Legumes"] &
+    transform:  rotateZ(45deg) rotateY(-60deg) translate(0%, 6%)
+
   [data-food="Corn"] &
-    transform: rotateZ(65deg) rotateX(-20deg) rotateY(-60deg) translate(0,0%)
+    transform: rotateZ(65deg) rotateX(-40deg) rotateY(-60deg) translate(-5%, 6%)
 
   [data-food="Vegetables"] &
-    transform: rotateZ(30deg) rotateX(15deg) rotateY(-60deg) translate(0,0%)
+    transform: rotateZ(30deg) rotateX(25deg) rotateY(-60deg) translate(5%, 10%)
 
 @media (hover: hover)
   .land-cell:not(.unswappable):hover
     .food-item-fill
       opacity: 1
-    // .food-item-image
-    //   transform: rotateZ(45deg) rotateY(-60deg) translate(0, -2px)
 
 @media (max-height: 650px) and (min-width: $screen-sm)
   #farm-wrapper
