@@ -1,50 +1,37 @@
-name: Deploy to GitHub Pages
+name: Deploy to AWS s3 Bucket
 
 on:
+  workflow_dispatch:
   push:
-    branches: "main"
-
+    branches:
+      - production
+env:
+  cloudfront_distribution: ${{ secrets.CLOUDFRONT_DISTRIBUTION }}
 jobs:
-  build_site:
+  deploy-to-s3:
+    name: Deploy to S3
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm install
+          node-version: "20"
 
       - name: build
         env:
-          BASE_PATH: "/${{ github.event.repository.name }}"
+          BASE_PATH: "/farm-the-gap"
         run: |
-          npm run build
-
-      - name: Upload Artifacts
-        uses: actions/upload-pages-artifact@v3
+          npm install && npm run build
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          # this should match the `pages` option in your adapter-static options
-          path: "build/"
-
-  deploy:
-    needs: build_site
-    runs-on: ubuntu-latest
-
-    permissions:
-      pages: write
-      id-token: write
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      - name: Copy to S3
+        working-directory: ./
+        run: |
+          aws s3 sync build s3://stories2.theplotline.org/farm-the-gap/ --delete
+      - name: Clear Cloudfront cache
+        run: |
+          aws cloudfront create-invalidation --distribution-id $cloudfront_distribution --paths '/*'

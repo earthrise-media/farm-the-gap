@@ -7,7 +7,7 @@
     "The strategy game and learning platform for feeding the future."
 
   export let image: string | undefined = "/img/cover.png"
-  export let siteurl: string | undefined = "https://stories.theplotline.org"
+  export let siteurl: string | undefined = "https://stories.theplotline.org/farm-the-gap"
 
   const titleSuffix = `The Plotline`
 

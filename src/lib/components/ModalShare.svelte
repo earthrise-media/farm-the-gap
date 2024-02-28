@@ -44,7 +44,7 @@
     }
   ]
 
-  $: url = "https://earthrise-media.github.io/farm-the-gap/" || $page.url.pathname
+  $: url = $page.url.href
   $: text = encodeURIComponent($userState.shareText)
 </script>
 
@@ -59,7 +59,7 @@
     <div slot="title">Share</div>
     <p>{$userState.shareText}</p>
     <div class="buttons">
-      {#each platforms as { name, href, icon, color, mobileOnly }}
+      {#each platforms as { name, href, icon, color }}
         <a
           class="button-share"
           href={href.replace("{{url}}", url).replace("{{text}}", text)}
@@ -67,7 +67,6 @@
           rel="noopener noreferrer"
           style="background-color: {color}"
           data-tooltip={name}
-          class:mobile-only={mobileOnly}
         >
           {#if icon}
             <Icon classList="text-xl" type={icon} fillRule="evenodd" />
