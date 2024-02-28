@@ -25,23 +25,26 @@
 <svelte:head>
   <title>{title}</title>
   <meta name="title" content={title} />
-  <meta name="copyright" content={author} />
   <meta name="author" content={author} />
-  <meta name="og:site_name" content={author} />
+  <meta name="copyright" content={author} />
+
+  <meta property="og:title" content={title} />
+  <meta property="og:site_name" content={author} />
+  <meta property="og:url" content="{siteurl}{basepath}" />
+
   <meta name="twitter:title" content={title} />
   <meta name="twitter:site" content="@the_plotline" />
-  <meta property="og:url" content="{siteurl}{basepath}" />
 
   {#if image}
     <meta name="image" property="og:image" content="{siteurl}{basepath}{image}" />
     <meta name="twitter:image" content="{siteurl}{basepath}{image}" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="og:image" content="{siteurl}{basepath}{image}" />
+    <meta property="og:image" content="{siteurl}{basepath}{image}" />
   {/if}
 
   {#if description}
     <meta name="description" content={description} />
-    <meta name="og:description" content={description} />
     <meta name="twitter:description" content={description} />
+    <meta property="og:description" content={description} />
   {/if}
 </svelte:head>

@@ -24,7 +24,7 @@
   accounts for 50% of the resources used:
 </p>
 
-<figure class="figure-wde">
+<figure class="figure-diet-compare">
   <div class="figure-title">The US diet is twice as resource-intensive as the global average</div>
   <div class="figure-subtitle label">
     Per-capita values, 2009. Charts adapted from <a
@@ -126,8 +126,8 @@ legend
   gap: 4rem
 
   .label
-    min-width: 13ch
-    width: 13ch
+    min-width: 11.5ch
+    width: 11.5ch
 
   .country-column
     display: flex
@@ -146,7 +146,16 @@ legend
 figcaption
   margin-top: 3.5rem
 
+@media (min-height: 700px) and (min-width: 1500px)
+
+  legend
+    font-size: 0.625rem
+
+  .comparative-charts-wrap
+    gap: 2rem
+
 @media (max-width: $screen-sm)
+
   .comparative-charts-wrap
     gap: 1rem
     .country-column

@@ -37,7 +37,7 @@
 
 @media (min-height: 700px) and (min-width: 1500px)
   .slide
-    max-width: 850px
+    max-width: 800px
 
 @media (max-width: $screen-sm)
   .slide

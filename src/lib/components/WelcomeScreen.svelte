@@ -42,7 +42,7 @@
 </script>
 
 {#if !$userState.hasBeenWelcomed}
-  <Modal id="welcome-screen" fullscreen durationOut={800}>
+  <Modal id="welcome-screen" fullscreen fullWidth durationOut={800}>
     <div
       class="welcome-wrapper slide-{slideIndex}"
       role="button"

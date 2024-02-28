@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from "$app/stores"
   import { userState } from "$lib/stores/state"
 
   import Icon from "$lib/components/Icon.svelte"
@@ -7,42 +8,44 @@
   const platforms = [
     {
       name: "Twitter",
-      url: "https://twitter.com/intent/tweet?text=",
+      href: "https://twitter.com/intent/tweet?url={{url}}&text={{text}}",
       icon: "twitter",
       color: "#141414"
     },
     {
       name: "Facebook",
-      url: "https://www.facebook.com/sharer/sharer.php?u=",
+      href: "https://www.facebook.com/sharer/sharer.php?u={{url}}",
       icon: "facebook",
       color: "#4267B2"
     },
     {
       name: "LinkedIn",
-      url: "https://www.linkedin.com/shareArticle?mini=true&url=",
+      href: "https://www.linkedin.com/sharing/share-offsite/?url={{url}}",
       icon: "linkedin",
       color: "#0077B5"
     },
     {
       name: "Reddit",
-      url: "https://reddit.com/submit?url=",
+      href: "https://reddit.com/submit?url={{url}}&title={{text}}",
       icon: "reddit",
       color: "#FF4500"
     },
     {
       name: "Whatsapp",
-      url: `https://wa.me/?text=`,
+      href: `https://wa.me/?text={{text}} {{url}}`,
       icon: "whatsapp",
-      color: "#25d366",
-      mobileOnly: true
+      color: "#25d366"
     },
     {
       name: "Email",
-      url: "mailto:?subject=The%20Plotline&body=",
+      href: "mailto:?subject=Check this out&body={{text}} {{url}}",
       icon: "mail",
       color: "#141414"
     }
   ]
+
+  $: url = "https://earthrise-media.github.io/farm-the-gap/" || $page.url.pathname
+  $: text = encodeURIComponent($userState.shareText)
 </script>
 
 {#if $userState.shareText}
@@ -56,10 +59,10 @@
     <div slot="title">Share</div>
     <p>{$userState.shareText}</p>
     <div class="buttons">
-      {#each platforms as { name, url, icon, color, mobileOnly }}
+      {#each platforms as { name, href, icon, color, mobileOnly }}
         <a
           class="button-share"
-          href="{url}{$userState.shareText}"
+          href={href.replace("{{url}}", url).replace("{{text}}", text)}
           target="_blank"
           rel="noopener noreferrer"
           style="background-color: {color}"

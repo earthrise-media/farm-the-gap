@@ -6,7 +6,7 @@
   import ButtonUndo from "./ButtonUndo.svelte"
 </script>
 
-<div id="mobile-menu" class="text-2xl">
+<header id="mobile-menu" class="text-2xl">
   <div class="flex-col">
     <Button bare onClick={() => ($userState.isMenuOpen = !$userState.isMenuOpen)}>
       <div class="icon icon-menu flex-center bg-primary-2">
@@ -41,7 +41,7 @@
       </div>
     </Button>
   </div>
-</div>
+</header>
 
 <style lang="sass">
 @import "src/styles/vars/screens"
@@ -55,7 +55,7 @@
     z-index: 1
     display: flex
     align-items: center
-    height: 100%
+    height: calc(100% - 4.5rem)
     justify-content: space-between
     flex-direction: column
 
