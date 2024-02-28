@@ -126,6 +126,14 @@
   display: flex
   height: 100%
 
+  h1
+    margin-bottom: 0.25em
+  p
+    margin-bottom: 0.5em
+
+    + p
+      margin-top: 0.25em
+
 .slide-title
   padding-top: 8rem
 
@@ -157,16 +165,16 @@
 
     .slide-0 &
       transition: all 0.8s ease
-      transform: scale(0.85) translate(0, -68%)
+      transform: scale(0.85) translate(0, -75%)
 
     .slide-1 &
-      transform: scale(2) translate(0, -60%)
+      transform: scale(2) translate(0, -65%)
 
     .slide-2 &
-      transform: scale(1) translate(0, -40%)
+      transform: scale(1) translate(0, -55%)
 
     .slide-3 &
-      transform: scale(0.85) translate(0, -70%)
+      transform: scale(0.85) translate(0, -75%)
 
 .impact-charts
   gap: 0 1.25rem
