@@ -19,7 +19,9 @@
     }
   }
 
+  
   $: basepath = base.replace(/[\.\/]+/, "")
+  $: console.log("Siteurl:", siteurl, "Base:", base, "Basepath:", basepath)
 </script>
 
 <svelte:head>
