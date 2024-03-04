@@ -3,8 +3,7 @@ name: Deploy to AWS s3 Bucket
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: "main"
 env:
   cloudfront_distribution: ${{ secrets.CLOUDFRONT_DISTRIBUTION }}
 jobs:
