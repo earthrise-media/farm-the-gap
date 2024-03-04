@@ -40,7 +40,7 @@ export const milestones: Toast[] = [
   {
     id: "first-warning-water",
     img: "guide.png",
-    type: "milestone",
+    type: "warning",
     target: ".panel-game-state",
     mobilePosition: "bottom right",
     title: "You just recieved your first environmental warning!",
@@ -49,13 +49,16 @@ export const milestones: Toast[] = [
     trigger: ({ successMetrics }) => successMetrics.waterUseChange.warn,
     onEnter: ({ userState }) => {
       userState.toastIdsShown.push("first-warning-ghg")
+      userState.toastIdsShown.push("first-warning-protein")
+      userState.toastIdsShown.push("first-warning-eutrophy")
+      userState.itemSelectedForSwap = null
     },
     button: "Dismiss"
   },
   {
     id: "first-warning-ghg",
     img: "guide.png",
-    type: "milestone",
+    type: "warning",
     target: ".panel-game-state",
     mobilePosition: "bottom right",
     title: "You just recieved your first environmental warning!",
@@ -64,21 +67,48 @@ export const milestones: Toast[] = [
     trigger: ({ successMetrics }) => successMetrics.emissionsChange.warn,
     onEnter: ({ userState }) => {
       userState.toastIdsShown.push("first-warning-water")
+      userState.toastIdsShown.push("first-warning-protein")
+      userState.toastIdsShown.push("first-warning-eutrophy")
+      userState.itemSelectedForSwap = null
+    },
+    button: "Dismiss"
+  },
+  {
+    id: "first-warning-eutrophy",
+    img: "guide.png",
+    type: "warning",
+    target: ".panel-game-state",
+    mobilePosition: "bottom right",
+    title: "You just recieved your first environmental warning!",
+    message:
+      "Now use the data table to lower your water pollution. Try replacing a high-water-pollution food with a lower-pollution one that provides more calories per hectare.",
+    trigger: ({ successMetrics }) => successMetrics.emissionsChange.warn,
+    onEnter: ({ userState }) => {
+      userState.toastIdsShown.push("first-warning-ghg")
+      userState.toastIdsShown.push("first-warning-water")
+      userState.toastIdsShown.push("first-warning-protein")
+      userState.itemSelectedForSwap = null
+    },
+    button: "Dismiss"
+  },
+  {
+    id: "first-warning-protein",
+    img: "guide.png",
+    type: "warning",
+    target: ".panel-game-state",
+    mobilePosition: "bottom right",
+    title: "You just recieved your first warning!",
+    message:
+      "Now use the data table to increase your per-capita protein supply. Try replacing low-protein foods with a high-protein ones – in terms of both protein per calorie and per unit of land.",
+    trigger: ({ successMetrics }) => successMetrics.proteinPerPersonPerDay.warn,
+    onEnter: ({ userState }) => {
+      userState.toastIdsShown.push("first-warning-ghg")
+      userState.toastIdsShown.push("first-warning-water")
+      userState.toastIdsShown.push("first-warning-eutrophy")
+      userState.itemSelectedForSwap = null
     },
     button: "Dismiss"
   }
-
-  // {
-  //   id: "milestone-animal-reduction",
-  //   img: "guide.png",
-  //   type: "milestone",
-  //   title: "You have reduced animal !",
-  //   trigger: ({gameState, farm: Farm}) => {
-  //     farm
-  //   }.start + 10,
-  //   message: "",
-  //   button: "Dismiss"
-  // },
 ]
 
 // As Michael Pollan said:</p><p>“Each day, you have three votes to change the food system.”
