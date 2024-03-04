@@ -122,6 +122,8 @@
 {/if}
 
 <style lang="sass">
+@import "src/styles/vars/screens"
+
 .welcome-wrapper
   display: flex
   height: 100%
@@ -160,21 +162,18 @@
     transition: all 0.6s ease-in-out
     transform: scale(0.7)
 
-    :global(.land-cell)
-      font-size: 75%
-
     .slide-0 &
       transition: all 0.8s ease
-      transform: scale(0.85) translate(0, -75%)
+      transform: scale(0.85) translate(0, -70%)
 
     .slide-1 &
-      transform: scale(2) translate(0, -65%)
+      transform: scale(2) translate(0, -60%)
 
     .slide-2 &
       transform: scale(1) translate(0, -55%)
 
     .slide-3 &
-      transform: scale(0.85) translate(0, -75%)
+      transform: scale(0.85) translate(0, -70%)
 
 .impact-charts
   gap: 0 1.25rem
@@ -194,5 +193,16 @@
 :global(#welcome-screen .scroller-contents.scroller-y),
 :global(#end-screen .scroller-contents.scroller-y)
   overflow: hidden
+
+
+@media (min-height: 700px) and (min-width: 1280px)
+  .welcome-farm-wrapper
+    .farm-transform
+      :global(.land-cell)
+        font-size: 70%
+
+      .slide-1 &
+        :global(.land-cell)
+          font-size: 60%
 
 </style>
