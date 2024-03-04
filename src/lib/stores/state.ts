@@ -88,7 +88,7 @@ export const successMetrics = derived(
       suffix: "g",
       limit: proteinPerPersonPerDayLimit,
       objective: `Keep above ${proteinPerPersonPerDayLimit}g`,
-      warn: proteinPerPersonPerDayValue < proteinPerPersonPerDayLimit + 3,
+      warn: proteinPerPersonPerDayValue < proteinPerPersonPerDayLimit + 5,
       fail: proteinPerPersonPerDayValue < proteinPerPersonPerDayLimit,
       history: $gameHistory.map((o) => o.proteinPerPersonPerDay),
       farmMetricKey: "protein",
