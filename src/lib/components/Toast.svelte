@@ -78,7 +78,8 @@
     if (mounted && toast) {
       toast?.onEnter?.(callbackProps)
       if (toast.target) {
-        const element = qs(toast.target)
+        const query = (window.innerWidth <= 900 && toast.mobileTarget) || toast.target
+        const element = qs(query)
 
         if (element) {
           const style = getComputedStyle(element)
@@ -218,14 +219,6 @@
   display: grid
   grid-template-columns: auto 1fr
 
-  &.top
-    top: 0
-    bottom: auto
-
-  &.right
-    right: 0
-    left: auto
-
 .toast-img
   width: 35px
   display: flex
@@ -265,6 +258,15 @@
 @media (max-width: $screen-sm)
   .toast-wrapper
     font-size: 0.875rem
+
+  .toast
+    &.top
+      top: 0
+      bottom: auto
+
+    &.right
+      right: 0
+      left: auto
 
   .toast-button
     font-size: 1rem

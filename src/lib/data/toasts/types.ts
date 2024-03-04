@@ -20,6 +20,7 @@ export type Toast = {
   button?: string
   target?: string
   next?: string | number
+  mobileTarget?: string
   mobilePosition?: "top left" | "top right" | "bottom left" | "bottom right"
   task?: (props: CallBackProps) => boolean
   trigger?: (props: CallBackProps) => boolean
