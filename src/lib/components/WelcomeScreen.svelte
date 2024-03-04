@@ -195,7 +195,7 @@
   overflow: hidden
 
 
-@media (min-height: 700px) and (min-width: 1280px)
+@media (min-width: 1280px)
   .welcome-farm-wrapper
     .farm-transform
       :global(.land-cell)
