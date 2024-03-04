@@ -198,12 +198,7 @@
 @media (min-width: 1280px)
   .welcome-farm-wrapper
     .farm-transform
-      :global(.food-item-image img)
-        transform: scale(0.5)
-        transition: transform 0.6s ease-in-out
-
-      .slide-1 &
-        :global(.food-item-image img)
-          transform: scale(0.36)
+      :global(.land-cell)
+        font-size: 0.6rem!important
 
 </style>
