@@ -10,8 +10,6 @@ jobs:
   deploy-to-s3:
     name: Deploy to S3
     runs-on: ubuntu-latest
-    env:
-      BASE_PATH: "/farm-the-gap"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -19,6 +17,8 @@ jobs:
           node-version: "20"
       - name: build
         run: npm install && npm run build
+        env:
+          BASE_PATH: "/farm-the-gap"
       - name: Configure AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
