@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - production
+      - main
 env:
   cloudfront_distribution: ${{ secrets.CLOUDFRONT_DISTRIBUTION }}
 jobs:
