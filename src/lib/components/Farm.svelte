@@ -25,8 +25,6 @@
   const isSwappable = (food: Food) => food.id !== $userState.itemSelectedForSwap?.id
 
   const swapFoodItem = (e: MouseEvent, x: number, y: number) => {
-    e.stopPropagation()
-
     const foodAdded = JSON.parse(JSON.stringify($userState.itemSelectedForSwap))
     const foodRemoved = JSON.parse(JSON.stringify($farm.grid[y][x]))
 
@@ -210,7 +208,6 @@
   justify-content: center
   margin: 0.25rem
   color: var(--color-secondary-1)
-  background: var(--color-primary-1)
   border-radius: 2rem
 
   :global(button)
@@ -360,7 +357,7 @@
     .food-item-fill
       opacity: 1
 
-@media (max-height: 650px) and (min-width: $screen-sm)
+@media (max-height: 800px) and (min-width: $screen-sm)
   #farm-wrapper
     padding-bottom: 5%
   #land-grid

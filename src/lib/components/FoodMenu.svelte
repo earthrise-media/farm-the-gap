@@ -116,8 +116,6 @@
   margin-right: 0.375em
   padding: 0.625em
 
-.food-count
-
 .food-emoji
   font-size: 1.25em
   margin-left: auto
@@ -129,6 +127,11 @@
 
 :global(#food-menu-wrapper button)
   padding: 0.125em 0.375em 0.125em 0.125em
+
+@media (min-width: $screen-sm + 1)
+  .group-plant
+    :global(button:nth-child(5))
+      grid-row: 2 / span 1
 
 @media (max-width: $screen-sm)
   #food-menu-wrapper
