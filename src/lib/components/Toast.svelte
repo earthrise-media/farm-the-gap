@@ -118,7 +118,7 @@
     {/if}
     {#key toast.id}
       <div
-        class="toast {toast.mobilePosition}"
+        class="toast {toast.mobilePosition ?? ''}"
         out:fly|global={{ y: 32, easing }}
         in:fly|global={{ y: 32, easing, delay: 200 }}
       >
@@ -203,6 +203,7 @@
 
 .toast
   pointer-events: all
+  cursor: default
   position: absolute
   left: 0
   bottom: 0

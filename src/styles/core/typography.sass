@@ -2,9 +2,12 @@ article
   line-height: 1.5
 
 p, ul, ol
-  margin-bottom: 1.75em
-  &:last-child
-    margin-bottom: 0
+
+  .toast &:not(:last-child)
+    margin-bottom: 0.75em
+
+  &:not(:last-child)
+    margin-bottom: 1.75em
 
 li
   margin-bottom: 0.25em

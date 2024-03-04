@@ -42,7 +42,7 @@ export const guide: Toast[] = [
     type: "guide",
     title: "Key impact metrics",
     message:
-      "Monitor your environmental impact and nutritional stats here. The population changes each year and it will be game over if you fail on any metric. Be careful!",
+      "Monitor your environmental impact and nutritional stats here. The population changes with each move and it will be game over if you fail on any metric. Be careful!",
     button: "Next",
     target: ".panel-game-state",
     mobilePosition: "bottom right",
