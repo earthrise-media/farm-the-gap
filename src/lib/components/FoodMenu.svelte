@@ -25,7 +25,7 @@
   bind:innerWidth={vw}
   bind:innerHeight={vh}
   on:click={(e) => {
-    if (e.target instanceof HTMLElement && e.target.closest("#land-grid")) return
+    if (e.target instanceof HTMLElement && e.target.closest(".land-cell")) return
     $userState.itemSelectedForSwap = null
   }}
 />
