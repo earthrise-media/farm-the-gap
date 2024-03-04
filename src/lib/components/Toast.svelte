@@ -4,7 +4,6 @@
   import { backOut as easing } from "svelte/easing"
 
   import Button from "$lib/components/Button.svelte"
-  import AnimatedIcon from "$lib/components/AnimatedIcon.svelte"
 
   import { qs } from "martha"
   import { onMount } from "svelte"
