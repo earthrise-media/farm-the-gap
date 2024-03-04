@@ -152,4 +152,7 @@ $radius: 1rem
       &.show-header
         margin: 0.5rem 0.75rem 0.75rem 4.25rem
 
+@media (min-height: 700px) and (min-width: 1500px)
+  .modal
+    width: 750px
 </style>
