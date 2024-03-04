@@ -66,7 +66,7 @@
               )} more calories to feed a growing and developing population.
             </p>
             <p>Can you reimagine agriculture to feed the future sustainably?</p>
-            <p class="label text-tertiary-1">Click anywhere to begin (x)</p>
+            <p class="label text-tertiary-1">Click anywhere to begin</p>
           </Slide>
         {:else if slideIndex === 1}
           <Slide>
