@@ -33,7 +33,7 @@ This repository contains all the source code and data for the game.
 I had to whittle down the hundreds of foods eaten globally into a sensible list of groups for easy gameplay. That involved making decisions about how to group and categorize foods, and finding the optimal trade-off between simplicity and accuracy. I arrived at the 13 foods and food groups in the stats table below.
 
 | Food | globalLand (%) | kgYieldPerHa | caloriesPerKg | proteinPerKg | emissionsPerKg | waterUsePerKg | eutrophyPerKg | landPerKg |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ---  | ---: | --- | --- | --- | --- | --- | --- | --- |
 | 🐄 Beef | 53 | 50 | 2,430 | 175 | 95 | 2494 | 428.7 | 295.3 | 
 | 🐑 Lamb | 10 | 27 | 2,550 | 171 | 39.7 | 1803 | 97.1 | 369.8 |
 | 🥛 Dairy | 6 | 2,458 | 610 | 32.7 | 3.7 | 310 | 11.5 | 4.1 |
