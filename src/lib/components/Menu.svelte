@@ -57,7 +57,7 @@
               if (href === $page.url.pathname) e.preventDefault()
               else $userState.isMenuOpen = false
             }}
-            href="{base}/{href}"
+            href="{base}/{href}/"
           >
             {@html title}
             {#if note}

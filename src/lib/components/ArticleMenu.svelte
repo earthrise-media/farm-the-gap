@@ -26,12 +26,12 @@
     .slice(0, maxItems) as { title, slug }, i}
     <a
       class="article-link flex-center flex-col"
-      class:current={$page.url.pathname === `${base}/learn/${slug}`}
+      class:current={$page.url.pathname === `${base}/learn/${slug}/`}
       on:click={(e) => {
         if (slug === $page.url.pathname) e.preventDefault()
         $userState.isMenuOpen = false
       }}
-      href="{base}/learn/{slug}"
+      href="{base}/learn/{slug}/"
     >
       <div class="article-link-title">{title}</div>
     </a>

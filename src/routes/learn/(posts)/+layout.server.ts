@@ -5,7 +5,7 @@ import articles from "$lib/data/articles"
 
 export async function load({ url }) {
   const slug = url.pathname
-  const post = articles.find((post) => slug === `${base}/learn/${post.slug}`)
+  const post = articles.find((post) => slug === `${base}/learn/${post.slug}/`)
 
   if (post) return { post }
 

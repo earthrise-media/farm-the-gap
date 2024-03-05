@@ -51,5 +51,5 @@
 
 <p>
   There are multiple strategies that can contribute to closing this food gap, which we explore in
-  the <a href="{base}/learn/strategies">next article</a>.
+  the <a href="{base}/learn/strategies/">next article</a>.
 </p>
