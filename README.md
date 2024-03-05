@@ -1,16 +1,16 @@
 # Farm the Gap
 
-## 📍 Overview
-
-[Farm The Gap](https://stories.theplotline.org/farm-the-gap/), a new digital puzzle game from [The Plotline](https://theplotline.org/), gives you the keys to this virtual global farm. Modeled on real-world data, the game’s objective is to close a 50% “food gap” by simply changing what we grow and eat.
-
-This repository contains all the source code and data for the game.
-
 *Developed with the software and tools below*
 
 ![Svelte Badge](https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00)
 ![Typescript Badge](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Typescript Badge](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
+
+## 📍 Overview
+
+[Farm The Gap](https://stories.theplotline.org/farm-the-gap/), a new digital puzzle game from [The Plotline](https://theplotline.org/), gives you the keys to this virtual global farm. Modeled on real-world data, the game’s objective is to close a 50% “food gap” by simply changing what we grow and eat.
+
+This repository contains all the source code and data for the game.
 
 ## 👾 Development
 
