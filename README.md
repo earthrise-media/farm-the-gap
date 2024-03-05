@@ -120,15 +120,17 @@ interface SuccessMetrics {
 
 I had to whittle down the hundreds of foods eaten globally into a sensible list of groups for easy gameplay. That involved making decisions about how to group and categorize foods, and finding the optimal trade-off between simplicity and accuracy. I arrived at the 13 foods and food groups in the stats table below.
 
+Find these defined in [src/lib/data/foods.json](src/lib/data/foods.json).
+
 | Food | globalLand (%) | kgYieldPerHa | caloriesPerKg | proteinPerKg | emissionsPerKg | waterUsePerKg | eutrophyPerKg | landPerKg |
 | ---  | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 🐄 Beef | 53 | 50 | 2,430 | 175 | 95 | 2494 | 428.7 | 295.3 | 
-| 🐑 Lamb | 10 | 27 | 2,550 | 171 | 39.7 | 1803 | 97.1 | 369.8 |
+| 🐑 Lamb | 9 | 27 | 2,550 | 171 | 39.7 | 1803 | 97.1 | 369.8 |
 | 🥛 Dairy | 6 | 2,458 | 610 | 32.7 | 3.7 | 310 | 11.5 | 4.1 |
-| 🌾 Rice | 5 | 4,740 | 3,590 | 70.4 | 3.9 | 1,586 | 26.5 | 2.9 | 
-| 🍞 Wheat | 5 | 3,483 | 3,700 | 151 | 1.6 | 648 | 7.2 | 3.9 | 
+| 🌾 Rice | 6 | 4,740 | 3,590 | 70.4 | 3.9 | 1,586 | 26.5 | 2.9 | 
+| 🍞 Wheat | 6 | 3,483 | 3,700 | 151 | 1.6 | 648 | 7.2 | 3.9 | 
 | 🐖 Pork | 4 | 737 | 2,280 | 178 | 9.8 | 1292 | 60.9 | 13.6 |
-| 🥜 Nuts* | 3 | 1,600 | 5,930 | 206.7 | 1.8 | 2993 | 16.6 | 11 |
+| 🥜 Nuts* | 2 | 1,600 | 5,930 | 206.7 | 1.8 | 2993 | 16.6 | 11 |
 | 🫘 Legumes* | 3 | 1,896 | 3093 | 192 | 1.4 | 52 | 11.7 | 16.4 |
 | 🐓 Poultry | 3 | 1,200 | 1,330 | 179 | 8.2 | 483 | 34.3 | 8.3 |
 | 🌽 Corn | 2 | 5,847 | 3,640 | 62 | 1.7 | 216 | 4 | 2.9 |
@@ -136,14 +138,13 @@ I had to whittle down the hundreds of foods eaten globally into a sensible list 
 | 🍊 Fruit* | 2 | 13,655 | 418 | 6.8 | 1.1 | 186 | 3.5 | 1 |
 | 🥚 Eggs | 2 | 1,465 | 1,430 | 124 | 4.4 | 830 | 20 | 6.8 |
 
-- ***Nuts** impact data is the average of Nuts and Groundnuts (commodity data); nutrition data is the average of raw peanuts, almonds, and cashews.*
-- ***Legumes** data is a weighted average of Beans (75%), Chickpeas (10%), Lentils (5%), Garden Peas (10%)*
-- ***Vegetables** impact data is the weighted average of Root Vegetables (75%), Other Vegetables (20%), and Brassicas (5%). Nutrition data is the weighted average of gold potatoes, mature carrots and raw broccoli.*
-- ***Fruit** impact data is weighted average of Apples (11%), Bananas (14%), Berries (1%), Citrus Fruit (18%), Tomatoes (21%), and Other Fruit (35%) (commodity data). Nutritional data is weighted average of red delicious apples, bananas, strawberries, navel oranges, roma tomatoes and bartlett pears.*
+***Nuts** impact data is the average of Nuts and Groundnuts (commodity data); nutrition data is the average of raw peanuts, almonds, and cashews.*
 
-Find these defined in [/src/lib/data/foods.json](/src/lib/data/foods.json).
+***Legumes** data is a weighted average of Beans (75%), Chickpeas (10%), Lentils (5%), Garden Peas (10%)*
 
-The game relies on four core datasets for each food type, outlined in the table below.
+***Vegetables** impact data is the weighted average of Root Vegetables (75%), Other Vegetables (20%), and Brassicas (5%). Nutrition data is the weighted average of gold potatoes, mature carrots and raw broccoli.*
+
+***Fruit** impact data is weighted average of Apples (11%), Bananas (14%), Berries (1%), Citrus Fruit (18%), Tomatoes (21%), and Other Fruit (35%) (commodity data). Nutritional data is weighted average of red delicious apples, bananas, strawberries, navel oranges, roma tomatoes and bartlett pears.*
 
 
 
