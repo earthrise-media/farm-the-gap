@@ -1,4 +1,4 @@
-# Farm the Gap
+# Farm the Gap: A strategy game and learning platform to feed the future.
 
 *Developed with the software and tools below*
 
@@ -10,7 +10,7 @@
 
 ## 📍 Overview
 
-[Farm The Gap](https://stories.theplotline.org/farm-the-gap/), a new digital puzzle game from [The Plotline](https://theplotline.org/), gives you the keys to this virtual global farm. Modeled on real-world data, the game’s objective is to close a 50% “food gap” by simply changing what we grow and eat.
+[Farm The Gap](https://stories.theplotline.org/farm-the-gap/), a new digital puzzle game from [The Plotline](https://theplotline.org/), gives you the keys to a virtual global farm. Modeled on real-world data, the game’s objective is to close a 50% “food gap” by simply changing what we grow and eat.
 
 This repository contains all the source code and data for the game.
 
