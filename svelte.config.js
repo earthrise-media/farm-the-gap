@@ -7,6 +7,7 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		paths: {
+			relative: false,
 			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
 		},
 		prerender: {
