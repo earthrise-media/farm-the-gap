@@ -6,8 +6,8 @@
   export let unit: string
   export let title: string
   export let subtitle: string
-  export let caption: string | undefined
-  export let callouts: Food[] | undefined
+  export let caption: string | undefined = undefined
+  export let callouts: Food[] | undefined = undefined
   export let fv: (item: Food) => number
 
   $: max = Math.ceil(Math.max(...foods.map(fv)))
