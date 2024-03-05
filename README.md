@@ -6,7 +6,7 @@
 ![Typescript Badge](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![Sass Badge](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
 
-<img alt="Promotional image of the game" src="/static/img/cover.png" width="50%" style="margin: auto"/>
+<img alt="Promotional image of the game" src="/static/img/cover.png" width="50%" style="margin: auto; border-radius: 16px;"/>
 
 ## 📍 Overview
 
