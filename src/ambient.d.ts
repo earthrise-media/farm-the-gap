@@ -82,7 +82,7 @@ declare global {
   // GameState related types
   type InventoryItem = { id: FoodId; name: string; available: number }
 
-  // Fail/success relatied types
+  // Fail/success related types
   class GameSnapshot {
     year: number
     proteinPerPersonPerDay: number
