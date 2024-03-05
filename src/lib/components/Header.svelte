@@ -22,7 +22,7 @@
   <a
     id="logo"
     class="flex align-center"
-    href="{base}/"
+    href={base}
     on:click={() => ($userState.isMenuOpen = false)}
   >
     <img src="{base}/brand/icon@128.png" alt="The Farm The Gap Logo" />

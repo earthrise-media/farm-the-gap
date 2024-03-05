@@ -37,7 +37,7 @@
     </a>
   {/each}
   {#if linkToGame}
-    <a class="game-link flex-center" href="{base}/">
+    <a class="game-link flex-center" href={base}>
       <div class="icon"></div>
       <div class="article-link-title">Play game &rarr;</div>
     </a>
