@@ -26,14 +26,100 @@ This repository contains all the source code and data for the game.
 3. Build a production version: `npm run build`
 4. Preview the production build: `npm run preview`.
 
-## Data
+## Global state
+
+The brains of the game are defined in [/src/lib/stores/state.ts](/src/lib/stores/state.ts).
+
+In this file are five `writable` Svelte stores:
+
+1. `**$farm**`: the foods occupying the farm grid and their respective and total outputs
+2. `**$gameState**`: years, undos, inventory
+3. `**$gameSettings**`: high-level global variables
+4. `**$userState**`: user preferences and interaction states
+5. `**$gameHistory**`: history of moves (foods added/removed and where)
+
+The first three stores feed into a `derived` Svelte store called `**$successMetrics**`. This store monitors the overall game status (win/loss) and the warning or fail states of each individual game metric (protein supply, emissions, etc). Any changes in the dependant stores triggers a recalculation of the derived store.
+
+## Data types
+
+Global types and class declarations can be found in [/src/ambient.ts](/src/ambient.ts). Some important data structures:
+
+### Farm
+
+```typescript
+class Farm {
+  constructor(settings: GameSettings | null)
+
+  // properties
+  initialState: FarmState
+  grid: FarmGrid
+  items: string[]
+  rows: number
+  cols: number
+
+  // methods
+  getInitialState(): FarmState
+  getFarmMetric(fn: (item: Food) => number): FarmMetric
+  plantCrop(x: number, y: number, foodItem: Food): void
+  getTotalSum(fn: (item: Food) => number): number
+  getSumByFoodType(fn: (item: Food) => number): FarmGridFoodList[]
+
+  // getters
+  readonly yield: FarmMetric
+  readonly landUse: FarmMetric
+  readonly waterUse: FarmMetric
+  readonly emissions: FarmMetric
+  readonly eutrophy: FarmMetric
+  readonly protein: FarmMetric
+  readonly calories: FarmMetric
+  readonly foodChanges: Count[]
+}
+```
+
+### Failure metrics
+
+```typescript
+interface FailureMetric {
+  value: number
+  key: FailureMetricKey
+  label: string
+  suffix: string
+  limit: number
+  objective: string
+  warn: boolean
+  fail: boolean
+  history: number[]
+  farmMetricKey: FarmMetricKey
+  foodMetricKey: keyof Food
+  chartSettings: LineChartSettings
+}
+```
+
+### High-level game status
+
+```typescript
+interface SuccessMetrics {
+  hectaresPerPerson: number
+  peopleAdequateCalories: number
+  calorieProductionChange: number
+  caloriesPerPersonPerDayValue: number
+  proteinPerPersonPerDay: FailureMetric
+  emissionsChange: FailureMetric
+  waterUseChange: FailureMetric
+  eutrophyChange: FailureMetric
+  hasSucceeded: boolean
+  hasFailed: boolean
+}
+```
+
+## Source data
 
 ### Foods
 
 I had to whittle down the hundreds of foods eaten globally into a sensible list of groups for easy gameplay. That involved making decisions about how to group and categorize foods, and finding the optimal trade-off between simplicity and accuracy. I arrived at the 13 foods and food groups in the stats table below.
 
 | Food | globalLand (%) | kgYieldPerHa | caloriesPerKg | proteinPerKg | emissionsPerKg | waterUsePerKg | eutrophyPerKg | landPerKg |
-| ---  | ---: | --- | --- | --- | --- | --- | --- | --- |
+| ---  | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | 🐄 Beef | 53 | 50 | 2,430 | 175 | 95 | 2494 | 428.7 | 295.3 | 
 | 🐑 Lamb | 10 | 27 | 2,550 | 171 | 39.7 | 1803 | 97.1 | 369.8 |
 | 🥛 Dairy | 6 | 2,458 | 610 | 32.7 | 3.7 | 310 | 11.5 | 4.1 |
