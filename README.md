@@ -34,11 +34,11 @@ The brains of the game are defined in [src/lib/stores/state.ts](src/lib/stores/s
 
 In this file are five `writable` Svelte stores:
 
-1. `$farm`: the foods occupying the farm grid and their respective and total outputs
-2. `$gameState`: years, undos, inventory
-3. `$gameSettings`: high-level global variables
-4. `$userState`: user preferences and interaction states
-5. `$gameHistory`: history of moves (foods added/removed and where)
+1. `$farm`: The foods on the farm and the respective production outputs
+2. `$gameState`: Food inventory, current year, remaining undos
+3. `$gameSettings`: High-level global settings
+4. `$userState`: User preferences and interaction states
+5. `$gameHistory`: History of moves (foods added/removed and where)
 
 The first three stores feed into a `derived` Svelte store called `$successMetrics`. This store monitors the overall game status (win/loss) and the warning or fail states of each individual game metric (protein supply, emissions, etc). Any changes in the dependant stores triggers a recalculation of the derived store.
 
