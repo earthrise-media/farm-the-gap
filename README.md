@@ -30,7 +30,7 @@ This repository contains all the source code and data for the game.
 
 ## Global state
 
-The brains of the game are defined in [/src/lib/stores/state.ts](/src/lib/stores/state.ts).
+The brains of the game are defined in [src/lib/stores/state.ts](src/lib/stores/state.ts).
 
 In this file are five `writable` Svelte stores:
 
@@ -40,11 +40,11 @@ In this file are five `writable` Svelte stores:
 4. `$userState`: user preferences and interaction states
 5. `$gameHistory`: history of moves (foods added/removed and where)
 
-The first three stores feed into a `derived` Svelte store called `**$successMetrics**`. This store monitors the overall game status (win/loss) and the warning or fail states of each individual game metric (protein supply, emissions, etc). Any changes in the dependant stores triggers a recalculation of the derived store.
+The first three stores feed into a `derived` Svelte store called `$successMetrics`. This store monitors the overall game status (win/loss) and the warning or fail states of each individual game metric (protein supply, emissions, etc). Any changes in the dependant stores triggers a recalculation of the derived store.
 
 ## Data types
 
-Global types and class declarations can be found in [/src/ambient.ts](/src/ambient.ts). Some important data structures:
+Global types and class declarations can be found in [src/ambient.d.ts](src/ambient.d.ts). Some important data structures:
 
 ### Farm
 
