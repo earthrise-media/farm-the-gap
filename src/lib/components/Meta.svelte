@@ -14,14 +14,26 @@
   const analyticsId = "G-SCXFQBRZMS"
 
   $: {
+    // Initialise analytics
+    if (analyticsId && browser) {
+      window.dataLayer = window.dataLayer || []
+      window.gtag = function gtag() {
+        window.dataLayer.push(arguments)
+      }
+      window.gtag("js", new Date())
+      window.gtag("config", "G-SCXFQBRZMS")
+    }
+  }
+
+  $: {
+    // Update title on page change
     if (!title) {
       title = titleSuffix
     } else if (!title.includes(titleSuffix)) {
       title += " - " + titleSuffix
     }
-  }
 
-  $: {
+    // Update analytics on page change
     if (analyticsId && browser && window.gtag !== undefined) {
       window.gtag("config", analyticsId, {
         page_title: title,
@@ -56,15 +68,7 @@
     <meta property="og:description" content={description} />
   {/if}
 
-  {#if analyticsId && browser}
+  {#if analyticsId}
     <script async src="https://www.googletagmanager.com/gtag/js?id={analyticsId}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || []
-      window.gtag = function gtag() {
-        window.dataLayer.push(arguments)
-      }
-      window.gtag("js", new Date())
-      window.gtag("config", analyticsId)
-    </script>
   {/if}
 </svelte:head>
