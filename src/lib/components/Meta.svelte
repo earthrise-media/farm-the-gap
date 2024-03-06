@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { base } from "$app/paths"
+  import { browser } from "$app/environment"
+  import { page } from "$app/stores"
 
   export let author = "The Plotline"
   export let title: string | undefined = "Farm the Gap"
@@ -9,7 +10,8 @@
   export let image: string | undefined = "/img/cover.png"
   export let siteurl: string | undefined = "https://stories.theplotline.org/farm-the-gap"
 
-  const titleSuffix = `The Plotline`
+  const titleSuffix = "The Plotline"
+  const analyticsId = "G-SCXFQBRZMS"
 
   $: {
     if (!title) {
@@ -19,7 +21,14 @@
     }
   }
 
-  $: basepath = base.replace(/[\.\/]+/, "")
+  $: {
+    if (analyticsId && browser && window.gtag !== undefined) {
+      window.gtag("config", analyticsId, {
+        page_title: title,
+        page_path: $page.url.pathname
+      })
+    }
+  }
 </script>
 
 <svelte:head>
@@ -45,5 +54,17 @@
     <meta name="description" content={description} />
     <meta name="twitter:description" content={description} />
     <meta property="og:description" content={description} />
+  {/if}
+
+  {#if analyticsId && browser}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={analyticsId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      window.gtag = function gtag() {
+        window.dataLayer.push(arguments)
+      }
+      window.gtag("js", new Date())
+      window.gtag("config", analyticsId)
+    </script>
   {/if}
 </svelte:head>

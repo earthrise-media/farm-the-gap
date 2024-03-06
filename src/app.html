@@ -1,29 +1,21 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
 
-<head>
-  <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/brand/icon.svg" />
+    <link rel="alternate icon" type="image/png" href="%sveltekit.assets%/brand/icon@128.png" />
+    <link rel="apple-touch-icon" href="%sveltekit.assets%/brand/icon@128.png" sizes="128x128" />
 
-  <link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/brand/icon.svg" />
-  <link rel="alternate icon" type="image/png" href="%sveltekit.assets%/brand/icon@128.png" />
-  <link rel="apple-touch-icon" href="%sveltekit.assets%/brand/icon@128.png" sizes="128x128" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    %sveltekit.head%
+  </head>
 
-  %sveltekit.head%
-</head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SCXFQBRZMS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
-  gtag('js', new Date());
-
-  gtag('config', 'G-SCXFQBRZMS');
-</script>
-
-<body data-sveltekit-preload-data="hover">
-  <div style="display: contents">%sveltekit.body%</div>
-</body>
-
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
 </html>

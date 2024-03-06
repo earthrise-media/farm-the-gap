@@ -15,6 +15,7 @@
     "@iconify-json/svg-spinners": "^1.1.2",
     "@sveltejs/adapter-static": "^3.0.1",
     "@sveltejs/kit": "^2.5.2",
+    "@types/gtag.js": "^0.0.19",
     "@types/lodash.groupby": "^4.6.9",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
