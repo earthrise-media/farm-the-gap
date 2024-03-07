@@ -135,6 +135,7 @@
 .slide-2
   position: relative
   width: 100%
+  padding: 0 1rem
 
   hr.spacer
     margin: 1rem auto 0

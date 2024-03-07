@@ -205,6 +205,8 @@
     margin-top: 1.5rem
 
 .slide-2
+  max-width: 100vw
+  padding: 0 1rem
   hr.spacer
     margin: 1rem auto 0
 
